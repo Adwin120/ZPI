@@ -9,17 +9,17 @@ app.use(express.static("dist/frontend"));
 
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.post('/KlientFormularz', (req: Request, res: Response) => {
+app.post('/Klient', (req: Request, res: Response) => {
     console.log('Dane z formularza dla klienta:', req.body);
     res.send('Dane z formularza dla klienta zostały odebrane');
 });
 
-app.post('/PracownikFormularz', (req: Request, res: Response) => {
+app.post('/Pracownik', (req: Request, res: Response) => {
     console.log('Dane z formularza dla pracownika:', req.body);
     res.send('Dane z formularza dla pracownika zostały odebrane');
 });
 
-app.post('/ZadanieFormularz', (req: Request, res: Response) => {
+app.post('/Zadanie', (req: Request, res: Response) => {
     console.log('Dane z formularza dla żądania:', req.body);
     res.send('Dane z formularza dla żądania zostały odebrane');
 });
