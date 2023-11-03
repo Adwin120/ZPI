@@ -60,7 +60,7 @@ const MockForms: React.FC<Props> = () => {
                     label="Hasło" 
                     required 
                     inputProps={{
-                        pattern: "^(?=.*[A-Z])(?=.*[!@#$%^&*()_+{}\[\]:;<>,.?~\\/-]).{8,}$"
+                        pattern: "^(?=.*[A-Z])(?=.*[!@#$%^&*()_+{}[]:;<>,.?~\\/-]).{8,}$"
                     }}
                     helperText="Hasło musi zawierać co najmniej jedną dużą literę, jeden znak specjalny i mieć co najmniej 8 znaków długości."
                 />
