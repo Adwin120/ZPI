@@ -1,4 +1,4 @@
-import React, { PropsWithChildren } from "react";
+import React, { PropsWithChildren, useId } from "react";
 import { Dialog, DialogTitle, DialogContent, Stack, Button } from "@mui/material";
 
 interface Props extends PropsWithChildren {
@@ -8,17 +8,18 @@ interface Props extends PropsWithChildren {
     title: string;
 }
 const FormDialog: React.FC<Props> = ({ onClose, open, submitEndpoint, title, children }) => {
+    const titleId = useId();
     return (
         <Dialog
             open={open}
             PaperProps={{ elevation: 18, sx: { minWidth: "50%" } }}
             onClose={onClose}
         >
-            <DialogTitle variant="h5" component="h2">
+            <DialogTitle variant="h5" component="h2" id={titleId}>
                 {title}
             </DialogTitle>
             <DialogContent>
-                <form action={submitEndpoint} method="POST">
+                <form action={submitEndpoint} method="POST" aria-labelledby={titleId}>
                     <Stack direction="column" gap={1} py={2}>
                         {children}
                     </Stack>
