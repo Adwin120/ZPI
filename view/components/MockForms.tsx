@@ -22,7 +22,7 @@ const MockForms: React.FC<Props> = () => {
             <FormDialog
                 open={activeFormId === 1}
                 onClose={closeDialog}
-                submitEndpoint="KlientFormularz"
+                submitEndpoint="Klient"
                 title="formularz 1"
             >
                 <TextField name="nazwa" label="Nazwa" required />
@@ -50,7 +50,7 @@ const MockForms: React.FC<Props> = () => {
             <FormDialog
                 open={activeFormId === 2}
                 onClose={closeDialog}
-                submitEndpoint="PracownikFormularz"
+                submitEndpoint="Pracownik"
                 title="formularz 2"
             >
                 <TextField type="email" name="email" label="E-mail" />
@@ -80,7 +80,7 @@ const MockForms: React.FC<Props> = () => {
             <FormDialog
                 open={activeFormId === 3}
                 onClose={closeDialog}
-                submitEndpoint="ZadanieFormularz"
+                submitEndpoint="Zadanie"
                 title="formularz 3"
             >
                 <TextField 
