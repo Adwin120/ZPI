@@ -9,15 +9,19 @@
 /** @type {import('jest').Config} */
 const config = {
   preset: "ts-jest/presets/default-esm",
-  "globals": {
-    "ts-jest": {
-      "useESM": true,
-      "tsconfig": {
-        "module": "ES2022",
-        "target": "ES2017"
-      }
-    }
+  transform: {
+    "^.+\\.tsx?$": [
+        "ts-jest",
+        {
+            useESM: true,
+            tsconfig: {
+                module: "ES2022",
+                target: "ES2017"
+            }
+        }
+    ]
   },
+  silent: true,
   extensionsToTreatAsEsm: [".ts"],
   // All imported modules in your tests should be mocked automatically
   // automock: false,
