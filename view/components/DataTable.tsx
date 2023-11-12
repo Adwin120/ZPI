@@ -7,6 +7,7 @@ import {
     type DataGridProps,
 } from "@mui/x-data-grid";
 import useBackendAPI from "../hooks/useBackendAPI";
+import { Alert, AlertTitle } from "@mui/material";
 
 interface Props<T extends GridValidRowModel> extends Partial<DataGridProps<T>> {
     dataEndpoint: string | null;
@@ -17,7 +18,21 @@ const DataTable = <T extends GridValidRowModel>({
     schema,
     ...dataGridProps
 }: Props<T>) => {
-    const { data, isLoading } = useBackendAPI<T[]>(dataEndpoint);
+    const { data, isLoading, error } = useBackendAPI<T[]>(dataEndpoint);
+
+    if (error) {
+        console.error(error);
+        return (
+            <Alert>
+                <AlertTitle>Błąd przy pobieraniu danych</AlertTitle>
+                <p>
+                    {error.message}
+                    <small>{error.name}</small>
+                </p>
+            </Alert>
+        );
+    }
+    
     return (
         <DataGrid<T>
             loading={isLoading}
