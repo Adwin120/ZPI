@@ -1,4 +1,4 @@
-import { Button, TextField } from "@mui/material";
+import { Box, Button, TextField } from "@mui/material";
 import React, { useCallback, useState } from "react";
 import FormDialog from "./FormDialog";
 import DataTable from "./DataTable";
@@ -10,16 +10,17 @@ const MockForms: React.FC<Props> = () => {
 
     return (
         <>
-            <Button onClick={() => setActiveFormId(1)} variant="outlined">
-                Dodaj klienta
-            </Button>
-            <Button onClick={() => setActiveFormId(2)} variant="outlined">
-                Dodaj pracownika
-            </Button>
-            <Button onClick={() => setActiveFormId(3)} variant="outlined">
-                Dodaj żądanie
-            </Button>
-
+            <Box sx={{ p: 2 }}>
+                <Button onClick={() => setActiveFormId(1)} variant="outlined">
+                    Dodaj klienta
+                </Button>
+                <Button onClick={() => setActiveFormId(2)} variant="outlined">
+                    Dodaj pracownika
+                </Button>
+                <Button onClick={() => setActiveFormId(3)} variant="outlined">
+                    Dodaj żądanie
+                </Button>
+            </Box>
             <FormDialog
                 open={activeFormId === 1}
                 onClose={closeDialog}
@@ -106,10 +107,8 @@ const MockForms: React.FC<Props> = () => {
                 <TextField name="opis" label="Opis" multiline minRows={2} />
                 <TextField name="status" label="Status" />
             </FormDialog>
-            <DataTable
-                dataEndpoint={null}
-                schema={[]}
-            />
+
+            <DataTable dataEndpoint={null} schema={[]} />
         </>
     );
 };

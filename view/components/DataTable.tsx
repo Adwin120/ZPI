@@ -27,6 +27,7 @@ const DataTable = <T extends GridValidRowModel>({
             slots={{
                 toolbar: GridToolbar,
             }}
+            slotProps={{ toolbar: { printOptions: { disableToolbarButton: true } } }}
             {...dataGridProps}
         />
     );
