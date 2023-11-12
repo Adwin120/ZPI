@@ -1,6 +1,6 @@
 import request from "supertest";
 
-import app from "./index";
+import app from "./app";
 
 describe("Dodawanie Żądania - Testy", () => {
 
