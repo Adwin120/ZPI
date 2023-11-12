@@ -1,4 +1,5 @@
 import React from "react";
+
 import {
     DataGrid,
     GridValidRowModel,
@@ -6,19 +7,20 @@ import {
     type GridColDef,
     type DataGridProps,
 } from "@mui/x-data-grid";
+
 import useBackendAPI from "../hooks/useBackendAPI";
 import { Alert, AlertTitle } from "@mui/material";
 
-interface Props<T extends GridValidRowModel> extends Partial<DataGridProps<T>> {
+interface Props<Row extends GridValidRowModel> extends Partial<DataGridProps<Row>> {
     dataEndpoint: string | null;
-    schema: GridColDef<T>[];
+    schema: GridColDef<Row>[];
 }
-const DataTable = <T extends GridValidRowModel>({
+const DataTable = <Row extends GridValidRowModel>({
     dataEndpoint,
     schema,
     ...dataGridProps
-}: Props<T>) => {
-    const { data, isLoading, error } = useBackendAPI<T[]>(dataEndpoint);
+}: Props<Row>) => {
+    const { data, isLoading, error } = useBackendAPI<Row[]>(dataEndpoint);
 
     if (error) {
         console.error(error);
@@ -32,9 +34,9 @@ const DataTable = <T extends GridValidRowModel>({
             </Alert>
         );
     }
-    
+
     return (
-        <DataGrid<T>
+        <DataGrid<Row>
             loading={isLoading}
             columns={schema}
             rows={data ?? []}
