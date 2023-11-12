@@ -17,8 +17,6 @@ const connection = await mysql.createConnection({
         ca: process.env["DB_SSL_CA"],
         cert: process.env["DB_SSL_CERT"],
         key: process.env["DB_SSL_KEY"],
-        //TODO: dodatkowa konfiguracja serwera DB może być niezbędna żeby to usunąć
-        rejectUnauthorized: false
     }
 });
 console.log("connected to DB")
