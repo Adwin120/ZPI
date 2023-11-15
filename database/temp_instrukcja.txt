@@ -12,6 +12,6 @@ b)Bill Gates:
 
 note: domyślnie hasło root to: K0chamTesty
 1. uruchomić " docker-compose up -d " w folderze database
-2. budowanie bazy przez "mysql -h 127.0.0.1 -P 3306 -u root < zpi_db.sql	(też w tym folderze)
-3. ogólnie wrzucanie skryptów na serwer przez: "mysql -h 127.0.0.1 -P 3306 -u root < "nazwa pliku albo sciezka"	(też w tym folderze)
-4. łączenie i praca przez kod na ip 127.0.0.1 , albo przez cmd dalej: " mysql -h 127.0.0.1 -P 3306 -u root " i potem "USE db_main"
+2. budowanie bazy przez "mysql -h 127.0.0.1 -p 3306 -u root < zpi_db.sql	(też w tym folderze)
+3. ogólnie wrzucanie skryptów na serwer przez: "mysql -h 127.0.0.1 -p 3306 -u root < "nazwa pliku albo sciezka"	(też w tym folderze)
+4. łączenie i praca przez kod na ip 127.0.0.1 , albo przez cmd dalej: " mysql -h 127.0.0.1 -p 3306 -u root " i potem "USE db_main"
