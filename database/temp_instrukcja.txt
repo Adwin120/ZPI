@@ -1,3 +1,17 @@
+Wymagane zainstalowanie i uruchomienie Dockera https://www.docker.com/products/docker-desktop/
+	oraz mysql client
+	
+Instrukcja instalacji mysql client:
+a)Mac:
+	-wpisz w terminalu "brew install mysql"
+b)Bill Gates:
+	-pobierz i zainstaluj https://dev.mysql.com/downloads/shell/ (8.0 starczy)
+	-napraw PATH bo pewnie się nie wpisze: set path=%PATH%;C:\Program Files\MySQL\MySQL Shell 8.0\bin; 	
+		(wrzuciłem domyślną ścieżkę ale możecie mieć inną jak zmienicie w instalce)
+		sprawdź czy działa wpisując "mysql" w cmd, jak pisze cokolwiek innego niż "mysql is not recognised as an internal or external 			command,operable program or batch" to jest git, jak nie to restart cmd/restart systemu/reinstall mysql/sprawdź czy nie masz innej 		instalki mysql zainstalowanej
+
+note: domyślnie hasło root to: K0chamTesty
 1. uruchomić " docker-compose up -d " w folderze database
-2. budowanie bazy przez "mysql -h 127.0.0.1 -P 3306 -u root < (ściezka do /database/zpi_db.sql) "
-3. łączenie przez " mysql -h 127.0.0.1 -P 3306 -u root " i potem "USE db_main"
+2. budowanie bazy przez "mysql -h 127.0.0.1 -P 3306 -u root < zpi_db.sql	(też w tym folderze)
+3. ogólnie wrzucanie skryptów na serwer przez: "mysql -h 127.0.0.1 -P 3306 -u root < "nazwa pliku albo sciezka"	(też w tym folderze)
+4. łączenie i praca przez kod na ip 127.0.0.1 , albo przez cmd dalej: " mysql -h 127.0.0.1 -P 3306 -u root " i potem "USE db_main"
