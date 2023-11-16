@@ -13,11 +13,11 @@
   },
   "targets": {
     "frontend": {
-      "source": "./view/index.html",
+      "source": "./src/view/index.html",
       "context": "browser"
     },
     "backend": {
-      "source": "./server/index.ts",
+      "source": "./src/server/index.ts",
       "context": "node",
       "outputFormat": "esmodule",
       "isLibrary": true
