@@ -2,7 +2,7 @@ import { Button, TextField } from "@mui/material";
 import React, { useCallback, useState } from "react";
 import FormDialog from "./FormDialog";
 import { postToEndpoint } from "../backendAccess";
-import { klientSchema } from "../../../common/klientSchema";
+import { klientSchema } from "../../common/klientSchema";
 import FormTextField from "./FormTextField";
 
 interface Props {}

@@ -2,7 +2,7 @@ import express, { Request, Response } from "express";
 import { body, validationResult } from "express-validator";
 import bodyParser from "body-parser";
 import { validateBody } from "../common/zodHelpers";
-import { klientSchema } from "../common/klientSchema";
+import { KlientPayload, klientSchema } from "../common/klientSchema";
 
 const app = express();
 
@@ -15,7 +15,8 @@ app.post(
     "/Klient",
     validateBody(klientSchema),
     (req: Request, res: Response) => {
-        console.log("Dane z formularza dla klienta:", req.body);
+        const body = req.body as KlientPayload;
+        console.log("Dane z formularza dla klienta:", body);
         res.status(200).send("Dane z formularza dla klienta zostały odebrane");
     }
 );
