@@ -1,6 +1,6 @@
 import { Button, TextField } from "@mui/material";
 import React, { useCallback, useState } from "react";
-import FormDialog from "./FormDialog";
+import FormDialog from "../FormDialog";
 
 interface Props {}
 const MockForms: React.FC<Props> = () => {

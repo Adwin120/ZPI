@@ -1,5 +1,5 @@
 import { createTheme } from "@mui/material";
-import { grey, lightGreen } from "@mui/material/colors";
+import { blue, deepPurple, green, grey, lightGreen } from "@mui/material/colors";
 import { plPL } from "@mui/material/locale";
 
 const theme = createTheme(
@@ -7,10 +7,10 @@ const theme = createTheme(
         palette: {
             // mode: 'dark',
             primary: {
-                main: grey[600],
+                main: green[800],
             },
             secondary: {
-                main: lightGreen["A400"],
+                main: deepPurple[400],
             },
             text: {
                 primary: "rgba(0,0,0,0.97)",
