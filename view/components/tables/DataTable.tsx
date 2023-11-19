@@ -8,7 +8,7 @@ import {
     type DataGridProps,
 } from "@mui/x-data-grid";
 
-import useBackendAPI from "../hooks/useBackendAPI";
+import useBackendAPI from "../../hooks/useBackendAPI";
 import { Alert, AlertTitle } from "@mui/material";
 
 interface Props<Row extends GridValidRowModel> extends Partial<DataGridProps<Row>> {
@@ -44,7 +44,12 @@ const DataTable = <Row extends GridValidRowModel>({
             slots={{
                 toolbar: GridToolbar,
             }}
-            slotProps={{ toolbar: { printOptions: { disableToolbarButton: true } } }}
+            slotProps={{
+                toolbar: {
+                    printOptions: { hideToolbar: true, hideFooter: true },
+                    csvOptions: { fileName: dataEndpoint },
+                },
+            }}
             {...dataGridProps}
         />
     );

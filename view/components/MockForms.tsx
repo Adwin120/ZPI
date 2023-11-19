@@ -1,7 +1,8 @@
 import { Box, Button, TextField } from "@mui/material";
 import React, { useCallback, useState } from "react";
 import FormDialog from "./FormDialog";
-import DataTable from "./DataTable";
+import DataTable from "./tables/DataTable";
+import { KlientColumnDef } from "./tables/KlientColumnDef";
 
 interface Props {}
 const MockForms: React.FC<Props> = () => {
@@ -108,7 +109,7 @@ const MockForms: React.FC<Props> = () => {
                 <TextField name="status" label="Status" />
             </FormDialog>
 
-            <DataTable dataEndpoint={null} schema={[]} />
+            <DataTable dataEndpoint="Klient" schema={KlientColumnDef} />
         </>
     );
 };
