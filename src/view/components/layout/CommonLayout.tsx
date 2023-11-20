@@ -23,8 +23,8 @@ interface Props extends PropsWithChildren {
     pageTitle: string;
 }
 const CommonLayout: React.FC<Props> = ({ children, pageTitle }) => {
-    const [isDrawerOpen, setDrawerOpen] = useState<boolean>(true);
     const isDesktop = useMediaQuery((t: Theme) => t.breakpoints.up("md"));
+    const [isDrawerOpen, setDrawerOpen] = useState<boolean>(isDesktop);
 
     return (
         <>

@@ -1,8 +1,6 @@
-
-
 import mysql from "mysql2/promise";
 
-import dotenv from 'dotenv'
+import dotenv from "dotenv";
 import app from "./app";
 dotenv.config();
 
@@ -17,15 +15,12 @@ const connection = await mysql.createConnection({
         ca: process.env["DB_SSL_CA"],
         cert: process.env["DB_SSL_CERT"],
         key: process.env["DB_SSL_KEY"],
-        rejectUnauthorized: false
-    }
+    },
 });
-console.log("connected to DB")
+console.log("connected to DB");
 
 const x = await connection.query("SELECT * FROM Auto");
-console.log(x)
-
-
+console.log(x);
 
 app.listen(port, () => {
     console.log(`express listening on port ${port}`);

@@ -9,15 +9,16 @@
     "dev": "concurrently \"parcel watch\" \"nodemon dist/backend/index.js\"",
     "start": "node dist/backend/index.js",
     "lint": "eslint .",
-    "test": "node --experimental-vm-modules --no-warnings node_modules/jest/bin/jest.js"
+    "test": "node --experimental-vm-modules --no-warnings node_modules/jest/bin/jest.js",
+    "test:watch": "node --experimental-vm-modules --no-warnings node_modules/jest/bin/jest.js --watch"
   },
   "targets": {
     "frontend": {
-      "source": "./view/index.html",
+      "source": "./src/view/index.html",
       "context": "browser"
     },
     "backend": {
-      "source": "./server/index.ts",
+      "source": "./src/server/index.ts",
       "context": "node",
       "outputFormat": "esmodule",
       "isLibrary": true
@@ -55,6 +56,7 @@
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
     "@mui/icons-material": "^5.14.18",
+    "@hookform/resolvers": "^3.3.2",
     "@mui/material": "^5.14.15",
     "body-parser": "^1.20.2",
     "dotenv": "^16.3.1",
@@ -63,6 +65,8 @@
     "mysql2": "^3.6.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "swr": "^2.2.4"
+    "react-hook-form": "^7.48.2",
+    "swr": "^2.2.4",
+    "zod": "^3.22.4"
   }
 }
