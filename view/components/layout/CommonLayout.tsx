@@ -35,17 +35,16 @@ const CommonLayout: React.FC<Props> = ({ children, pageTitle }) => {
                         contentMovedByDrawer(isDrawerOpen && isDesktop),
                     ]}
                 >
-                    {isDrawerOpen ? (
-                        <div />
-                    ) : (
-                        <IconButton
-                            aria-label="Open menu"
-                            color="inherit"
-                            onClick={() => setDrawerOpen(true)}
-                        >
-                            <MenuIcon />
-                        </IconButton>
-                    )}
+                    <IconButton
+                        aria-label="Open menu"
+                        color="inherit"
+                        hidden={isDrawerOpen}
+                        sx={{ visibility: isDrawerOpen ? "hidden" : "visible" }}
+                        onClick={() => setDrawerOpen(true)}
+                    >
+                        <MenuIcon />
+                    </IconButton>
+
                     <Typography variant="h4" component="h1">
                         {pageTitle}
                     </Typography>
