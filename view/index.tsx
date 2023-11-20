@@ -2,7 +2,7 @@ import React from "react";
 import { createRoot } from "react-dom/client";
 import MockForms from "./components/layout/MockForms";
 import { CssBaseline, ThemeProvider } from "@mui/material";
-import theme from "./theme";
+import theme from "./styles/theme";
 import CommonLayout from "./components/layout/CommonLayout";
 
 const reactContainer = document.getElementById("react-app")!;

@@ -15,6 +15,7 @@ import React, { PropsWithChildren, useState } from "react";
 import MenuIcon from "@mui/icons-material/Menu";
 import UserInfo from "./UserInfo";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
+import contentMovedByDrawer from "../../styles/contentMovedByDrawer";
 
 interface Props extends PropsWithChildren {
     pageTitle: string;
@@ -24,15 +25,26 @@ const CommonLayout: React.FC<Props> = ({ children, pageTitle }) => {
     return (
         <>
             <AppBar position="sticky">
-                <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
-                    <IconButton
-                        aria-label="Open menu"
-                        color="inherit"
-                        onClick={() => setDrawerOpen(true)}
-                    >
-                        <MenuIcon />
-                    </IconButton>
-                    <Typography variant="h4" component="h1">{pageTitle}</Typography>
+                <Toolbar
+                    sx={[
+                        { display: "flex", justifyContent: "space-between" },
+                        contentMovedByDrawer(isDrawerOpen),
+                    ]}
+                >
+                    {isDrawerOpen ? (
+                        <div />
+                    ) : (
+                        <IconButton
+                            aria-label="Open menu"
+                            color="inherit"
+                            onClick={() => setDrawerOpen(true)}
+                        >
+                            <MenuIcon />
+                        </IconButton>
+                    )}
+                    <Typography variant="h4" component="h1">
+                        {pageTitle}
+                    </Typography>
                     <UserInfo />
                 </Toolbar>
             </AppBar>
@@ -40,7 +52,7 @@ const CommonLayout: React.FC<Props> = ({ children, pageTitle }) => {
                 open={isDrawerOpen}
                 variant="persistent"
                 anchor="left"
-                PaperProps={{ sx: { minWidth: "200px" } }}
+                PaperProps={{ sx: (t) => ({ width: t.dimensions["drawerWidth"] }) }}
             >
                 <Toolbar sx={{ display: "flex", justifyContent: "end" }}>
                     <IconButton aria-label="Close menu" onClick={() => setDrawerOpen(false)}>
@@ -54,7 +66,7 @@ const CommonLayout: React.FC<Props> = ({ children, pageTitle }) => {
                     <NavigationListItem>Figi z makiem</NavigationListItem>
                 </List>
             </Drawer>
-            <Box component="main" sx={{ p: 2 }}>
+            <Box component="main" sx={[{ p: 2 }, contentMovedByDrawer(isDrawerOpen)]}>
                 {children}
             </Box>
         </>
