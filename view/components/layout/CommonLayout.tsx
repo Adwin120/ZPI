@@ -8,8 +8,10 @@ import {
     ListItem,
     ListItemButton,
     ListItemText,
+    Theme,
     Toolbar,
     Typography,
+    useMediaQuery,
 } from "@mui/material";
 import React, { PropsWithChildren, useState } from "react";
 import MenuIcon from "@mui/icons-material/Menu";
@@ -22,13 +24,15 @@ interface Props extends PropsWithChildren {
 }
 const CommonLayout: React.FC<Props> = ({ children, pageTitle }) => {
     const [isDrawerOpen, setDrawerOpen] = useState<boolean>(true);
+    const isDesktop = useMediaQuery((t: Theme) => t.breakpoints.up("md"));
+
     return (
         <>
             <AppBar position="sticky">
                 <Toolbar
                     sx={[
                         { display: "flex", justifyContent: "space-between" },
-                        contentMovedByDrawer(isDrawerOpen),
+                        contentMovedByDrawer(isDrawerOpen && isDesktop),
                     ]}
                 >
                     {isDrawerOpen ? (
@@ -50,8 +54,9 @@ const CommonLayout: React.FC<Props> = ({ children, pageTitle }) => {
             </AppBar>
             <Drawer
                 open={isDrawerOpen}
-                variant="persistent"
+                variant={isDesktop ? "persistent" : "temporary"}
                 anchor="left"
+                onClose={() => setDrawerOpen(false)}
                 PaperProps={{ sx: (t) => ({ width: t.dimensions["drawerWidth"] }) }}
             >
                 <Toolbar sx={{ display: "flex", justifyContent: "end" }}>
@@ -66,7 +71,7 @@ const CommonLayout: React.FC<Props> = ({ children, pageTitle }) => {
                     <NavigationListItem>Figi z makiem</NavigationListItem>
                 </List>
             </Drawer>
-            <Box component="main" sx={[{ p: 2 }, contentMovedByDrawer(isDrawerOpen)]}>
+            <Box component="main" sx={[{ p: 2 }, contentMovedByDrawer(isDrawerOpen && isDesktop)]}>
                 {children}
             </Box>
         </>
@@ -74,6 +79,7 @@ const CommonLayout: React.FC<Props> = ({ children, pageTitle }) => {
 };
 
 function NavigationListItem({ children }: PropsWithChildren) {
+    //TODO: highlight the selected element
     return (
         <ListItem disablePadding>
             <ListItemButton>

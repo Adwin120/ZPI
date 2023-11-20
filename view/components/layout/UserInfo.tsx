@@ -13,7 +13,7 @@ const UserInfo: React.FC<Props> = () => {
 
     return (
         <Stack direction="row" alignItems="center" spacing={1}>
-            <Typography variant="h5" noWrap component="div">
+            <Typography variant="h5" noWrap component="div" sx={{display: ["none", "block"]}}>
                 {user.displayName}
             </Typography>
             <Avatar
