@@ -1,18 +1,31 @@
-import express from "express";
 
-const app = express();
+
+import mysql from "mysql2/promise";
+
+import dotenv from 'dotenv'
+import app from "./app";
+dotenv.config();
+
 const port = 3000;
 
-// serving the react app on "/"
-app.use(express.static("dist/frontend"));
-
-// delete after making a minimum working server, this just makes sure the basics work
-app.get("/ping", (_, res) => {
-    res.send("pong");
+const connection = await mysql.createConnection({
+    host: process.env["DB_HOST"],
+    user: process.env["DB_USER"],
+    password: process.env["DB_PASSWORD"],
+    database: process.env["DB_NAME"],
+    ssl: {
+        ca: process.env["DB_SSL_CA"],
+        cert: process.env["DB_SSL_CERT"],
+        key: process.env["DB_SSL_KEY"],
+    }
 });
+console.log("connected to DB")
+
+const x = await connection.query("SELECT * FROM Auto");
+console.log(x)
+
+
 
 app.listen(port, () => {
     console.log(`express listening on port ${port}`);
 });
-
-export default app;
