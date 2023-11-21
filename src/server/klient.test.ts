@@ -2,7 +2,7 @@ import request from "supertest";
 
 import app from "./app";
 import { KlientPayload } from "../common/klientSchema";
-import { FieldValidationError, ValidationErrorBody } from "../common/zodHelpers";
+import { FieldValidationError, ValidationErrorBody } from "./middleware/zodValidation";
 
 describe("Dodawanie Klienta - Testy", () => {
     it("powinno przetworzyć poprawne dane", async () => {

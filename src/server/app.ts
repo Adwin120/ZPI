@@ -1,8 +1,9 @@
 import express, { Request, Response } from "express";
 import { body, validationResult } from "express-validator";
 import bodyParser from "body-parser";
-import { validateBody } from "../common/zodHelpers";
+import { validateBody } from "./middleware/zodValidation";
 import { KlientPayload, klientSchema } from "../common/klientSchema";
+import { getUserData } from "./middleware/firebaseAuth";
 
 const app = express();
 
@@ -11,15 +12,15 @@ app.use(express.static("dist/frontend"));
 // app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-app.post(
-    "/Klient",
-    validateBody(klientSchema),
-    (req: Request, res: Response) => {
-        const body = req.body as KlientPayload;
-        console.log("Dane z formularza dla klienta:", body);
-        res.status(200).send("Dane z formularza dla klienta zostały odebrane");
-    }
-);
+app.post("/Klient", validateBody(klientSchema), (req: Request, res: Response) => {
+    const body = req.body as KlientPayload;
+    console.log("Dane z formularza dla klienta:", body);
+
+    const user = getUserData(res);
+    console.log("user:", user);
+    
+    res.status(200).send("Dane z formularza dla klienta zostały odebrane");
+});
 
 app.post(
     "/Pracownik",
