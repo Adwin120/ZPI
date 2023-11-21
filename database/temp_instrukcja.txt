@@ -6,14 +6,16 @@ a)Mac:
 	-wpisz w terminalu "brew install mysql"
 b)Bill Gates:
 	-pobierz i zainstaluj https://dev.mysql.com/downloads/shell/ (8.0 starczy)
-	-napraw PATH bo pewnie się nie wpisze: set path=%PATH%;C:\Program Files\MySQL\MySQL Shell 8.0\bin; 	
+	-napraw PATH bo pewnie się nie wpisze "set path=%PATH%;C:\Program Files\MySQL\MySQL Shell 8.0\bin;" 	
 		(wrzuciłem domyślną ścieżkę ale możecie mieć inną jak zmienicie w instalce)
-		sprawdź czy działa wpisując "mysql" w cmd, jak pisze cokolwiek innego niż "mysql is not recognised as an internal or external 			command,operable program or batch" to jest git, jak nie to restart cmd/restart systemu/reinstall mysql/sprawdź czy nie masz innej 		instalki mysql zainstalowanej
+		sprawdź czy działa wpisując "mysql" w cmd, jak pisze cokolwiek innego niż "mysql is not recognised as an internal or external 			
+		command,operable program or batch" to jest git, jak nie to restart cmd/restart systemu/reinstall mysql/sprawdź czy nie masz innej 		
+		instalki mysql zainstalowanej
 
 note: domyślnie hasło root to: K0chamTesty
 note2: skrypt StartTestEnv uruchamia pierwsze 3 punkty automatycznie
 
 1. uruchomić " docker-compose up -d " w folderze database
-2. budowanie bazy przez "mysql -h 127.0.0.1 -pK0chamTesty -u root < zpi_db.sql	(też w tym folderze)
-3. ogólnie wrzucanie skryptów na serwer przez: "mysql -h 127.0.0.1 -pK0chamTesty -u root < "nazwa pliku albo sciezka"	(też w tym folderze)
-4. łączenie i praca przez kod na ip 127.0.0.1 , albo przez cmd dalej: " mysql -h 127.0.0.1 -pK0chamTesty -u root db_main"
+2. budowanie bazy przez "mysql -hlocalhost -pK0chamTesty -u root < create_database.sql	(też w tym folderze)
+3. ogólnie wrzucanie skryptów na serwer przez: "mysql -hlocalhost -pK0chamTesty -u root < "nazwa pliku albo sciezka"	(też w tym folderze)
+4. łączenie i praca przez kod na ip 127.0.0.1 lub localhost , albo przez cmd dalej: " mysql -hlocalhost -pK0chamTesty -u root db_main"
