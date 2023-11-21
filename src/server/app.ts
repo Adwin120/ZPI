@@ -1,36 +1,23 @@
 import express, { Request, Response } from "express";
 import { body, validationResult } from "express-validator";
 import bodyParser from "body-parser";
+import { validateBody } from "../common/zodHelpers";
+import { KlientPayload, klientSchema } from "../common/klientSchema";
 
 const app = express();
 
 // serving the react app on "/"
 app.use(express.static("dist/frontend"));
-app.use(bodyParser.urlencoded({ extended: true }));
+// app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 app.post(
     "/Klient",
-    [
-        body("nazwa").notEmpty().withMessage("Nazwa jest wymagana."),
-        body("email")
-            .matches(/^[^@\s]+@[^@\s\.]+\.[^@\.\s]+$/)
-            .withMessage("Niepoprawny format adresu e-mail."),
-        body("adres").notEmpty().withMessage("Adres jest wymagany."),
-        body("nip")
-            .matches(/^\d{10}$/)
-            .withMessage("NIP musi mieć 10 cyfr."),
-        body("telefon")
-            .matches(/^\d{9}$/)
-            .withMessage("Telefon musi mieć 9 cyfr."),
-    ],
+    validateBody(klientSchema),
     (req: Request, res: Response) => {
-        const errors = validationResult(req);
-        if (!errors.isEmpty()) {
-            res.status(400).json({ errors: errors.array() });
-        }
-        console.log("Dane z formularza dla klienta:", req.body);
-        res.send("Dane z formularza dla klienta zostały odebrane");
+        const body = req.body as KlientPayload;
+        console.log("Dane z formularza dla klienta:", body);
+        res.status(200).send("Dane z formularza dla klienta zostały odebrane");
     }
 );
 

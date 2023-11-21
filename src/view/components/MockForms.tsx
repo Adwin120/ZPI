@@ -1,6 +1,9 @@
 import { Button, TextField } from "@mui/material";
 import React, { useCallback, useState } from "react";
 import FormDialog from "./FormDialog";
+import { postToEndpoint } from "../backendAccess";
+import { klientSchema } from "../../common/klientSchema";
+import FormTextField from "./FormTextField";
 
 interface Props {}
 const MockForms: React.FC<Props> = () => {
@@ -22,32 +25,29 @@ const MockForms: React.FC<Props> = () => {
             <FormDialog
                 open={activeFormId === 1}
                 onClose={closeDialog}
-                submitEndpoint="Klient"
-                title="formularz 1"
+                schema={klientSchema}
+                onSubmit={postToEndpoint("Klient", console.log)}
+                title="Dodaj klienta"
             >
-                <TextField name="nazwa" label="Nazwa" required />
-                <TextField type="email" name="email" label="E-mail" required />
-                <TextField name="adres" label="Adres" required />
-                <TextField 
-                    name="nip" 
-                    label="NIP" 
-                    required 
-                    inputProps={{
-                        pattern: "^[0-9]{10}$"
-                    }}
-                    helperText="Numer musi mieć dokładnie 10 cyfr" />
-                <TextField 
-                    type="tel" 
-                    name="telefon" 
-                    label="Telefon" 
-                    required 
-                    inputProps={{
-                        pattern: "^[0-9]{9}$"
-                    }}
-                    helperText="Numer musi mieć dokładnie 9 cyfr" />
+                <FormTextField name="nazwa" label="Nazwa" required />
+                <FormTextField type="email" name="email" label="E-mail" required />
+                <FormTextField name="adres" label="Adres" required />
+                <FormTextField
+                    name="nip"
+                    label="NIP"
+                    required
+                    helperText="Numer musi mieć dokładnie 10 cyfr"
+                />
+                <FormTextField
+                    type="tel"
+                    name="telefon"
+                    label="Telefon"
+                    required
+                    helperText="Numer musi mieć dokładnie 9 cyfr"
+                />
             </FormDialog>
 
-            <FormDialog
+            {/* <FormDialog
                 open={activeFormId === 2}
                 onClose={closeDialog}
                 submitEndpoint="Pracownik"
@@ -75,12 +75,12 @@ const MockForms: React.FC<Props> = () => {
                         pattern: "^[0-9]{9}$"
                     }}
                     helperText="Numer musi mieć dokładnie 9 cyfr" />
-            </FormDialog>
+            </FormDialog> */}
 
-            <FormDialog
+            {/* <FormDialog
                 open={activeFormId === 3}
                 onClose={closeDialog}
-                submitEndpoint="Zadanie"
+                onSubmit={postToEndpoint("Zadanie")}
                 title="formularz 3"
             >
                 <TextField 
@@ -101,7 +101,7 @@ const MockForms: React.FC<Props> = () => {
                 />
                 <TextField name="opis" label="Opis" multiline minRows={2} />
                 <TextField name="status" label="Status" />
-            </FormDialog>
+            </FormDialog> */}
         </>
     );
 };
