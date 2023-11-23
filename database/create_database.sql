@@ -27,7 +27,7 @@ USE `db_main` ;
 DROP TABLE IF EXISTS `db_main`.`Klient` ;
 
 CREATE TABLE IF NOT EXISTS `db_main`.`Klient` (
-  `IdKlient` INT NOT NULL,
+  `IdKlient` INT NOT NULL AUTO_INCREMENT,
   `Adres` VARCHAR(45) NULL DEFAULT NULL,
   `Email` VARCHAR(45) NULL DEFAULT NULL,
   `Nazwa` VARCHAR(45) NULL DEFAULT NULL,
@@ -44,7 +44,7 @@ DEFAULT CHARACTER SET = utf8mb3;
 DROP TABLE IF EXISTS `db_main`.`Model` ;
 
 CREATE TABLE IF NOT EXISTS `db_main`.`Model` (
-  `IdModel` INT NOT NULL,
+  `IdModel` INT NOT NULL AUTO_INCREMENT,
   `Marka` VARCHAR(45) NULL DEFAULT NULL,
   `Model` VARCHAR(45) NULL DEFAULT NULL,
   PRIMARY KEY (`IdModel`))
@@ -58,7 +58,7 @@ DEFAULT CHARACTER SET = utf8mb3;
 DROP TABLE IF EXISTS `db_main`.`Auto` ;
 
 CREATE TABLE IF NOT EXISTS `db_main`.`Auto` (
-  `IdAuto` INT NOT NULL,
+  `IdAuto` INT NOT NULL AUTO_INCREMENT,
   `Model_IdModel` INT NOT NULL,
   `Klient_IdKlient` INT NOT NULL,
   `Rejestracja` VARCHAR(20) NULL DEFAULT NULL,
@@ -84,7 +84,7 @@ DEFAULT CHARACTER SET = utf8mb3;
 DROP TABLE IF EXISTS `db_main`.`Pracownik` ;
 
 CREATE TABLE IF NOT EXISTS `db_main`.`Pracownik` (
-  `IdPracownik` INT NOT NULL,
+  `IdPracownik` INT NOT NULL AUTO_INCREMENT,
   `Email` VARCHAR(45) NULL DEFAULT NULL,
   `Imie` VARCHAR(45) NULL DEFAULT NULL,
   `Nazwisko` VARCHAR(45) NULL DEFAULT NULL,
@@ -121,7 +121,7 @@ DEFAULT CHARACTER SET = utf8mb3;
 DROP TABLE IF EXISTS `db_main`.`Usluga` ;
 
 CREATE TABLE IF NOT EXISTS `db_main`.`Usluga` (
-  `IdUsluga` INT NOT NULL,
+  `IdUsluga` INT NOT NULL AUTO_INCREMENT,
   `Opis` VARCHAR(150) NULL DEFAULT NULL,
   `Nazwa` VARCHAR(45) NULL DEFAULT NULL,
   PRIMARY KEY (`IdUsluga`))
@@ -156,7 +156,7 @@ DEFAULT CHARACTER SET = utf8mb3;
 DROP TABLE IF EXISTS `db_main`.`Grafik` ;
 
 CREATE TABLE IF NOT EXISTS `db_main`.`Grafik` (
-  `IdGrafik` INT NOT NULL,
+  `IdGrafik` INT NOT NULL AUTO_INCREMENT,
   `Pracownik_IdPracownik` INT NOT NULL,
   `Klient_IdKlient` INT NOT NULL,
   `Czas_rozpoczecia` TIMESTAMP NULL DEFAULT NULL,
@@ -178,7 +178,7 @@ DEFAULT CHARACTER SET = utf8mb3;
 DROP TABLE IF EXISTS `db_main`.`Umowa` ;
 
 CREATE TABLE IF NOT EXISTS `db_main`.`Umowa` (
-  `IdUmowa` INT NOT NULL,
+  `IdUmowa` INT NOT NULL AUTO_INCREMENT,
   `Klient_IdKlient` INT NOT NULL,
   `Data_rozpoczecia` DATE NULL DEFAULT NULL,
   `Data_zakonczenia` DATE NULL DEFAULT NULL,
@@ -219,7 +219,7 @@ DEFAULT CHARACTER SET = utf8mb3;
 DROP TABLE IF EXISTS `db_main`.`Zgloszenie` ;
 
 CREATE TABLE IF NOT EXISTS `db_main`.`Zgloszenie` (
-  `IdZgloszenie` INT NOT NULL,
+  `IdZgloszenie` INT NOT NULL AUTO_INCREMENT,
   `Pracownik_IdPracownik` INT NOT NULL,
   `Klient_IdKlient` INT NOT NULL,
   `Opis` VARCHAR(150) NULL DEFAULT NULL,

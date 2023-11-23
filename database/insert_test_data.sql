@@ -1,188 +1,193 @@
-INSERT INTO `db_main`.`Klient` (`IdKlient`, `Adres`, `Email`, `Nazwa`, `NIP`, `Telefon`) 
+INSERT INTO `db_main`.`Klient` (`Adres`, `Email`, `Nazwa`, `NIP`, `Telefon`) 
 VALUES 
-(1, 'ul. Auto-Moto 1, 00-001 Warszawa', 'warszawa.auto@example.com', 'Auto-Moto Warszawa', '1234567890', '+48 123 456 789'),
-(2, 'ul. CarWorld 2, 11-002 Kraków', 'carworld.krakow@example.com', 'CarWorld Kraków', '0987654321', '+48 987 654 321'),
-(3, 'ul. Motoplaza 3, 22-003 Wroclaw', 'motoplaza.wroclaw@example.com', 'Motoplaza Wroclaw', '3456789012', '+48 345 678 901'),
-(4, 'ul. AutoExpress 4, 33-004 Gdańsk', 'autoexpress.gdansk@example.com', 'AutoExpress Gdańsk', '2345678901', '+48 234 567 890'),
-(5, 'ul. SpeedCars 5, 44-005 lódź', 'speedcars.lodz@example.com', 'SpeedCars lódź', '5678901234', '+48 567 890 123'),
-(6, 'ul. MotorLine 6, 55-006 Poznań', 'motorline.poznan@example.com', 'MotorLine Poznań', '4567890123', '+48 456 789 012'),
-(7, 'ul. AutoDream 7, 66-007 Katowice', 'autodream.katowice@example.com', 'AutoDream Katowice', '7890123456', '+48 789 012 345'),
-(8, 'ul. CarZone 8, 77-008 Lublin', 'carzone.lublin@example.com', 'CarZone Lublin', '6789012345', '+48 678 901 234'),
-(9, 'ul. FastWheels 9, 88-009 Rzeszów', 'fastwheels.rzeszow@example.com', 'FastWheels Rzeszów', '8901234567', '+48 890 123 456'),
-(10, 'ul. AutoSpeed 10, 99-010 Bydgoszcz', 'autospeed.bydgoszcz@example.com', 'AutoSpeed Bydgoszcz', '4567123456', '+48 456 712 345');
+('ul. Auto-Moto 1, 00-001 Warszawa', 'warszawa.auto@example.com', 'Auto-Moto Warszawa', '1234567890', '+48 123 456 789'),
+('ul. CarWorld 2, 11-002 Kraków', 'carworld.krakow@example.com', 'CarWorld Kraków', '0987654321', '+48 987 654 321'),
+('ul. Motoplaza 3, 22-003 Wroclaw', 'motoplaza.wroclaw@example.com', 'Motoplaza Wroclaw', '3456789012', '+48 345 678 901'),
+('ul. AutoExpress 4, 33-004 Gdańsk', 'autoexpress.gdansk@example.com', 'AutoExpress Gdańsk', '2345678901', '+48 234 567 890'),
+('ul. SpeedCars 5, 44-005 lódź', 'speedcars.lodz@example.com', 'SpeedCars lódź', '5678901234', '+48 567 890 123'),
+('ul. MotorLine 6, 55-006 Poznań', 'motorline.poznan@example.com', 'MotorLine Poznań', '4567890123', '+48 456 789 012'),
+('ul. AutoDream 7, 66-007 Katowice', 'autodream.katowice@example.com', 'AutoDream Katowice', '7890123456', '+48 789 012 345'),
+('ul. CarZone 8, 77-008 Lublin', 'carzone.lublin@example.com', 'CarZone Lublin', '6789012345', '+48 678 901 234'),
+('ul. FastWheels 9, 88-009 Rzeszów', 'fastwheels.rzeszow@example.com', 'FastWheels Rzeszów', '8901234567', '+48 890 123 456'),
+('ul. AutoSpeed 10, 99-010 Bydgoszcz', 'autospeed.bydgoszcz@example.com', 'AutoSpeed Bydgoszcz', '4567123456', '+48 456 712 345');
 
 
-INSERT INTO `db_main`.`Model` (`IdModel`, `Marka`, `Model`)
+
+INSERT INTO `db_main`.`Model` (`Marka`, `Model`)
 VALUES
-(1, 'Ford', 'Escape'),
-(2, 'Ford', 'Mustang'),
-(3, 'Ford', 'Explorer'),
-(4, 'Ford', 'Edge'),
-(5, 'Ford', 'F-150'),
-(6, 'Ford', 'Fusion'),
-(7, 'Ford', 'Expedition'),
-(8, 'Volkswagen', 'Tiguan'),
-(9, 'Volkswagen', 'Jetta'),
-(10, 'Volkswagen', 'Atlas'),
-(11, 'Volkswagen', 'Passat'),
-(12, 'Volkswagen', 'Golf Alltrack'),
-(13, 'Volkswagen', 'Arteon'),
-(14, 'Volkswagen', 'Touareg'),
-(15, 'Toyota', 'Camry'),
-(16, 'Toyota', 'RAV4'),
-(17, 'Toyota', 'Corolla'),
-(18, 'Toyota', 'Highlander'),
-(19, 'Toyota', 'Tacoma'),
-(20, 'Toyota', 'Sienna'),
-(21, 'Toyota', 'Prius'),
-(22, 'Honda', 'Civic'),
-(23, 'Honda', 'CR-V'),
-(24, 'Honda', 'Pilot'),
-(25, 'Honda', 'Accord'),
-(26, 'Honda', 'Fit'),
-(27, 'Honda', 'HR-V'),
-(28, 'Honda', 'Insight'),
-(29, 'Chevrolet', 'Equinox'),
-(30, 'Chevrolet', 'Malibu'),
-(31, 'Chevrolet', 'Silverado'),
-(32, 'Chevrolet', 'Traverse'),
-(33, 'Chevrolet', 'Cruze'),
-(34, 'Chevrolet', 'Tahoe'),
-(35, 'Chevrolet', 'Impala'),
-(36, 'Ford', 'Ranger'),
-(37, 'Ford', 'Bronco'),
-(38, 'Ford', 'Escape Hybrid'),
-(39, 'Ford', 'Mustang Mach-E'),
-(40, 'Volkswagen', 'Golf SportWagen'),
-(41, 'Volkswagen', 'Jetta GLI'),
-(42, 'Volkswagen', 'Tiguan Allspace'),
-(43, 'Volkswagen', 'e-Golf'),
-(44, 'Toyota', 'Sienna Hybrid'),
-(45, 'Toyota', 'Tundra'),
-(46, 'Toyota', 'Prius Prime'),
-(47, 'Toyota', 'Avalon'),
-(48, 'Honda', 'Civic Type R'),
-(49, 'Honda', 'Passport'),
-(50, 'Honda', 'Fit Hybrid'),
-(51, 'Honda', 'CR-V Hybrid'),
-(52, 'Chevrolet', 'Trax'),
-(53, 'Chevrolet', 'Bolt EV'),
-(54, 'Chevrolet', 'Spark'),
-(55, 'Chevrolet', 'Trailblazer'),
-(56, 'Nissan', 'Rogue'),
-(57, 'Nissan', 'Sentra'),
-(58, 'Nissan', 'Murano'),
-(59, 'Nissan', 'Kicks'),
-(60, 'Kia', 'Soul'),
-(61, 'Kia', 'Seltos'),
-(62, 'Kia', 'Telluride'),
-(63, 'Kia', 'Cadenza'),
-(64, 'Mazda', 'MX-5 Miata'),
-(65, 'Mazda', 'CX-30'),
-(66, 'Mazda', 'CX-9'),
-(67, 'Mazda', 'Mazda6');
+('Ford', 'Escape'),
+('Ford', 'Mustang'),
+('Ford', 'Explorer'),
+('Ford', 'Edge'),
+('Ford', 'F-150'),
+('Ford', 'Fusion'),
+('Ford', 'Expedition'),
+('Volkswagen', 'Tiguan'),
+('Volkswagen', 'Jetta'),
+('Volkswagen', 'Atlas'),
+('Volkswagen', 'Passat'),
+('Volkswagen', 'Golf Alltrack'),
+('Volkswagen', 'Arteon'),
+('Volkswagen', 'Touareg'),
+('Toyota', 'Camry'),
+('Toyota', 'RAV4'),
+('Toyota', 'Corolla'),
+('Toyota', 'Highlander'),
+('Toyota', 'Tacoma'),
+('Toyota', 'Sienna'),
+('Toyota', 'Prius'),
+('Honda', 'Civic'),
+('Honda', 'CR-V'),
+('Honda', 'Pilot'),
+('Honda', 'Accord'),
+('Honda', 'Fit'),
+('Honda', 'HR-V'),
+('Honda', 'Insight'),
+('Chevrolet', 'Equinox'),
+('Chevrolet', 'Malibu'),
+('Chevrolet', 'Silverado'),
+('Chevrolet', 'Traverse'),
+('Chevrolet', 'Cruze'),
+('Chevrolet', 'Tahoe'),
+('Chevrolet', 'Impala'),
+('Ford', 'Ranger'),
+('Ford', 'Bronco'),
+('Ford', 'Escape Hybrid'),
+('Ford', 'Mustang Mach-E'),
+('Volkswagen', 'Golf SportWagen'),
+('Volkswagen', 'Jetta GLI'),
+('Volkswagen', 'Tiguan Allspace'),
+('Volkswagen', 'e-Golf'),
+('Toyota', 'Sienna Hybrid'),
+('Toyota', 'Tundra'),
+('Toyota', 'Prius Prime'),
+('Toyota', 'Avalon'),
+('Honda', 'Civic Type R'),
+('Honda', 'Passport'),
+('Honda', 'Fit Hybrid'),
+('Honda', 'CR-V Hybrid'),
+('Chevrolet', 'Trax'),
+('Chevrolet', 'Bolt EV'),
+('Chevrolet', 'Spark'),
+('Chevrolet', 'Trailblazer'),
+('Nissan', 'Rogue'),
+('Nissan', 'Sentra'),
+('Nissan', 'Murano'),
+('Nissan', 'Kicks'),
+('Kia', 'Soul'),
+('Kia', 'Seltos'),
+('Kia', 'Telluride'),
+('Kia', 'Cadenza'),
+('Mazda', 'MX-5 Miata'),
+('Mazda', 'CX-30'),
+('Mazda', 'CX-9'),
+('Mazda', 'Mazda6');
 
 
-INSERT INTO `db_main`.`Pracownik` (`IdPracownik`, `Email`, `Imie`, `Nazwisko`, `Telefon`)
+
+INSERT INTO `db_main`.`Pracownik` (`Email`, `Imie`, `Nazwisko`, `Telefon`)
 VALUES
-(1, 'jan.kowalski@example.com', 'Jan', 'Kowalski', '+48 123 456 789'),
-(2, 'anna.nowak@example.com', 'Anna', 'Nowak', '+48 987 654 321'),
-(3, 'marek.wisniewski@example.com', 'Marek', 'Wiśniewski', '+48 345 678 901'),
-(4, 'ewa.jankowska@example.com', 'Ewa', 'Jankowska', '+48 234 567 890'),
-(5, 'pawel.kaczmarek@example.com', 'Pawel', 'Kaczmarek', '+48 567 890 123'),
-(6, 'joanna.szmidt@example.com', 'Joanna', 'Szmidt', '+48 456 789 012'),
-(7, 'piotr.wolski@example.com', 'Piotr', 'Wolski', '+48 789 012 345'),
-(8, 'agnieszka.adamska@example.com', 'Agnieszka', 'Adamska', '+48 678 901 234'),
-(9, 'adam.nowicki@example.com', 'Adam', 'Nowicki', '+48 890 123 456'),
-(10, 'ewelina.mazur@example.com', 'Ewelina', 'Mazur', '+48 456 712 345'),
-(11, 'michal.kowalczyk@example.com', 'Michal', 'Kowalczyk', '+48 789 123 456'),
-(12, 'katarzyna.zajac@example.com', 'Katarzyna', 'Zając', '+48 567 234 567'),
-(13, 'tomasz.wrobel@example.com', 'Tomasz', 'Wróbel', '+48 234 678 901'),
-(14, 'patrycja.lewandowska@example.com', 'Patrycja', 'Lewandowska', '+48 901 345 678'),
-(15, 'piotr.kaczmarek@example.com', 'Piotr', 'Kaczmarek', '+48 678 456 789'),
-(16, 'agnieszka.adamczak@example.com', 'Agnieszka', 'Adamczak', '+48 567 567 890'),
-(17, 'damian.nowakowski@example.com', 'Damian', 'Nowakowski', '+48 456 678 901'),
-(18, 'julia.kowal@example.com', 'Julia', 'Kowal', '+48 345 789 012'),
-(19, 'adam.zajac@example.com', 'Adam', 'Zając', '+48 234 890 123'),
-(20, 'marta.kowalska@example.com', 'Marta', 'Kowalska', '+48 123 901 234');
+('jan.kowalski@example.com', 'Jan', 'Kowalski', '+48 123 456 789'),
+('anna.nowak@example.com', 'Anna', 'Nowak', '+48 987 654 321'),
+('marek.wisniewski@example.com', 'Marek', 'Wiśniewski', '+48 345 678 901'),
+('ewa.jankowska@example.com', 'Ewa', 'Jankowska', '+48 234 567 890'),
+('pawel.kaczmarek@example.com', 'Paweł', 'Kaczmarek', '+48 567 890 123'),
+('joanna.szmidt@example.com', 'Joanna', 'Szmidt', '+48 456 789 012'),
+('piotr.wolski@example.com', 'Piotr', 'Wolski', '+48 789 012 345'),
+('agnieszka.adamska@example.com', 'Agnieszka', 'Adamska', '+48 678 901 234'),
+('adam.nowicki@example.com', 'Adam', 'Nowicki', '+48 890 123 456'),
+('ewelina.mazur@example.com', 'Ewelina', 'Mazur', '+48 456 712 345'),
+('michal.kowalczyk@example.com', 'Michał', 'Kowalczyk', '+48 789 123 456'),
+('katarzyna.zajac@example.com', 'Katarzyna', 'Zając', '+48 567 234 567'),
+('tomasz.wrobel@example.com', 'Tomasz', 'Wróbel', '+48 234 678 901'),
+('patrycja.lewandowska@example.com', 'Patrycja', 'Lewandowska', '+48 901 345 678'),
+('piotr.kaczmarek@example.com', 'Piotr', 'Kaczmarek', '+48 678 456 789'),
+('agnieszka.adamczak@example.com', 'Agnieszka', 'Adamczak', '+48 567 567 890'),
+('damian.nowakowski@example.com', 'Damian', 'Nowakowski', '+48 456 678 901'),
+('julia.kowal@example.com', 'Julia', 'Kowal', '+48 345 789 012'),
+('adam.zajac@example.com', 'Adam', 'Zając', '+48 234 890 123'),
+('marta.kowalska@example.com', 'Marta', 'Kowalska', '+48 123 901 234');
 
 
-INSERT INTO `db_main`.`Auto` (`IdAuto`, `Model_IdModel`, `Klient_IdKlient`, `Rejestracja`, `Czas_rozpoczecia`, `Czas_zakonczenia`, `Dodatkowe_informacje`)
+INSERT INTO `db_main`.`Auto` (`Model_IdModel`, `Klient_IdKlient`, `Rejestracja`, `Czas_rozpoczecia`, `Czas_zakonczenia`, `Dodatkowe_informacje`)
 VALUES
-(1, 1, 1, 'WAR-12345', '2023-11-08 09:00:00', '2023-11-08 17:00:00', 'Uszkodzenia: brak'),
-(2, 2, 2, 'KRA-67890', '2023-11-09 10:00:00', '2023-11-09 18:00:00', 'Uszkodzenia: drobne rysy'),
-(3, 3, 3, 'WRO-34567', '2023-11-10 08:30:00', '2023-11-10 16:30:00', 'Uszkodzenia: brak'),
-(4, 4, 4, 'GDA-23456', '2023-11-11 08:00:00', '2023-11-11 16:00:00', 'Uszkodzenia: brak'),
-(5, 5, 5, 'LOD-78901', '2023-11-12 09:30:00', '2023-11-12 17:30:00', 'Uszkodzenia: brak'),
-(6, 6, 6, 'POZ-45678', '2023-11-13 10:30:00', '2023-11-13 18:30:00', 'Uszkodzenia: lekka wgniotka'),
-(7, 7, 7, 'KAT-34567', '2023-11-14 11:30:00', '2023-11-14 19:30:00', 'Uszkodzenia: brak'),
-(8, 8, 8, 'LUB-98765', '2023-11-15 08:00:00', '2023-11-15 16:00:00', 'Uszkodzenia: rysy na karoserii'),
-(9, 9, 9, 'RZE-54321', '2023-11-16 09:30:00', '2023-11-16 17:30:00', 'Uszkodzenia: brak'),
-(10, 10, 10, 'BYD-67890', '2023-11-17 07:30:00', '2023-11-17 15:30:00', 'Uszkodzenia: brak'),
-(11, 11, 1, 'WAR-11111', '2023-11-18 09:00:00', '2023-11-18 17:00:00', 'Uszkodzenia: brak'),
-(12, 12, 2, 'KRA-22222', '2023-11-19 10:00:00', '2023-11-19 18:00:00', 'Uszkodzenia: rysy na boku'),
-(13, 13, 3, 'WRO-33333', '2023-11-20 08:30:00', '2023-11-20 16:30:00', 'Uszkodzenia: brak'),
-(14, 14, 4, 'GDA-44444', '2023-11-21 08:00:00', '2023-11-21 16:00:00', 'Uszkodzenia: lekka wgniotka'),
-(15, 15, 5, 'LOD-55555', '2023-11-22 09:30:00', '2023-11-22 17:30:00', 'Uszkodzenia: brak'),
-(16, 16, 6, 'POZ-66666', '2023-11-23 10:30:00', '2023-11-23 18:30:00', 'Uszkodzenia: brak'),
-(17, 17, 7, 'KAT-77777', '2023-11-24 11:30:00', '2023-11-24 19:30:00', 'Uszkodzenia: rysy na dachu'),
-(18, 18, 8, 'LUB-88888', '2023-11-25 08:00:00', '2023-11-25 16:00:00', 'Uszkodzenia: brak'),
-(19, 19, 9, 'RZE-99999', '2023-11-26 09:30:00', '2023-11-26 17:30:00', 'Uszkodzenia: brak'),
-(20, 20, 10, 'BYD-00000', '2023-11-27 07:30:00', '2023-11-27 15:30:00', 'Uszkodzenia: brak'),
-(21, 21, 1, 'WAR-98765', '2023-11-28 09:00:00', '2023-11-28 17:00:00', 'Uszkodzenia: lekka rysa na przedniej szybie'),
-(22, 22, 2, 'KRA-12345', '2023-11-29 10:00:00', '2023-11-29 18:00:00', 'Uszkodzenia: brak'),
-(23, 23, 3, 'WRO-23456', '2023-11-30 08:30:00', '2023-11-30 16:30:00', 'Uszkodzenia: rysy na bokach'),
-(24, 24, 4, 'GDA-34567', '2023-12-01 08:00:00', '2023-12-01 16:00:00', 'Uszkodzenia: brak'),
-(25, 25, 5, 'LOD-45678', '2023-12-02 09:30:00', '2023-12-02 17:30:00', 'Uszkodzenia: brak'),
-(26, 26, 6, 'POZ-56789', '2023-12-03 10:30:00', '2023-12-03 18:30:00', 'Uszkodzenia: rysa na masce'),
-(27, 27, 7, 'KAT-67890', '2023-12-04 11:30:00', '2023-12-04 19:30:00', 'Uszkodzenia: lekka wgniotka na tylnej klapie'),
-(28, 28, 8, 'LUB-78901', '2023-12-05 08:00:00', '2023-12-05 16:00:00', 'Uszkodzenia: brak'),
-(29, 29, 9, 'RZE-89012', '2023-12-06 09:30:00', '2023-12-06 17:30:00', 'Uszkodzenia: rysy na drzwiach'),
-(30, 30, 10, 'BYD-90123', '2023-12-07 07:30:00', '2023-12-07 15:30:00', 'Uszkodzenia: brak'),
-(31, 31, 1, 'WAR-11111', '2023-12-08 09:00:00', '2023-12-08 17:00:00', 'Uszkodzenia: brak'),
-(32, 32, 2, 'KRA-22222', '2023-12-09 10:00:00', '2023-12-09 18:00:00', 'Uszkodzenia: brak'),
-(33, 33, 3, 'WRO-33333', '2023-12-10 08:30:00', '2023-12-10 16:30:00', 'Uszkodzenia: rysy na boku'),
-(34, 34, 4, 'GDA-44444', '2023-12-11 08:00:00', '2023-12-11 16:00:00', 'Uszkodzenia: lekka rysa na dachu'),
-(35, 35, 5, 'LOD-55555', '2023-12-12 09:30:00', '2023-12-12 17:30:00', 'Uszkodzenia: brak'),
-(36, 36, 6, 'POZ-66666', '2023-12-13 10:30:00', '2023-12-13 18:30:00', 'Uszkodzenia: brak'),
-(37, 37, 7, 'KAT-77777', '2023-12-14 11:30:00', '2023-12-14 19:30:00', 'Uszkodzenia: brak'),
-(38, 38, 8, 'LUB-88888', '2023-12-15 08:00:00', '2023-12-15 16:00:00', 'Uszkodzenia: rysy na drzwiach'),
-(39, 39, 9, 'RZE-99999', '2023-12-16 09:30:00', '2023-12-16 17:30:00', 'Uszkodzenia: brak'),
-(40, 40, 10, 'BYD-00000', '2023-12-17 07:30:00', '2023-12-17 15:30:00', 'Uszkodzenia: brak');
+(1, 1, 'WAR-12345', '2023-11-08 09:00:00', '2023-11-08 17:00:00', 'Uszkodzenia: brak'),
+(2, 2, 'KRA-67890', '2023-11-09 10:00:00', '2023-11-09 18:00:00', 'Uszkodzenia: drobne rysy'),
+(3, 3, 'WRO-34567', '2023-11-10 08:30:00', '2023-11-10 16:30:00', 'Uszkodzenia: brak'),
+(4, 4, 'GDA-23456', '2023-11-11 08:00:00', '2023-11-11 16:00:00', 'Uszkodzenia: brak'),
+(5, 5, 'LOD-78901', '2023-11-12 09:30:00', '2023-11-12 17:30:00', 'Uszkodzenia: brak'),
+(6, 6, 'POZ-45678', '2023-11-13 10:30:00', '2023-11-13 18:30:00', 'Uszkodzenia: lekka wgniotka'),
+(7, 7, 'KAT-34567', '2023-11-14 11:30:00', '2023-11-14 19:30:00', 'Uszkodzenia: brak'),
+(8, 8, 'LUB-98765', '2023-11-15 08:00:00', '2023-11-15 16:00:00', 'Uszkodzenia: rysy na karoserii'),
+(9, 9, 'RZE-54321', '2023-11-16 09:30:00', '2023-11-16 17:30:00', 'Uszkodzenia: brak'),
+(10, 10, 'BYD-67890', '2023-11-17 07:30:00', '2023-11-17 15:30:00', 'Uszkodzenia: brak'),
+(11, 1, 'WAR-11111', '2023-11-18 09:00:00', '2023-11-18 17:00:00', 'Uszkodzenia: brak'),
+(12, 2, 'KRA-22222', '2023-11-19 10:00:00', '2023-11-19 18:00:00', 'Uszkodzenia: rysy na boku'),
+(13, 3, 'WRO-33333', '2023-11-20 08:30:00', '2023-11-20 16:30:00', 'Uszkodzenia: brak'),
+(14, 4, 'GDA-44444', '2023-11-21 08:00:00', '2023-11-21 16:00:00', 'Uszkodzenia: lekka wgniotka'),
+(15, 5, 'LOD-55555', '2023-11-22 09:30:00', '2023-11-22 17:30:00', 'Uszkodzenia: brak'),
+(16, 6, 'POZ-66666', '2023-11-23 10:30:00', '2023-11-23 18:30:00', 'Uszkodzenia: brak'),
+(17, 7, 'KAT-77777', '2023-11-24 11:30:00', '2023-11-24 19:30:00', 'Uszkodzenia: rysy na dachu'),
+(18, 8, 'LUB-88888', '2023-11-25 08:00:00', '2023-11-25 16:00:00', 'Uszkodzenia: brak'),
+(19, 9, 'RZE-99999', '2023-11-26 09:30:00', '2023-11-26 17:30:00', 'Uszkodzenia: brak'),
+(20, 10, 'BYD-00000', '2023-11-27 07:30:00', '2023-11-27 15:30:00', 'Uszkodzenia: brak'),
+(21, 1, 'WAR-98765', '2023-11-28 09:00:00', '2023-11-28 17:00:00', 'Uszkodzenia: lekka rysa na przedniej szybie'),
+(22, 2, 'KRA-12345', '2023-11-29 10:00:00', '2023-11-29 18:00:00', 'Uszkodzenia: brak'),
+(23, 3, 'WRO-23456', '2023-11-30 08:30:00', '2023-11-30 16:30:00', 'Uszkodzenia: rysy na bokach'),
+(24, 4, 'GDA-34567', '2023-12-01 08:00:00', '2023-12-01 16:00:00', 'Uszkodzenia: brak'),
+(25, 5, 'LOD-45678', '2023-12-02 09:30:00', '2023-12-02 17:30:00', 'Uszkodzenia: brak'),
+(26, 6, 'POZ-56789', '2023-12-03 10:30:00', '2023-12-03 18:30:00', 'Uszkodzenia: rysa na masce'),
+(27, 7, 'KAT-67890', '2023-12-04 11:30:00', '2023-12-04 19:30:00', 'Uszkodzenia: lekka wgniotka na tylnej klapie'),
+(28, 8, 'LUB-78901', '2023-12-05 08:00:00', '2023-12-05 16:00:00', 'Uszkodzenia: brak'),
+(29, 9, 'RZE-89012', '2023-12-06 09:30:00', '2023-12-06 17:30:00', 'Uszkodzenia: rysy na drzwiach'),
+(30, 10, 'BYD-90123', '2023-12-07 07:30:00', '2023-12-07 15:30:00', 'Uszkodzenia: brak'),
+(31, 1, 'WAR-11111', '2023-12-08 09:00:00', '2023-12-08 17:00:00', 'Uszkodzenia: brak'),
+(32, 2, 'KRA-22222', '2023-12-09 10:00:00', '2023-12-09 18:00:00', 'Uszkodzenia: brak'),
+(33, 3, 'WRO-33333', '2023-12-10 08:30:00', '2023-12-10 16:30:00', 'Uszkodzenia: rysy na boku'),
+(34, 4, 'GDA-44444', '2023-12-11 08:00:00', '2023-12-11 16:00:00', 'Uszkodzenia: lekka rysa na dachu'),
+(35, 5, 'LOD-55555', '2023-12-12 09:30:00', '2023-12-12 17:30:00', 'Uszkodzenia: brak'),
+(36, 6, 'POZ-66666', '2023-12-13 10:30:00', '2023-12-13 18:30:00', 'Uszkodzenia: brak'),
+(37, 7, 'KAT-77777', '2023-12-14 11:30:00', '2023-12-14 19:30:00', 'Uszkodzenia: brak'),
+(38, 8, 'LUB-88888', '2023-12-15 08:00:00', '2023-12-15 16:00:00', 'Uszkodzenia: rysy na drzwiach'),
+(39, 9, 'RZE-99999', '2023-12-16 09:30:00', '2023-12-16 17:30:00', 'Uszkodzenia: brak'),
+(40, 10, 'BYD-00000', '2023-12-17 07:30:00', '2023-12-17 15:30:00', 'Uszkodzenia: brak');
 
 
-INSERT INTO `db_main`.`Zgloszenie` (`IdZgloszenie`, `Pracownik_IdPracownik`, `Klient_IdKlient`, `Opis`, `Status`)
+
+
+INSERT INTO `db_main`.`Zgloszenie` (`Pracownik_IdPracownik`, `Klient_IdKlient`, `Opis`, `Status`)
 VALUES
-(1, 1, 1, 'Klient zglosil rysy na boku auta.', 'Przeslane'),
-(2, 2, 2, 'Klient potrzebuje nowego zestawu myjącego do auta.', 'Odrzucone'),
-(3, 3, 3, 'Klient zglosil uszkodzenie lusterka w samochodzie.', 'Zaakceptowane'),
-(4, 4, 4, 'Klient zauważyl brak środka czyszczącego w salonie.', 'Przeslane'),
-(5, 5, 5, 'Klient zglosil problemy z dzialaniem odkurzacza na stacji mycia.', 'Odrzucone'),
-(6, 6, 6, 'Klient potrzebuje nowy worek do odkurzacza.', 'Zaakceptowane'),
-(7, 7, 7, 'Klient zglosil uszkodzenie przedniej szyby w samochodzie.', 'Przeslane'),
-(8, 8, 8, 'Klient potrzebuje nową wodę oczyszczoną do mycia auta.', 'Odrzucone'),
-(9, 9, 9, 'Klient zauważyl brak ręczników papierowych w salonie.', 'Zaakceptowane'),
-(10, 10, 10, 'Klient zglosil problemy z wycieraczkami w samochodzie.', 'Przeslane'),
-(11, 1, 1, 'Klient potrzebuje nowe gumki wycieraczek.', 'Odrzucone'),
-(12, 2, 2, 'Klient zglosil brak plynu do spryskiwaczy w samochodzie.', 'Zaakceptowane'),
-(13, 3, 3, 'Klient zauważyl brak rękawic ochronnych w salonie.', 'Przeslane'),
-(14, 4, 4, 'Klient potrzebuje nowy wąż do mycia auta.', 'Odrzucone'),
-(15, 5, 5, 'Klient zglosil uszkodzenie bieżnika opon w samochodzie.', 'Zaakceptowane'),
-(16, 6, 6, 'Klient zauważyl brak środka dezynfekującego w salonie.', 'Przeslane'),
-(17, 7, 7, 'Klient potrzebuje nową szczotkę do mycia auta.', 'Odrzucone'),
-(18, 8, 8, 'Klient zglosil problemy z dzialaniem stacji sprężonego powietrza.', 'Zaakceptowane'),
-(19, 9, 9, 'Klient zauważyl brak środków do mycia felg w salonie.', 'Przeslane'),
-(20, 10, 10, 'Klient potrzebuje nowy zapas opon zimowych.', 'Odrzucone'),
-(21, 1, 1, 'Klient zglosil brak plynu do hamulców w samochodzie.', 'Zaakceptowane'),
-(22, 2, 2, 'Klient zauważyl brak chlodziwa w salonie.', 'Przeslane'),
-(23, 3, 3, 'Klient potrzebuje nowy ręcznik do suszenia auta.', 'Odrzucone'),
-(24, 4, 4, 'Klient zglosil problemy z dzialaniem myjni ciśnieniowej.', 'Zaakceptowane'),
-(25, 5, 5, 'Klient zauważyl brak worków na śmieci w salonie.', 'Przeslane'),
-(26, 6, 6, 'Klient potrzebuje nowy wózek do transportu chemii.', 'Odrzucone'),
-(27, 7, 7, 'Klient zglosil brak baterii w odkurzaczu na stacji mycia.', 'Zaakceptowane'),
-(28, 8, 8, 'Klient zauważyl brak żarówki w samochodzie.', 'Przeslane'),
-(29, 9, 9, 'Klient potrzebuje nowy wąż sprężonego powietrza do mycia auta.', 'Odrzucone'),
-(30, 10, 10, 'Klient zglosil problemy z dzialaniem zamka w samochodzie.', 'Zaakceptowane');
+(1, 1, 'Klient zglosil rysy na boku auta.', 'Przeslane'),
+(2, 2, 'Klient potrzebuje nowego zestawu myjącego do auta.', 'Odrzucone'),
+(3, 3, 'Klient zglosil uszkodzenie lusterka w samochodzie.', 'Zaakceptowane'),
+(4, 4, 'Klient zauważyl brak środka czyszczącego w salonie.', 'Przeslane'),
+(5, 5, 'Klient zglosil problemy z dzialaniem odkurzacza na stacji mycia.', 'Odrzucone'),
+(6, 6, 'Klient potrzebuje nowy worek do odkurzacza.', 'Zaakceptowane'),
+(7, 7, 'Klient zglosil uszkodzenie przedniej szyby w samochodzie.', 'Przeslane'),
+(8, 8, 'Klient potrzebuje nową wodę oczyszczoną do mycia auta.', 'Odrzucone'),
+(9, 9, 'Klient zauważyl brak ręczników papierowych w salonie.', 'Zaakceptowane'),
+(10, 10, 'Klient zglosil problemy z wycieraczkami w samochodzie.', 'Przeslane'),
+(11, 1, 'Klient potrzebuje nowe gumki wycieraczek.', 'Odrzucone'),
+(12, 2, 'Klient zglosil brak plynu do spryskiwaczy w samochodzie.', 'Zaakceptowane'),
+(13, 3, 'Klient zauważyl brak rękawic ochronnych w salonie.', 'Przeslane'),
+(14, 4, 'Klient potrzebuje nowy wąż do mycia auta.', 'Odrzucone'),
+(15, 5, 'Klient zglosil uszkodzenie bieżnika opon w samochodzie.', 'Zaakceptowane'),
+(16, 6, 'Klient zauważyl brak środka dezynfekującego w salonie.', 'Przeslane'),
+(17, 7, 'Klient potrzebuje nową szczotkę do mycia auta.', 'Odrzucone'),
+(18, 8, 'Klient zglosil problemy z dzialaniem stacji sprężonego powietrza.', 'Zaakceptowane'),
+(19, 9, 'Klient zauważyl brak środków do mycia felg w salonie.', 'Przeslane'),
+(20, 10, 'Klient potrzebuje nowy zapas opon zimowych.', 'Odrzucone'),
+(21, 1, 'Klient zglosil brak plynu do hamulców w samochodzie.', 'Zaakceptowane'),
+(22, 2, 'Klient zauważyl brak chlodziwa w salonie.', 'Przeslane'),
+(23, 3, 'Klient potrzebuje nowy ręcznik do suszenia auta.', 'Odrzucone'),
+(24, 4, 'Klient zglosil problemy z dzialaniem myjni ciśnieniowej.', 'Zaakceptowane'),
+(25, 5, 'Klient zauważyl brak worków na śmieci w salonie.', 'Przeslane'),
+(26, 6, 'Klient potrzebuje nowy wózek do transportu chemii.', 'Odrzucone'),
+(27, 7, 'Klient zglosil brak baterii w odkurzaczu na stacji mycia.', 'Zaakceptowane'),
+(28, 8, 'Klient zauważyl brak żarówki w samochodzie.', 'Przeslane'),
+(29, 9, 'Klient potrzebuje nowy wąż sprężonego powietrza do mycia auta.', 'Odrzucone'),
+(30, 10, 'Klient zglosil problemy z dzialaniem zamka w samochodzie.', 'Zaakceptowane');
+
 
 
 INSERT INTO `db_main`.`Auto_Pracownik` (`Auto_IdAuto`, `Pracownik_IdPracownik`)
@@ -253,18 +258,19 @@ VALUES
 (40, 1);
 
 
-INSERT INTO `db_main`.`Usluga` (`IdUsluga`, `Opis`, `Nazwa`)
+INSERT INTO `db_main`.`Usluga` (`Opis`, `Nazwa`)
 VALUES
-(1, 'Pelne mycie zewnętrzne i wewnętrzne pojazdu, woskowanie i polerowanie lakieru.', 'Pelne Detailing'),
-(2, 'Skupienie się na dokladnym czyszczeniu wnętrza samochodu, w tym tapicerki, deski rozdzielczej i szyb.', 'Detailing Wnętrza'),
-(3, 'Usuwanie rys i wgnieceń z lakieru oraz odnawianie wyglądu karoserii.', 'Detailing Karoserii'),
-(4, 'Woskowanie i polerowanie lakieru, aby nadać samochodowi lśniący wygląd.', 'Woskowanie i Polerowanie'),
-(5, 'Usuwanie trudnych plam i zabrudzeń z tapicerki i dywanów.', 'Czyszczenie Tapicerki'),
-(6, 'Czyszczenie i dezynfekcja wnętrza pojazdu, eliminacja nieprzyjemnych zapachów.', 'Dezynfekcja i Odświeżanie'),
-(7, 'Czyszczenie felg i opon, aby przywrócić im blask i wygląd.', 'Czyszczenie Felg i Opon'),
-(8, 'Usuwanie trudnych zabrudzeń i plam z lakieru oraz usuwanie owadów.', 'Usuwanie Trudnych Plam i Owadów'),
-(9, 'Renowacja plastikowych elementów wewnątrz i na zewnątrz pojazdu.', 'Renowacja Plastików'),
-(10, 'Detailing szyb i lusterka, aby zapewnić czysty i blyszczący widok.', 'Czyszczenie Szyb i Lusterka');
+('Pelne mycie zewnętrzne i wewnętrzne pojazdu, woskowanie i polerowanie lakieru.', 'Pelne Detailing'),
+('Skupienie się na dokładnym czyszczeniu wnętrza samochodu, w tym tapicerki, deski rozdzielczej i szyb.', 'Detailing Wnętrza'),
+('Usuwanie rys i wgnieceń z lakieru oraz odnawianie wyglądu karoserii.', 'Detailing Karoserii'),
+('Woskowanie i polerowanie lakieru, aby nadać samochodowi lśniący wygląd.', 'Woskowanie i Polerowanie'),
+('Usuwanie trudnych plam i zabrudzeń z tapicerki i dywanów.', 'Czyszczenie Tapicerki'),
+('Czyszczenie i dezynfekcja wnętrza pojazdu, eliminacja nieprzyjemnych zapachów.', 'Dezynfekcja i Odświeżanie'),
+('Czyszczenie felg i opon, aby przywrócić im blask i wygląd.', 'Czyszczenie Felg i Opon'),
+('Usuwanie trudnych zabrudzeń i plam z lakieru oraz usuwanie owadów.', 'Usuwanie Trudnych Plam i Owadów'),
+('Renowacja plastikowych elementów wewnątrz i na zewnątrz pojazdu.', 'Renowacja Plastików'),
+('Detailing szyb i lusterka, aby zapewnić czysty i błyszczący widok.', 'Czyszczenie Szyb i Lusterka');
+
 
 
 INSERT INTO `db_main`.`Auto_Usluga` (`Auto_IdAuto`, `Usluga_IdUsluga`)
@@ -312,133 +318,133 @@ VALUES
 
 
 -- 50 przykladowych wpisów w tabeli Grafik z wartościami statusu, z co najmniej 10 wpisami na ten sam dzień
-INSERT INTO `db_main`.`Grafik` (`IdGrafik`, `Pracownik_IdPracownik`, `Klient_IdKlient`, `Czas_rozpoczecia`, `Czas_zakonczenia`, `Status`) 
+INSERT INTO `db_main`.`Grafik` (`Pracownik_IdPracownik`, `Klient_IdKlient`, `Czas_rozpoczecia`, `Czas_zakonczenia`, `Status`) 
 VALUES
-(1, 1, 1, '2023-11-08 09:00:00', '2023-11-08 17:00:00', 'Przeslany'),
-(2, 2, 2, '2023-11-08 09:00:00', '2023-11-08 17:00:00', 'Zaakceptowany'),
-(3, 3, 3, '2023-11-08 09:00:00', '2023-11-08 17:00:00', 'Odrzucony'),
-(4, 4, 4, '2023-11-08 09:00:00', '2023-11-08 17:00:00', 'Zmieniony'),
-(5, 5, 5, '2023-11-08 09:00:00', '2023-11-08 17:00:00', 'Przeslany'),
-(6, 6, 6, '2023-11-09 09:00:00', '2023-11-09 17:00:00', 'Zaakceptowany'),
-(7, 7, 7, '2023-11-09 09:00:00', '2023-11-09 17:00:00', 'Odrzucony'),
-(8, 8, 8, '2023-11-09 09:00:00', '2023-11-09 17:00:00', 'Zmieniony'),
-(9, 9, 9, '2023-11-09 09:00:00', '2023-11-09 17:00:00', 'Przeslany'),
-(10, 10, 10, '2023-11-10 09:00:00', '2023-11-10 17:00:00', 'Zaakceptowany'),
-(11, 11, 1, '2023-11-10 09:00:00', '2023-11-10 17:00:00', 'Odrzucony'),
-(12, 12, 2, '2023-11-10 09:00:00', '2023-11-10 17:00:00', 'Zmieniony'),
-(13, 13, 3, '2023-11-10 09:00:00', '2023-11-10 17:00:00', 'Przeslany'),
-(14, 14, 4, '2023-11-10 09:00:00', '2023-11-10 17:00:00', 'Zaakceptowany'),
-(15, 15, 5, '2023-11-11 09:00:00', '2023-11-11 17:00:00', 'Odrzucony'),
-(16, 16, 6, '2023-11-11 09:00:00', '2023-11-11 17:00:00', 'Zmieniony'),
-(17, 17, 7, '2023-11-11 09:00:00', '2023-11-11 17:00:00', 'Przeslany'),
-(18, 18, 8, '2023-11-11 09:00:00', '2023-11-11 17:00:00', 'Zaakceptowany'),
-(19, 19, 9, '2023-11-12 09:00:00', '2023-11-12 17:00:00', 'Odrzucony'),
-(20, 20, 10, '2023-11-12 09:00:00', '2023-11-12 17:00:00', 'Zmieniony'),
-(21, 1, 2, '2023-12-01 09:00:00', '2023-12-01 17:00:00', 'Przeslany'),
-(22, 2, 3, '2023-12-01 09:00:00', '2023-12-01 17:00:00', 'Zaakceptowany'),
-(23, 3, 4, '2023-12-01 09:00:00', '2023-12-01 17:00:00', 'Odrzucony'),
-(24, 4, 5, '2023-12-01 09:00:00', '2023-12-01 17:00:00', 'Zmieniony'),
-(25, 5, 6, '2023-12-01 09:00:00', '2023-12-01 17:00:00', 'Przeslany'),
-(26, 6, 7, '2023-12-02 09:00:00', '2023-12-02 17:00:00', 'Zaakceptowany'),
-(27, 7, 8, '2023-12-02 09:00:00', '2023-12-02 17:00:00', 'Odrzucony'),
-(28, 8, 9, '2023-12-02 09:00:00', '2023-12-02 17:00:00', 'Zmieniony'),
-(29, 9, 10, '2023-12-02 09:00:00', '2023-12-02 17:00:00', 'Przeslany'),
-(30, 10, 1, '2023-12-03 09:00:00', '2023-12-03 17:00:00', 'Zaakceptowany'),
-(31, 11, 2, '2023-12-03 09:00:00', '2023-12-03 17:00:00', 'Odrzucony'),
-(32, 12, 3, '2023-12-03 09:00:00', '2023-12-03 17:00:00', 'Zmieniony'),
-(33, 13, 4, '2023-12-03 09:00:00', '2023-12-03 17:00:00', 'Przeslany'),
-(34, 14, 5, '2023-12-03 09:00:00', '2023-12-03 17:00:00', 'Zaakceptowany'),
-(35, 15, 6, '2023-12-04 09:00:00', '2023-12-04 17:00:00', 'Odrzucony'),
-(36, 16, 7, '2023-12-04 09:00:00', '2023-12-04 17:00:00', 'Zmieniony'),
-(37, 17, 8, '2023-12-04 09:00:00', '2023-12-04 17:00:00', 'Przeslany'),
-(38, 18, 9, '2023-12-04 09:00:00', '2023-12-04 17:00:00', 'Zaakceptowany'),
-(39, 19, 10, '2023-12-05 09:00:00', '2023-12-05 17:00:00', 'Odrzucony'),
-(40, 20, 1, '2023-12-05 09:00:00', '2023-12-05 17:00:00', 'Zmieniony'),
-(41, 1, 3, '2023-12-06 09:00:00', '2023-12-06 17:00:00', 'Przeslany'),
-(42, 2, 4, '2023-12-06 09:00:00', '2023-12-06 17:00:00', 'Zaakceptowany'),
-(43, 3, 5, '2023-12-07 09:00:00', '2023-12-07 17:00:00', 'Odrzucony'),
-(44, 4, 6, '2023-12-07 09:00:00', '2023-12-07 17:00:00', 'Zmieniony'),
-(45, 5, 7, '2023-12-08 09:00:00', '2023-12-08 17:00:00', 'Przeslany'),
-(46, 6, 8, '2023-12-08 09:00:00', '2023-12-08 17:00:00', 'Zaakceptowany'),
-(47, 7, 9, '2023-12-09 09:00:00', '2023-12-09 17:00:00', 'Odrzucony'),
-(48, 8, 10, '2023-12-09 09:00:00', '2023-12-09 17:00:00', 'Zmieniony'),
-(49, 9, 1, '2023-12-10 09:00:00', '2023-12-10 17:00:00', 'Przeslany'),
-(50, 10, 2, '2023-12-10 09:00:00', '2023-12-10 17:00:00', 'Zaakceptowany'),
-(51, 11, 3, '2023-12-11 09:00:00', '2023-12-11 17:00:00', 'Odrzucony'),
-(52, 12, 4, '2023-12-11 09:00:00', '2023-12-11 17:00:00', 'Zmieniony'),
-(53, 13, 5, '2023-12-12 09:00:00', '2023-12-12 17:00:00', 'Przeslany'),
-(54, 14, 6, '2023-12-12 09:00:00', '2023-12-12 17:00:00', 'Zaakceptowany'),
-(55, 15, 7, '2023-12-13 09:00:00', '2023-12-13 17:00:00', 'Odrzucony'),
-(56, 16, 8, '2023-12-13 09:00:00', '2023-12-13 17:00:00', 'Zmieniony'),
-(57, 17, 9, '2023-12-14 09:00:00', '2023-12-14 17:00:00', 'Przeslany'),
-(58, 18, 10, '2023-12-14 09:00:00', '2023-12-14 17:00:00', 'Zaakceptowany'),
-(59, 19, 1, '2023-12-15 09:00:00', '2023-12-15 17:00:00', 'Odrzucony'),
-(60, 20, 2, '2023-12-15 09:00:00', '2023-12-15 17:00:00', 'Zmieniony'),
-(61, 1, 3, '2023-12-16 09:00:00', '2023-12-16 17:00:00', 'Przeslany'),
-(62, 2, 4, '2023-12-16 09:00:00', '2023-12-16 17:00:00', 'Zaakceptowany'),
-(63, 3, 5, '2023-12-17 09:00:00', '2023-12-17 17:00:00', 'Odrzucony'),
-(64, 4, 6, '2023-12-17 09:00:00', '2023-12-17 17:00:00', 'Zmieniony'),
-(65, 5, 7, '2023-12-18 09:00:00', '2023-12-18 17:00:00', 'Przeslany'),
-(66, 6, 8, '2023-12-18 09:00:00', '2023-12-18 17:00:00', 'Zaakceptowany'),
-(67, 7, 9, '2023-12-19 09:00:00', '2023-12-19 17:00:00', 'Odrzucony'),
-(68, 8, 10, '2023-12-19 09:00:00', '2023-12-19 17:00:00', 'Zmieniony'),
-(69, 9, 1, '2023-12-20 09:00:00', '2023-12-20 17:00:00', 'Przeslany'),
-(70, 10, 2, '2023-12-20 09:00:00', '2023-12-20 17:00:00', 'Zaakceptowany'),
-(71, 11, 3, '2023-12-21 09:00:00', '2023-12-21 17:00:00', 'Odrzucony'),
-(72, 12, 4, '2023-12-21 09:00:00', '2023-12-21 17:00:00', 'Zmieniony'),
-(73, 13, 5, '2023-12-22 09:00:00', '2023-12-22 17:00:00', 'Przeslany'),
-(74, 14, 6, '2023-12-22 09:00:00', '2023-12-22 17:00:00', 'Zaakceptowany'),
-(75, 15, 7, '2023-12-23 09:00:00', '2023-12-23 17:00:00', 'Odrzucony'),
-(76, 16, 8, '2023-12-23 09:00:00', '2023-12-23 17:00:00', 'Zmieniony'),
-(77, 17, 9, '2023-12-24 09:00:00', '2023-12-24 17:00:00', 'Przeslany'),
-(78, 18, 10, '2023-12-24 09:00:00', '2023-12-24 17:00:00', 'Zaakceptowany'),
-(79, 19, 1, '2023-12-25 09:00:00', '2023-12-25 17:00:00', 'Odrzucony'),
-(80, 20, 2, '2023-12-25 09:00:00', '2023-12-25 17:00:00', 'Zmieniony'),
-(81, 1, 3, '2023-12-26 09:00:00', '2023-12-26 17:00:00', 'Przeslany'),
-(82, 2, 4, '2023-12-26 09:00:00', '2023-12-26 17:00:00', 'Zaakceptowany'),
-(83, 3, 5, '2023-12-27 09:00:00', '2023-12-27 17:00:00', 'Odrzucony'),
-(84, 4, 6, '2023-12-27 09:00:00', '2023-12-27 17:00:00', 'Zmieniony'),
-(85, 5, 7, '2023-12-28 09:00:00', '2023-12-28 17:00:00', 'Przeslany'),
-(86, 6, 8, '2023-12-28 09:00:00', '2023-12-28 17:00:00', 'Zaakceptowany'),
-(87, 7, 9, '2023-12-29 09:00:00', '2023-12-29 17:00:00', 'Odrzucony'),
-(88, 8, 10, '2023-12-29 09:00:00', '2023-12-29 17:00:00', 'Zmieniony'),
-(89, 9, 1, '2023-12-30 09:00:00', '2023-12-30 17:00:00', 'Przeslany'),
-(90, 10, 2, '2023-12-30 09:00:00', '2023-12-30 17:00:00', 'Zaakceptowany'),
-(91, 11, 3, '2023-12-31 09:00:00', '2023-12-31 17:00:00', 'Odrzucony'),
-(92, 12, 4, '2023-12-31 09:00:00', '2023-12-31 17:00:00', 'Zmieniony'),
-(93, 13, 5, '2024-01-01 09:00:00', '2024-01-01 17:00:00', 'Przeslany'),
-(94, 14, 6, '2024-01-01 09:00:00', '2024-01-01 17:00:00', 'Zaakceptowany'),
-(95, 15, 7, '2024-01-02 09:00:00', '2024-01-02 17:00:00', 'Odrzucony'),
-(96, 16, 8, '2024-01-02 09:00:00', '2024-01-02 17:00:00', 'Zmieniony'),
-(97, 17, 9, '2024-01-03 09:00:00', '2024-01-03 17:00:00', 'Przeslany'),
-(98, 18, 10, '2024-01-03 09:00:00', '2024-01-03 17:00:00', 'Zaakceptowany'),
-(99, 19, 1, '2024-01-04 09:00:00', '2024-01-04 17:00:00', 'Odrzucony'),
-(100, 20, 2, '2024-01-04 09:00:00', '2024-01-04 17:00:00', 'Zmieniony');
+(1, 1, '2023-11-08 09:00:00', '2023-11-08 17:00:00', 'Przeslany')
+(2, 2, '2023-11-08 09:00:00', '2023-11-08 17:00:00', 'Zaakceptowany')
+(3, 3, '2023-11-08 09:00:00', '2023-11-08 17:00:00', 'Odrzucony')
+(4, 4, '2023-11-08 09:00:00', '2023-11-08 17:00:00', 'Zmieniony')
+(5, 5, '2023-11-08 09:00:00', '2023-11-08 17:00:00', 'Przeslany')
+(6, 6, '2023-11-09 09:00:00', '2023-11-09 17:00:00', 'Zaakceptowany')
+(7, 7, '2023-11-09 09:00:00', '2023-11-09 17:00:00', 'Odrzucony')
+(8, 8, '2023-11-09 09:00:00', '2023-11-09 17:00:00', 'Zmieniony')
+(9, 9, '2023-11-09 09:00:00', '2023-11-09 17:00:00', 'Przeslany')
+(10, 10, '2023-11-10 09:00:00', '2023-11-10 17:00:00', 'Zaakceptowany')
+(11, 1, '2023-11-10 09:00:00', '2023-11-10 17:00:00', 'Odrzucony')
+(12, 2, '2023-11-10 09:00:00', '2023-11-10 17:00:00', 'Zmieniony')
+(13, 3, '2023-11-10 09:00:00', '2023-11-10 17:00:00', 'Przeslany')
+(14, 4, '2023-11-10 09:00:00', '2023-11-10 17:00:00', 'Zaakceptowany')
+(15, 5, '2023-11-11 09:00:00', '2023-11-11 17:00:00', 'Odrzucony')
+(16, 6, '2023-11-11 09:00:00', '2023-11-11 17:00:00', 'Zmieniony')
+(17, 7, '2023-11-11 09:00:00', '2023-11-11 17:00:00', 'Przeslany')
+(18, 8, '2023-11-11 09:00:00', '2023-11-11 17:00:00', 'Zaakceptowany')
+(19, 9, '2023-11-12 09:00:00', '2023-11-12 17:00:00', 'Odrzucony')
+(20, 10, '2023-11-12 09:00:00', '2023-11-12 17:00:00', 'Zmieniony')
+(1, 2, '2023-12-01 09:00:00', '2023-12-01 17:00:00', 'Przeslany')
+(2, 3, '2023-12-01 09:00:00', '2023-12-01 17:00:00', 'Zaakceptowany')
+(3, 4, '2023-12-01 09:00:00', '2023-12-01 17:00:00', 'Odrzucony')
+(4, 5, '2023-12-01 09:00:00', '2023-12-01 17:00:00', 'Zmieniony')
+(5, 6, '2023-12-01 09:00:00', '2023-12-01 17:00:00', 'Przeslany')
+(6, 7, '2023-12-02 09:00:00', '2023-12-02 17:00:00', 'Zaakceptowany')
+(7, 8, '2023-12-02 09:00:00', '2023-12-02 17:00:00', 'Odrzucony')
+(8, 9, '2023-12-02 09:00:00', '2023-12-02 17:00:00', 'Zmieniony')
+(9, 10, '2023-12-02 09:00:00', '2023-12-02 17:00:00', 'Przeslany')
+(10, 1, '2023-12-03 09:00:00', '2023-12-03 17:00:00', 'Zaakceptowany')
+(11, 2, '2023-12-03 09:00:00', '2023-12-03 17:00:00', 'Odrzucony')
+(12, 3, '2023-12-03 09:00:00', '2023-12-03 17:00:00', 'Zmieniony')
+(13, 4, '2023-12-03 09:00:00', '2023-12-03 17:00:00', 'Przeslany')
+(14, 5, '2023-12-03 09:00:00', '2023-12-03 17:00:00', 'Zaakceptowany')
+(15, 6, '2023-12-04 09:00:00', '2023-12-04 17:00:00', 'Odrzucony')
+(16, 7, '2023-12-04 09:00:00', '2023-12-04 17:00:00', 'Zmieniony')
+(17, 8, '2023-12-04 09:00:00', '2023-12-04 17:00:00', 'Przeslany')
+(18, 9, '2023-12-04 09:00:00', '2023-12-04 17:00:00', 'Zaakceptowany')
+(19, 10, '2023-12-05 09:00:00', '2023-12-05 17:00:00', 'Odrzucony')
+(20, 1, '2023-12-05 09:00:00', '2023-12-05 17:00:00', 'Zmieniony')
+(1, 3, '2023-12-06 09:00:00', '2023-12-06 17:00:00', 'Przeslany')
+(2, 4, '2023-12-06 09:00:00', '2023-12-06 17:00:00', 'Zaakceptowany')
+(3, 5, '2023-12-07 09:00:00', '2023-12-07 17:00:00', 'Odrzucony')
+(4, 6, '2023-12-07 09:00:00', '2023-12-07 17:00:00', 'Zmieniony')
+(5, 7, '2023-12-08 09:00:00', '2023-12-08 17:00:00', 'Przeslany')
+(6, 8, '2023-12-08 09:00:00', '2023-12-08 17:00:00', 'Zaakceptowany')
+(7, 9, '2023-12-09 09:00:00', '2023-12-09 17:00:00', 'Odrzucony')
+(8, 10, '2023-12-09 09:00:00', '2023-12-09 17:00:00', 'Zmieniony')
+(9, 1, '2023-12-10 09:00:00', '2023-12-10 17:00:00', 'Przeslany')
+(10, 2, '2023-12-10 09:00:00', '2023-12-10 17:00:00', 'Zaakceptowany')
+(11, 3, '2023-12-11 09:00:00', '2023-12-11 17:00:00', 'Odrzucony')
+(12, 4, '2023-12-11 09:00:00', '2023-12-11 17:00:00', 'Zmieniony')
+(13, 5, '2023-12-12 09:00:00', '2023-12-12 17:00:00', 'Przeslany')
+(14, 6, '2023-12-12 09:00:00', '2023-12-12 17:00:00', 'Zaakceptowany')
+(15, 7, '2023-12-13 09:00:00', '2023-12-13 17:00:00', 'Odrzucony')
+(16, 8, '2023-12-13 09:00:00', '2023-12-13 17:00:00', 'Zmieniony')
+(17, 9, '2023-12-14 09:00:00', '2023-12-14 17:00:00', 'Przeslany')
+(18, 10, '2023-12-14 09:00:00', '2023-12-14 17:00:00', 'Zaakceptowany')
+(19, 1, '2023-12-15 09:00:00', '2023-12-15 17:00:00', 'Odrzucony')
+(20, 2, '2023-12-15 09:00:00', '2023-12-15 17:00:00', 'Zmieniony')
+(1, 3, '2023-12-16 09:00:00', '2023-12-16 17:00:00', 'Przeslany')
+(2, 4, '2023-12-16 09:00:00', '2023-12-16 17:00:00', 'Zaakceptowany')
+(3, 5, '2023-12-17 09:00:00', '2023-12-17 17:00:00', 'Odrzucony')
+(4, 6, '2023-12-17 09:00:00', '2023-12-17 17:00:00', 'Zmieniony')
+(5, 7, '2023-12-18 09:00:00', '2023-12-18 17:00:00', 'Przeslany')
+(6, 8, '2023-12-18 09:00:00', '2023-12-18 17:00:00', 'Zaakceptowany')
+(7, 9, '2023-12-19 09:00:00', '2023-12-19 17:00:00', 'Odrzucony')
+(8, 10, '2023-12-19 09:00:00', '2023-12-19 17:00:00', 'Zmieniony')
+(9, 1, '2023-12-20 09:00:00', '2023-12-20 17:00:00', 'Przeslany')
+(10, 2, '2023-12-20 09:00:00', '2023-12-20 17:00:00', 'Zaakceptowany')
+(11, 3, '2023-12-21 09:00:00', '2023-12-21 17:00:00', 'Odrzucony')
+(12, 4, '2023-12-21 09:00:00', '2023-12-21 17:00:00', 'Zmieniony')
+(13, 5, '2023-12-22 09:00:00', '2023-12-22 17:00:00', 'Przeslany')
+(14, 6, '2023-12-22 09:00:00', '2023-12-22 17:00:00', 'Zaakceptowany')
+(15, 7, '2023-12-23 09:00:00', '2023-12-23 17:00:00', 'Odrzucony')
+(16, 8, '2023-12-23 09:00:00', '2023-12-23 17:00:00', 'Zmieniony')
+(17, 9, '2023-12-24 09:00:00', '2023-12-24 17:00:00', 'Przeslany')
+(18, 10, '2023-12-24 09:00:00', '2023-12-24 17:00:00', 'Zaakceptowany')
+(19, 1, '2023-12-25 09:00:00', '2023-12-25 17:00:00', 'Odrzucony')
+(20, 2, '2023-12-25 09:00:00', '2023-12-25 17:00:00', 'Zmieniony')
+(1, 3, '2023-12-26 09:00:00', '2023-12-26 17:00:00', 'Przeslany')
+(2, 4, '2023-12-26 09:00:00', '2023-12-26 17:00:00', 'Zaakceptowany')
+(3, 5, '2023-12-27 09:00:00', '2023-12-27 17:00:00', 'Odrzucony')
+(4, 6, '2023-12-27 09:00:00', '2023-12-27 17:00:00', 'Zmieniony')
+(5, 7, '2023-12-28 09:00:00', '2023-12-28 17:00:00', 'Przeslany')
+(6, 8, '2023-12-28 09:00:00', '2023-12-28 17:00:00', 'Zaakceptowany')
+(7, 9, '2023-12-29 09:00:00', '2023-12-29 17:00:00', 'Odrzucony')
+(8, 10, '2023-12-29 09:00:00', '2023-12-29 17:00:00', 'Zmieniony')
+(9, 1, '2023-12-30 09:00:00', '2023-12-30 17:00:00', 'Przeslany')
+(10, 2, '2023-12-30 09:00:00', '2023-12-30 17:00:00', 'Zaakceptowany')
+(11, 3, '2023-12-31 09:00:00', '2023-12-31 17:00:00', 'Odrzucony')
+(12, 4, '2023-12-31 09:00:00', '2023-12-31 17:00:00', 'Zmieniony')
+(13, 5, '2024-01-01 09:00:00', '2024-01-01 17:00:00', 'Przeslany')
+(14, 6, '2024-01-01 09:00:00', '2024-01-01 17:00:00', 'Zaakceptowany')
+(15, 7, '2024-01-02 09:00:00', '2024-01-02 17:00:00', 'Odrzucony')
+(16, 8, '2024-01-02 09:00:00', '2024-01-02 17:00:00', 'Zmieniony')
+(17, 9, '2024-01-03 09:00:00', '2024-01-03 17:00:00', 'Przeslany')
+(18, 10, '2024-01-03 09:00:00', '2024-01-03 17:00:00', 'Zaakceptowany')
+(19, 1, '2024-01-04 09:00:00', '2024-01-04 17:00:00', 'Odrzucony')
+(20, 2, '2024-01-04 09:00:00', '2024-01-04 17:00:00', 'Zmieniony');
 
 
 -- 30 przykladowych umów z 10 klientami
-INSERT INTO `db_main`.`Umowa` (`IdUmowa`, `Klient_IdKlient`, `Data_rozpoczecia`, `Data_zakonczenia`)
+INSERT INTO `db_main`.`Umowa` (`Klient_IdKlient`, `Data_rozpoczecia`, `Data_zakonczenia`)
 VALUES
-(1, 1, '2023-01-01', '2023-12-31'),
-(2, 2, '2023-02-01', '2024-01-31'),
-(3, 3, '2023-03-01', '2024-02-29'),
-(4, 4, '2023-04-01', '2024-03-31'),
-(5, 5, '2023-05-01', '2024-04-30'),
-(6, 6, '2023-06-01', '2024-05-31'),
-(7, 7, '2023-07-01', '2024-06-30'),
-(8, 8, '2023-08-01', '2024-07-31'),
-(9, 9, '2023-09-01', '2024-08-31'),
-(10, 10, '2023-10-01', '2024-09-30'),
-(11, 1, '2023-11-01', '2024-10-31'),
-(12, 2, '2023-12-01', '2024-11-30'),
-(13, 3, '2024-01-01', '2024-12-31'),
-(14, 4, '2024-02-01', '2025-01-31'),
-(15, 5, '2024-03-01', '2025-02-28'),
-(16, 6, '2024-04-01', '2025-03-31'),
-(17, 7, '2024-05-01', '2025-04-30'),
-(18, 8, '2024-06-01', '2025-05-31'),
-(19, 9, '2024-07-01', '2025-06-30'),
-(20, 10, '2024-08-01', '2025-07-31');
+(1, '2023-01-01', '2023-12-31')
+(2, '2023-02-01', '2024-01-31')
+(3, '2023-03-01', '2024-02-29')
+(4, '2023-04-01', '2024-03-31')
+(5, '2023-05-01', '2024-04-30')
+(6, '2023-06-01', '2024-05-31')
+(7, '2023-07-01', '2024-06-30')
+(8, '2023-08-01', '2024-07-31')
+(9, '2023-09-01', '2024-08-31')
+(10, '2023-10-01', '2024-09-30')
+(1, '2023-11-01', '2024-10-31')
+(2, '2023-12-01', '2024-11-30')
+(3, '2024-01-01', '2024-12-31')
+(4, '2024-02-01', '2025-01-31')
+(5, '2024-03-01', '2025-02-28')
+(6, '2024-04-01', '2025-03-31')
+(7, '2024-05-01', '2025-04-30')
+(8, '2024-06-01', '2025-05-31')
+(9, '2024-07-01', '2025-06-30')
+(10, '2024-08-01', '2025-07-31');
 
 
 INSERT INTO `db_main`.`Wersja_umowy` (`Usluga_IdUsluga`, `Umowa_IdUmowa`, `Cena`)
@@ -608,6 +614,7 @@ VALUES
 (3, 9, 120.00),
 (4, 9, 130.00),
 (5, 9, 110.00),
+(2, 19, 160.00),
 (6, 9, 90.00),
 (7, 9, 80.00),
 (8, 9, 140.00),
