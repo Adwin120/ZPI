@@ -1,27 +1,18 @@
-import dotenv from "dotenv";
-dotenv.config();
 import request from "supertest";
 
 import app from "./app";
 import { KlientPayload } from "../common/klientSchema";
 import { FieldValidationError, ValidationErrorBody } from "./middleware/zodValidation";
-import firebaseAdmin from "firebase-admin";
-import firebase from "firebase/compat/app";
-import "firebase/compat/auth"
+import { getMockBearerTokenWithRole, setupAuthenticationService } from "./testSetup";
 
-
-import publicConfig from "../../firebase.public.json";
-let mockToken_ = await firebaseAdmin.auth().createCustomToken("yn8d27PucGc4HhRJEs5aP2wxtwhE");
-firebase.initializeApp(publicConfig);
-firebase.auth().useEmulator("http://127.0.0.1:9099")
-const mockUser = await firebase.auth().signInWithCustomToken(mockToken_);
-const mockToken = await mockUser.user?.getIdToken()
+setupAuthenticationService();
+const mockToken = await getMockBearerTokenWithRole("pracownik");
 
 describe("Dodawanie Klienta - Testy", () => {
     it("powinno przetworzyć poprawne dane", async () => {
         const response = await request(app)
             .post("/Klient")
-            .set({authorization: 'Bearer ' + mockToken})
+            .set({ authorization: "Bearer " + mockToken })
             .send({
                 nazwa: "Testowa Nazwa",
                 adres: "Testowy Adres",
@@ -35,7 +26,10 @@ describe("Dodawanie Klienta - Testy", () => {
     });
 
     it("nie powinno przetworzyć danych z pustymi polami", async () => {
-        const response = await request(app).post("/Klient").set({authorization: 'Bearer ' + mockToken}).send({});
+        const response = await request(app)
+            .post("/Klient")
+            .set({ authorization: "Bearer " + mockToken })
+            .send({});
         const body = response.body as ValidationErrorBody;
         const errorFields = body.errors.map((e) => e.path);
 
@@ -50,13 +44,16 @@ describe("Dodawanie Klienta - Testy", () => {
     });
 
     it("powinien zwrócić błąd, gdy e-mail nie ma znaku @", async () => {
-        const response = await request(app).post("/Klient").set({authorization: 'Bearer ' + mockToken}).send({
-            nazwa: "Testowa Nazwa",
-            adres: "Testowy Adres",
-            email: "testtest.pl",
-            nip: "1234567890",
-            telefon: "123456789",
-        });
+        const response = await request(app)
+            .post("/Klient")
+            .set({ authorization: "Bearer " + mockToken })
+            .send({
+                nazwa: "Testowa Nazwa",
+                adres: "Testowy Adres",
+                email: "testtest.pl",
+                nip: "1234567890",
+                telefon: "123456789",
+            });
         const body = response.body as ValidationErrorBody;
 
         expect(response.status).toBe(400);
@@ -67,13 +64,16 @@ describe("Dodawanie Klienta - Testy", () => {
     });
 
     it("powinien zwrócić błąd, gdy e-mail nie ma znaku .", async () => {
-        const response = await request(app).post("/Klient").set({authorization: 'Bearer ' + mockToken}).send({
-            nazwa: "Testowa Nazwa",
-            adres: "Testowy Adres",
-            email: "test@testpl",
-            nip: "1234567890",
-            telefon: "123456789",
-        });
+        const response = await request(app)
+            .post("/Klient")
+            .set({ authorization: "Bearer " + mockToken })
+            .send({
+                nazwa: "Testowa Nazwa",
+                adres: "Testowy Adres",
+                email: "test@testpl",
+                nip: "1234567890",
+                telefon: "123456789",
+            });
         const body = response.body as ValidationErrorBody;
 
         expect(response.status).toBe(400);
@@ -84,13 +84,16 @@ describe("Dodawanie Klienta - Testy", () => {
     });
 
     it("powinien zwrócić błąd, gdy e-mail nie ma znaku przed @", async () => {
-        const response = await request(app).post("/Klient").set({authorization: 'Bearer ' + mockToken}).send({
-            nazwa: "Testowa Nazwa",
-            adres: "Testowy Adres",
-            email: "@test.pl",
-            nip: "1234567890",
-            telefon: "123456789",
-        });
+        const response = await request(app)
+            .post("/Klient")
+            .set({ authorization: "Bearer " + mockToken })
+            .send({
+                nazwa: "Testowa Nazwa",
+                adres: "Testowy Adres",
+                email: "@test.pl",
+                nip: "1234567890",
+                telefon: "123456789",
+            });
         const body = response.body as ValidationErrorBody;
 
         expect(response.status).toBe(400);
@@ -102,13 +105,16 @@ describe("Dodawanie Klienta - Testy", () => {
     });
 
     it("powinien zwrócić błąd, gdy e-mail nie ma znaku miedzy @ a .", async () => {
-        const response = await request(app).post("/Klient").set({authorization: 'Bearer ' + mockToken}).send({
-            nazwa: "Testowa Nazwa",
-            adres: "Testowy Adres",
-            email: "test@.pl",
-            nip: "1234567890",
-            telefon: "123456789",
-        });
+        const response = await request(app)
+            .post("/Klient")
+            .set({ authorization: "Bearer " + mockToken })
+            .send({
+                nazwa: "Testowa Nazwa",
+                adres: "Testowy Adres",
+                email: "test@.pl",
+                nip: "1234567890",
+                telefon: "123456789",
+            });
         const body = response.body as ValidationErrorBody;
 
         expect(response.status).toBe(400);
@@ -119,13 +125,16 @@ describe("Dodawanie Klienta - Testy", () => {
     });
 
     it("powinien zwrócić błąd, gdy e-mail nie ma znaku po . ", async () => {
-        const response = await request(app).post("/Klient").set({authorization: 'Bearer ' + mockToken}).send({
-            nazwa: "Testowa Nazwa",
-            adres: "Testowy Adres",
-            email: "test@test.",
-            nip: "1234567890",
-            telefon: "123456789",
-        });
+        const response = await request(app)
+            .post("/Klient")
+            .set({ authorization: "Bearer " + mockToken })
+            .send({
+                nazwa: "Testowa Nazwa",
+                adres: "Testowy Adres",
+                email: "test@test.",
+                nip: "1234567890",
+                telefon: "123456789",
+            });
         const body = response.body as ValidationErrorBody;
 
         expect(response.status).toBe(400);
@@ -136,13 +145,16 @@ describe("Dodawanie Klienta - Testy", () => {
     });
 
     it("powinien zwrócić błąd, gdy telefon jest za krótki", async () => {
-        const response = await request(app).post("/Klient").set({authorization: 'Bearer ' + mockToken}).send({
-            nazwa: "Testowa Nazwa",
-            adres: "Testowy Adres",
-            email: "test@test.",
-            nip: "1234567890",
-            telefon: "12345678",
-        });
+        const response = await request(app)
+            .post("/Klient")
+            .set({ authorization: "Bearer " + mockToken })
+            .send({
+                nazwa: "Testowa Nazwa",
+                adres: "Testowy Adres",
+                email: "test@test.",
+                nip: "1234567890",
+                telefon: "12345678",
+            });
 
         const body = response.body as ValidationErrorBody;
 
@@ -154,13 +166,16 @@ describe("Dodawanie Klienta - Testy", () => {
     });
 
     it("powinien zwrócić błąd, gdy telefon jest za długi", async () => {
-        const response = await request(app).post("/Klient").set({authorization: 'Bearer ' + mockToken}).send({
-            nazwa: "Testowa Nazwa",
-            adres: "Testowy Adres",
-            email: "test@test.",
-            nip: "1234567890",
-            telefon: "1234567890",
-        });
+        const response = await request(app)
+            .post("/Klient")
+            .set({ authorization: "Bearer " + mockToken })
+            .send({
+                nazwa: "Testowa Nazwa",
+                adres: "Testowy Adres",
+                email: "test@test.",
+                nip: "1234567890",
+                telefon: "1234567890",
+            });
         const body = response.body as ValidationErrorBody;
 
         expect(response.status).toBe(400);
@@ -171,13 +186,16 @@ describe("Dodawanie Klienta - Testy", () => {
     });
 
     it("powinien zwrócić błąd, gdy NIP jest za krótki", async () => {
-        const response = await request(app).post("/Klient").set({authorization: 'Bearer ' + mockToken}).send({
-            nazwa: "Testowa Nazwa",
-            adres: "Testowy Adres",
-            email: "test@test.",
-            nip: "123456789",
-            telefon: "123456789",
-        });
+        const response = await request(app)
+            .post("/Klient")
+            .set({ authorization: "Bearer " + mockToken })
+            .send({
+                nazwa: "Testowa Nazwa",
+                adres: "Testowy Adres",
+                email: "test@test.",
+                nip: "123456789",
+                telefon: "123456789",
+            });
         const body = response.body as ValidationErrorBody;
 
         expect(response.status).toBe(400);
@@ -188,13 +206,16 @@ describe("Dodawanie Klienta - Testy", () => {
     });
 
     it("powinien zwrócić błąd, gdy NIP jest za długi", async () => {
-        const response = await request(app).post("/Klient").set({authorization: 'Bearer ' + mockToken}).send({
-            nazwa: "Testowa Nazwa",
-            adres: "Testowy Adres",
-            email: "test@test.",
-            nip: "12345678900",
-            telefon: "123456789",
-        });
+        const response = await request(app)
+            .post("/Klient")
+            .set({ authorization: "Bearer " + mockToken })
+            .send({
+                nazwa: "Testowa Nazwa",
+                adres: "Testowy Adres",
+                email: "test@test.",
+                nip: "12345678900",
+                telefon: "123456789",
+            });
         const body = response.body as ValidationErrorBody;
 
         expect(response.status).toBe(400);
@@ -205,13 +226,16 @@ describe("Dodawanie Klienta - Testy", () => {
     });
 
     it("powinien zwrócić błąd, gdy adres jest pusty", async () => {
-        const response = await request(app).post("/Klient").set({authorization: 'Bearer ' + mockToken}).send({
-            nazwa: "Testowa Nazwa",
-            adres: "",
-            email: "test@test.",
-            nip: "1234567890",
-            telefon: "123456789",
-        });
+        const response = await request(app)
+            .post("/Klient")
+            .set({ authorization: "Bearer " + mockToken })
+            .send({
+                nazwa: "Testowa Nazwa",
+                adres: "",
+                email: "test@test.",
+                nip: "1234567890",
+                telefon: "123456789",
+            });
 
         expect(response.status).toBe(400);
         expect(response.body.errors).toContainEqual({
@@ -222,13 +246,16 @@ describe("Dodawanie Klienta - Testy", () => {
     });
 
     it("powinien zwrócić błąd, gdy nazwa jest pusta", async () => {
-        const response = await request(app).post("/Klient").set({authorization: 'Bearer ' + mockToken}).send({
-            nazwa: "",
-            adres: "Testowy Adres",
-            email: "test@test.",
-            nip: "1234567890",
-            telefon: "123456789",
-        });
+        const response = await request(app)
+            .post("/Klient")
+            .set({ authorization: "Bearer " + mockToken })
+            .send({
+                nazwa: "",
+                adres: "Testowy Adres",
+                email: "test@test.",
+                nip: "1234567890",
+                telefon: "123456789",
+            });
         const body = response.body as ValidationErrorBody;
 
         expect(response.status).toBe(400);
