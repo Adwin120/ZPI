@@ -33,7 +33,7 @@ const FormDialog = <T extends FieldValues>({
     return (
         <Dialog
             open={open}
-            PaperProps={{ elevation: 18, sx: { minWidth: "50%" } }}
+            PaperProps={{ elevation: 18, sx: { minWidth: "50%", mx: 2 } }}
             onClose={onClose}
         >
             <DialogTitle variant="h5" component="h2" id={titleId}>
