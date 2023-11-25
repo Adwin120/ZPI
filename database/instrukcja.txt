@@ -15,7 +15,15 @@ b)Bill Gates:
 note: domyślnie hasło root to: K0chamTesty
 note2: skrypt StartTestEnv uruchamia pierwsze 3 punkty automatycznie
 
+Instrukcja instalacji emulatora serwisu uwierzytelniania:
+-npm install -g firebase-tools
+-firebase login --reauth
+-firebase init
+
+wybrać nasz projekt
+wybrać tylko emulator
+
 1. uruchomić " docker-compose up -d " w folderze database
 2. budowanie bazy przez "mysql -hlocalhost -pK0chamTesty -u root < create_database.sql	(też w tym folderze)
 3. ogólnie wrzucanie skryptów na serwer przez: "mysql -hlocalhost -pK0chamTesty -u root < "nazwa pliku albo sciezka"	(też w tym folderze)
-4. łączenie i praca przez kod na ip 127.0.0.1 lub localhost , albo przez cmd dalej: " mysql -hlocalhost -pK0chamTesty -u root db_main"
+4. łączenie i praca przez kod na ip 127.0.0.1 lub localhost , albo przez cmd dalej: "mysql -hlocalhost -pK0chamTesty -u root db_main"

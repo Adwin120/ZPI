@@ -23,14 +23,14 @@ export const authenticate: RequestHandler = async (req, res, next) => {
         return;
     }
 
-    const token = headerParts[1];
+    const token = headerParts[1].trim();
 
     try {
         const userData = await firebaseAdmin.auth().verifyIdToken(token);
         res.locals["user"] = userData;
         next();
     } catch (e) {
-        console.log("nieuwierzytelniony token")
+        console.log("nieuwierzytelniony token", e)
         res.status(401).send("Blad uwierzytelnienia: Brak dostępu do serwisu");
     }
 };
