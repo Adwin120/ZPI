@@ -3,7 +3,8 @@ import { body, validationResult } from "express-validator";
 import bodyParser from "body-parser";
 import { validateBody } from "./middleware/zodValidation";
 import { KlientPayload, klientSchema } from "../common/klientSchema";
-import { authenticate, getUserData } from "./middleware/firebaseAuth";
+import { authenticate, authorize, getUserData } from "./middleware/firebaseAuth";
+import { roleGreaterOrEqual } from "../common/userRoles";
 
 const app = express();
 
@@ -12,15 +13,21 @@ app.use(express.static("dist/frontend"));
 // app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-app.post("/Klient", authenticate, validateBody(klientSchema), (req: Request, res: Response) => {
-    const body = req.body as KlientPayload;
-    console.log("Dane z formularza dla klienta:", body);
+app.post(
+    "/Klient",
+    authenticate,
+    authorize((user) => roleGreaterOrEqual(user["role"], "pracownik")),
+    validateBody(klientSchema),
+    (req: Request, res: Response) => {
+        const body = req.body as KlientPayload;
+        console.log("Dane z formularza dla klienta:", body);
 
-    const user = getUserData(res);
-    console.log("user:", user);
-    
-    res.status(200).send("Dane z formularza dla klienta zostały odebrane");
-});
+        const user = getUserData(res);
+        console.log("user:", user);
+
+        res.status(200).send("Dane z formularza dla klienta zostały odebrane");
+    }
+);
 
 app.post(
     "/Pracownik",
