@@ -2,6 +2,8 @@
 
 docker-compose up -d
 
+timeout 10
+
 set PASSWORD=K0chamTesty
 
 mysql -hlocalhost -p%PASSWORD% -u root < create_database.sql

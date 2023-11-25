@@ -14,6 +14,7 @@ b)Bill Gates:
 
 note: domyślnie hasło root to: K0chamTesty
 note2: skrypt StartTestEnv uruchamia pierwsze 3 punkty automatycznie
+note3: w danej bazie istnieje tylko konto root
 
 1. uruchomić " docker-compose up -d " w folderze database
 2. budowanie bazy przez "mysql -hlocalhost -pK0chamTesty -u root < create_database.sql	(też w tym folderze)
