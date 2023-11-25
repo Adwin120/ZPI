@@ -1,26 +1,31 @@
-import firebase from "firebase/compat/app";
-import firebaseui from "firebaseui";
-import "firebase/compat/auth";
-import type { FirebaseOptions } from "firebase/app";
-import type { User } from "firebase/auth";
+import { ElementRef, useEffect, useRef, useState } from "react";
 
-import { ElementRef, useEffect, useId, useRef, useState } from "react";
+import type firebase from "firebase/compat/app";
+import type { FirebaseOptions } from "firebase/app";
+import type firebaseui from "firebaseui";
+
+import publicConfig from "../../firebase.public.json";
+
+declare global {
+    interface Window {
+        firebaseui: typeof firebaseui;
+        firebase: typeof firebase;
+    }
+}
 
 // TODO: Replace the following with your app's Firebase project configuration
 // See: https://firebase.google.com/docs/web/learn-more#config-object
-const firebaseConfig: FirebaseOptions = {
-    // ...
-};
+const firebaseConfig: FirebaseOptions = publicConfig;
 
 // Initialize Firebase
-firebase.initializeApp(firebaseConfig);
+window.firebase.initializeApp(firebaseConfig);
 
 // Initialize Firebase Authentication and get a reference to the service
-export const auth = firebase.auth();
-const authUI = new firebaseui.auth.AuthUI(auth);
+export const auth = window.firebase.auth();
+const authUI = new window.firebaseui.auth.AuthUI(auth);
 
 export const useUser = () => {
-    const [user, setUser] = useState<firebase.User | null>(null);
+    const [user, setUser] = useState<firebase.User | null>(auth.currentUser);
     useEffect(() => {
         auth.onAuthStateChanged(setUser);
     }, []);
@@ -28,18 +33,18 @@ export const useUser = () => {
 };
 
 export const Login: React.FC = () => {
-    const containerID = useId();
+    const container = useRef<ElementRef<"div">>(null);
 
     useEffect(() => {
-        authUI.start(containerID, {
+        authUI.start(container.current!, {
             signInOptions: [
-                firebase.auth.EmailAuthProvider.PROVIDER_ID,
-                firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+                window.firebase.auth.EmailAuthProvider.PROVIDER_ID,
+                window.firebase.auth.GoogleAuthProvider.PROVIDER_ID,
             ],
         });
     });
 
-    return <div id={containerID} />;
+    return <div ref={container} />;
 };
 
 export const signIn = () => {

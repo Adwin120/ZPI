@@ -3,7 +3,7 @@ import { body, validationResult } from "express-validator";
 import bodyParser from "body-parser";
 import { validateBody } from "./middleware/zodValidation";
 import { KlientPayload, klientSchema } from "../common/klientSchema";
-import { getUserData } from "./middleware/firebaseAuth";
+import { authenticate, getUserData } from "./middleware/firebaseAuth";
 
 const app = express();
 
@@ -12,7 +12,7 @@ app.use(express.static("dist/frontend"));
 // app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-app.post("/Klient", validateBody(klientSchema), (req: Request, res: Response) => {
+app.post("/Klient", authenticate, validateBody(klientSchema), (req: Request, res: Response) => {
     const body = req.body as KlientPayload;
     console.log("Dane z formularza dla klienta:", body);
 

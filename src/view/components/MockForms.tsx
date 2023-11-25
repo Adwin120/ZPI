@@ -4,12 +4,13 @@ import FormDialog from "./FormDialog";
 import { postToEndpoint } from "../backendAccess";
 import { klientSchema } from "../../common/klientSchema";
 import FormTextField from "./FormTextField";
+import { Login, signOut, useUser } from "../firebaseAuth";
 
 interface Props {}
 const MockForms: React.FC<Props> = () => {
     const [activeFormId, setActiveFormId] = useState<1 | 2 | 3 | null>(null);
     const closeDialog = useCallback(() => setActiveFormId(null), []);
-
+    const user = useUser();
     return (
         <>
             <Button onClick={() => setActiveFormId(1)} variant="outlined">
@@ -102,6 +103,9 @@ const MockForms: React.FC<Props> = () => {
                 <TextField name="opis" label="Opis" multiline minRows={2} />
                 <TextField name="status" label="Status" />
             </FormDialog> */}
+            <Login/>
+            <p>{JSON.stringify(user, null, 4)}</p>
+            <button onClick={signOut}>sign out</button>
         </>
     );
 };
