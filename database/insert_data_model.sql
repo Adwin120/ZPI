@@ -1,4 +1,4 @@
-INSERT INTO `db_main`.`Model` (`IdModel`, `Marka`, `Model`)
+INSERT INTO `db_main`.`Model` (`Marka`, `Model`)
 VALUES
 ('Audi', 'Q3'),
 ('Chevrolet', 'Malibu'),

@@ -1,10 +1,10 @@
 import { Button, TextField } from "@mui/material";
 import React, { useCallback, useState } from "react";
-import FormDialog from "./FormDialog";
-import { postToEndpoint } from "../backendAccess";
-import { klientSchema } from "../../common/klientSchema";
-import FormTextField from "./FormTextField";
-import { Login, signOut, useUser } from "../firebaseAuth";
+import FormDialog from "../FormDialog";
+import { postToEndpoint } from "../../backendAccess";
+import { klientSchema } from "../../../common/klientSchema";
+import FormTextField from "../FormTextField";
+import { Login, signOut, useUser } from "../../firebaseAuth";
 
 interface Props {}
 const MockForms: React.FC<Props> = () => {

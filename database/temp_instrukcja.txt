@@ -1,3 +1,0 @@
-1. uruchomić " docker-compose up -d " w folderze database
-2. budowanie bazy przez "mysql -h 127.0.0.1 -P 3306 -u root < (ściezka do /database/zpi_db.sql) "
-3. łączenie przez " mysql -h 127.0.0.1 -P 3306 -u root " i potem "USE db_main"
