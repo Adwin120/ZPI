@@ -14,6 +14,7 @@ b)Bill Gates:
 
 note: domyślnie hasło root to: K0chamTesty
 note2: skrypt StartTestEnv uruchamia pierwsze 3 punkty automatycznie
+note3: w danej bazie istnieje tylko konto root
 
 Instrukcja instalacji emulatora serwisu uwierzytelniania:
 -npm install -g firebase-tools
