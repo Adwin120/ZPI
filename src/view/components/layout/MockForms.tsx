@@ -104,7 +104,6 @@ const MockForms: React.FC<Props> = () => {
                 <TextField name="status" label="Status" />
             </FormDialog> */}
             <Login/>
-            <p>{JSON.stringify(user, null, 4)}</p>
             <button onClick={signOut}>sign out</button>
         </>
     );

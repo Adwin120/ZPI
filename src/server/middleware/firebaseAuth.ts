@@ -4,7 +4,6 @@ import { ServiceAccount, initializeApp } from "firebase-admin/app";
 
 import adminCredentials from "../../../firebase-admin.private.json"
 
-//TODO: add credentials
 initializeApp({
     credential: firebaseAdmin.credential.cert(adminCredentials as ServiceAccount),
 });
