@@ -3,6 +3,8 @@ import { body, validationResult } from "express-validator";
 import bodyParser from "body-parser";
 import { validateBody } from "../common/zodHelpers";
 import { KlientPayload, klientSchema } from "../common/klientSchema";
+import mysql, { RowDataPacket } from "mysql2/promise";
+import dotenv from "dotenv";
 
 const app = express();
 
@@ -10,14 +12,23 @@ const app = express();
 app.use(express.static("dist/frontend"));
 // app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+dotenv.config();
 
 app.post(
     "/Klient",
     validateBody(klientSchema),
-    (req: Request, res: Response) => {
-        const body = req.body as KlientPayload;
-        console.log("Dane z formularza dla klienta:", body);
-        res.status(200).send("Dane z formularza dla klienta zostały odebrane");
+    async (req: Request, res: Response) => {
+        const klientData = req.body as KlientPayload;
+
+        try {
+            const dbConnection = await connection;
+            await dbConnection.query("INSERT INTO Klient ( Adres, Email, Nazwa, NIP, Telefon) VALUES ( ?, ?, ?, ?, ?)", [ klientData.adres, klientData.email, klientData.nazwa, klientData.nip , klientData.telefon]);
+
+            res.status(200).send("Dane z formularza dla klienta zostały odebrane");
+        } catch (error) {
+            console.error(error);
+            res.status(500).send("Wystąpił błąd podczas zapisywania klienta");
+        }
     }
 );
 
@@ -66,5 +77,48 @@ app.post(
         res.send("Dane z formularza dla żądania zostały odebrane");
     }
 );
+
+app.get('/Klient', async (req: Request, res: Response) => {
+    try {
+        const [results] = await connection.query<RowDataPacket[]>("SELECT * FROM Klient");
+        if (results.length === 0) {
+            return res.status(404).send('Nie znaleziono klientow');
+        }
+        return res.json(results);
+    } catch (error) {
+        console.error(error);
+        return res.status(500).send('Wystąpił błąd podczas pobierania danych klientow');
+    }
+});
+
+app.get('/Klient/:id', async (req: Request, res: Response) => {
+    const klientId = req.params["id"];
+
+    const [results] = await connection.query<RowDataPacket[]>("SELECT * FROM Klient WHERE IdKlient = ?", [klientId]);
+   try {
+      console.log(results);
+       if (results.length === 0) {
+           return res.status(404).send('Klient nie został znaleziony');
+       }
+      return res.json(results[0]);
+   } catch (error) {
+       console.error(error);
+       return res.status(500).send('Wystąpił błąd podczas pobierania danych klienta');
+   }
+});
+
+const connection = await mysql.createConnection({
+    host: process.env["DB_HOST"],
+    user: process.env["DB_USER"],
+    password: process.env["DB_PASSWORD"],
+    database: process.env["DB_NAME"],
+    // ssl: {
+    //     ca: process.env["DB_SSL_CA"],
+    //     cert: process.env["DB_SSL_CERT"],
+    //     key: process.env["DB_SSL_KEY"],
+    //     rejectUnauthorized:false
+    // },
+});
+console.log("connected to DB");
 
 export default app;
