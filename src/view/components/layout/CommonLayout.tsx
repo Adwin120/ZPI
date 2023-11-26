@@ -1,6 +1,7 @@
 import {
     AppBar,
     Box,
+    Button,
     Divider,
     Drawer,
     IconButton,
@@ -18,6 +19,9 @@ import MenuIcon from "@mui/icons-material/Menu";
 import UserInfo from "./UserInfo";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import contentMovedByDrawer from "../../styles/contentMovedByDrawer";
+import { useUser } from "../../firebaseAuth";
+import { useLocation } from "wouter";
+import NavigationListItem from "./NavigationListItem";
 
 interface Props extends PropsWithChildren {
     pageTitle: string;
@@ -25,6 +29,15 @@ interface Props extends PropsWithChildren {
 const CommonLayout: React.FC<Props> = ({ children, pageTitle }) => {
     const isDesktop = useMediaQuery((t: Theme) => t.breakpoints.up("md"));
     const [isDrawerOpen, setDrawerOpen] = useState<boolean>(isDesktop);
+
+    const user = useUser();
+    const [_, navigate] = useLocation();
+    const loggedIn = Boolean(user);
+    const SignIn = (
+        <Button variant="contained" color="secondary" onClick={() => navigate("/login")}>
+            Zaloguj
+        </Button>
+    );
 
     return (
         <>
@@ -48,7 +61,7 @@ const CommonLayout: React.FC<Props> = ({ children, pageTitle }) => {
                     <Typography variant="h4" component="h1">
                         {pageTitle}
                     </Typography>
-                    <UserInfo />
+                    {loggedIn ? <UserInfo /> : SignIn}
                 </Toolbar>
             </AppBar>
             <Drawer
@@ -65,9 +78,9 @@ const CommonLayout: React.FC<Props> = ({ children, pageTitle }) => {
                 </Toolbar>
                 <Divider />
                 <List disablePadding>
-                    <NavigationListItem>Klienci</NavigationListItem>
-                    <NavigationListItem>Zlecenia</NavigationListItem>
-                    <NavigationListItem>Figi z makiem</NavigationListItem>
+                    <NavigationListItem href="/klienci">Klienci</NavigationListItem>
+                    <NavigationListItem href="/zlecenia">Zlecenia</NavigationListItem>
+                    <NavigationListItem href="/figi">Figi z makiem</NavigationListItem>
                 </List>
             </Drawer>
             <Box component="main" sx={[{ p: 2 }, contentMovedByDrawer(isDrawerOpen && isDesktop)]}>
@@ -76,16 +89,5 @@ const CommonLayout: React.FC<Props> = ({ children, pageTitle }) => {
         </>
     );
 };
-
-function NavigationListItem({ children }: PropsWithChildren) {
-    //TODO: highlight the selected element
-    return (
-        <ListItem disablePadding>
-            <ListItemButton>
-                <ListItemText>{children}</ListItemText>
-            </ListItemButton>
-        </ListItem>
-    );
-}
 
 export default CommonLayout;

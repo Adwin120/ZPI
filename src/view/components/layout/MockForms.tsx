@@ -5,6 +5,7 @@ import { postToEndpoint } from "../../backendAccess";
 import { klientSchema } from "../../../common/klientSchema";
 import FormTextField from "../FormTextField";
 import { Login, signOut, useUser } from "../../firebaseAuth";
+import CommonLayout from "./CommonLayout";
 
 interface Props {}
 const MockForms: React.FC<Props> = () => {
@@ -12,7 +13,7 @@ const MockForms: React.FC<Props> = () => {
     const closeDialog = useCallback(() => setActiveFormId(null), []);
     const user = useUser();
     return (
-        <>
+        <CommonLayout pageTitle="MOXLY">
             <Button onClick={() => setActiveFormId(1)} variant="outlined">
                 Dodaj klienta
             </Button>
@@ -103,9 +104,7 @@ const MockForms: React.FC<Props> = () => {
                 <TextField name="opis" label="Opis" multiline minRows={2} />
                 <TextField name="status" label="Status" />
             </FormDialog> */}
-            <Login/>
-            <button onClick={signOut}>sign out</button>
-        </>
+        </CommonLayout>
     );
 };
 

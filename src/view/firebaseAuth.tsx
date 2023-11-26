@@ -5,6 +5,7 @@ import type { FirebaseOptions } from "firebase/app";
 import type firebaseui from "firebaseui";
 
 import publicConfig from "../../firebase.public.json";
+import { Paper, Stack } from "@mui/material";
 
 declare global {
     interface Window {
@@ -34,19 +35,24 @@ export const Login: React.FC = () => {
     const container = useRef<ElementRef<"div">>(null);
 
     useEffect(() => {
+        console.log(window.location.origin)
         authUI.start(container.current!, {
             signInOptions: [
                 window.firebase.auth.EmailAuthProvider.PROVIDER_ID,
                 window.firebase.auth.GoogleAuthProvider.PROVIDER_ID,
             ],
+            signInSuccessUrl: window.location.origin,
+            signInFlow: "popup"
         });
     });
 
-    return <div ref={container} />;
-};
-
-export const signIn = () => {
-    //TODO: redirect to login page
+    return (
+        <Stack alignItems="center" justifyContent="center" height="100vh">
+            <Paper>
+                <div ref={container} />
+            </Paper>
+        </Stack>
+    );
 };
 
 export const signOut = () => {
