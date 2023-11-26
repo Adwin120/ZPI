@@ -56,7 +56,6 @@ const MockForms: React.FC<Props> = () => {
                 <TextField type="email" name="email" label="E-mail" />
                 <TextField 
                     type="password" 
-                    name="haslo" 
                     label="Hasło" 
                     required 
                     inputProps={{
@@ -80,7 +79,7 @@ const MockForms: React.FC<Props> = () => {
             {/* <FormDialog
                 open={activeFormId === 3}
                 onClose={closeDialog}
-                onSubmit={postToEndpoint("Zadanie")}
+                onSubmit={postToEndpoint("Zgloszenie")}
                 title="formularz 3"
             >
                 <TextField 
