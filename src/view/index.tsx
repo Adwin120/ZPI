@@ -19,9 +19,9 @@ root.render(
         <Router>
             <Switch>
                 <Route path="/login" component={Login}></Route>
-                <Route path="/klienci" component={Klienci}></Route>
-                <Route path="/zlecenia" component={Zlecenia}></Route>
-                <Route path="/figi" component={Figi}></Route>
+                <Route path="/panel/klienci" component={Klienci}></Route>
+                <Route path="/panel/zlecenia" component={Zlecenia}></Route>
+                <Route path="/panel/figi" component={Figi}></Route>
                 <Route path="/" component={MockForms}></Route>
                 <Route component={NotFound}></Route>
             </Switch>

@@ -78,9 +78,9 @@ const CommonLayout: React.FC<Props> = ({ children, pageTitle }) => {
                 </Toolbar>
                 <Divider />
                 <List disablePadding>
-                    <NavigationListItem href="/klienci">Klienci</NavigationListItem>
-                    <NavigationListItem href="/zlecenia">Zlecenia</NavigationListItem>
-                    <NavigationListItem href="/figi">Figi z makiem</NavigationListItem>
+                    <NavigationListItem href="/panel/klienci">Klienci</NavigationListItem>
+                    <NavigationListItem href="/panel/zlecenia">Zlecenia</NavigationListItem>
+                    <NavigationListItem href="/panel/figi">Figi z makiem</NavigationListItem>
                 </List>
             </Drawer>
             <Box component="main" sx={[{ p: 2 }, contentMovedByDrawer(isDrawerOpen && isDesktop)]}>

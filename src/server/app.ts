@@ -15,6 +15,7 @@ const app = express();
 
 // serving the react app on "/"
 app.use(express.static("dist/frontend"));
+app.use("/panel/*",express.static("dist/frontend"));
 // app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 dotenv.config();
