@@ -1,6 +1,7 @@
 import {
     AppBar,
     Box,
+    Button,
     Divider,
     Drawer,
     IconButton,
@@ -18,13 +19,27 @@ import MenuIcon from "@mui/icons-material/Menu";
 import UserInfo from "./UserInfo";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import contentMovedByDrawer from "../../styles/contentMovedByDrawer";
+import { useUser } from "../../firebaseAuth";
+import { useLocation } from "wouter";
+import NavigationListItem from "./NavigationListItem";
+import { useSessionStorage } from "../../hooks/useSessionStorage";
 
 interface Props extends PropsWithChildren {
     pageTitle: string;
 }
 const CommonLayout: React.FC<Props> = ({ children, pageTitle }) => {
     const isDesktop = useMediaQuery((t: Theme) => t.breakpoints.up("md"));
-    const [isDrawerOpen, setDrawerOpen] = useState<boolean>(isDesktop);
+    const [_isDrawerOpen, setDrawerOpen] = useSessionStorage<"true" | "false">("isDrawerOpen", isDesktop ? "true" : "false");
+    const isDrawerOpen = _isDrawerOpen === "true"
+
+    const user = useUser();
+    const [_, navigate] = useLocation();
+    const loggedIn = Boolean(user);
+    const SignIn = (
+        <Button variant="contained" color="secondary" onClick={() => navigate("/login")}>
+            Zaloguj
+        </Button>
+    );
 
     return (
         <>
@@ -40,7 +55,7 @@ const CommonLayout: React.FC<Props> = ({ children, pageTitle }) => {
                         color="inherit"
                         hidden={isDrawerOpen}
                         sx={{ visibility: isDrawerOpen ? "hidden" : "visible" }}
-                        onClick={() => setDrawerOpen(true)}
+                        onClick={() => setDrawerOpen("true")}
                     >
                         <MenuIcon />
                     </IconButton>
@@ -48,26 +63,26 @@ const CommonLayout: React.FC<Props> = ({ children, pageTitle }) => {
                     <Typography variant="h4" component="h1">
                         {pageTitle}
                     </Typography>
-                    <UserInfo />
+                    {loggedIn ? <UserInfo /> : SignIn}
                 </Toolbar>
             </AppBar>
             <Drawer
                 open={isDrawerOpen}
                 variant={isDesktop ? "persistent" : "temporary"}
                 anchor="left"
-                onClose={() => setDrawerOpen(false)}
+                onClose={() => setDrawerOpen("false")}
                 PaperProps={{ sx: (t) => ({ width: t.dimensions["drawerWidth"] }) }}
             >
                 <Toolbar sx={{ display: "flex", justifyContent: "end" }}>
-                    <IconButton aria-label="Close menu" onClick={() => setDrawerOpen(false)}>
+                    <IconButton aria-label="Close menu" onClick={() => setDrawerOpen("false")}>
                         <ChevronLeftIcon />
                     </IconButton>
                 </Toolbar>
                 <Divider />
                 <List disablePadding>
-                    <NavigationListItem>Klienci</NavigationListItem>
-                    <NavigationListItem>Zlecenia</NavigationListItem>
-                    <NavigationListItem>Figi z makiem</NavigationListItem>
+                    <NavigationListItem href="/panel/klienci">Klienci</NavigationListItem>
+                    <NavigationListItem href="/panel/zlecenia">Zlecenia</NavigationListItem>
+                    <NavigationListItem href="/panel/figi">Figi z makiem</NavigationListItem>
                 </List>
             </Drawer>
             <Box component="main" sx={[{ p: 2 }, contentMovedByDrawer(isDrawerOpen && isDesktop)]}>
@@ -76,16 +91,5 @@ const CommonLayout: React.FC<Props> = ({ children, pageTitle }) => {
         </>
     );
 };
-
-function NavigationListItem({ children }: PropsWithChildren) {
-    //TODO: highlight the selected element
-    return (
-        <ListItem disablePadding>
-            <ListItemButton>
-                <ListItemText>{children}</ListItemText>
-            </ListItemButton>
-        </ListItem>
-    );
-}
 
 export default CommonLayout;

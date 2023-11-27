@@ -3,10 +3,12 @@ import { body, validationResult } from "express-validator";
 import bodyParser from "body-parser";
 import { validateBody } from "./middleware/zodValidation";
 import { KlientPayload, klientSchema } from "../common/klientSchema";
+
 import { authenticate, authorize, getUserData } from "./middleware/firebaseAuth";
 import { roleGreaterOrEqual } from "../common/userRoles";
 import {PracownikPayload, pracownikSchema } from "../common/pracownikSchema";
 import {ZgloszeniePayload, zgloszenieSchema } from "../common/zgloszenieSchema";
+
 import mysql, { RowDataPacket } from "mysql2/promise";
 import dotenv from "dotenv";
 
@@ -15,6 +17,7 @@ const app = express();
 
 // serving the react app on "/"
 app.use(express.static("dist/frontend"));
+app.use("/panel/*",express.static("dist/frontend"));
 // app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 dotenv.config();
