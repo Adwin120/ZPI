@@ -1,6 +1,7 @@
 @echo off
 
 docker-compose up -d
+start firebase emulators:start --only auth
 
 timeout 10
 

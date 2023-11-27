@@ -1,12 +1,15 @@
 import express, { Request, Response } from "express";
 import { body, validationResult } from "express-validator";
 import bodyParser from "body-parser";
-import { validateBody } from "../common/zodHelpers";
+import { validateBody } from "./middleware/zodValidation";
 import { KlientPayload, klientSchema } from "../common/klientSchema";
+import { authenticate, authorize, getUserData } from "./middleware/firebaseAuth";
+import { roleGreaterOrEqual } from "../common/userRoles";
 import {PracownikPayload, pracownikSchema } from "../common/pracownikSchema";
 import {ZgloszeniePayload, zgloszenieSchema } from "../common/zgloszenieSchema";
 import mysql, { RowDataPacket } from "mysql2/promise";
 import dotenv from "dotenv";
+
 
 const app = express();
 
@@ -18,10 +21,13 @@ dotenv.config();
 
 app.post(
     "/Klient",
+    authenticate,
+    authorize((user) => roleGreaterOrEqual(user["role"], "pracownik")),
     validateBody(klientSchema),
     async (req: Request, res: Response) => {
         const klientData = req.body as KlientPayload;
-
+        const user = getUserData(res);
+        console.log("user:", user);
         try {
             const dbConnection = await connection;
             await dbConnection.query("INSERT INTO Klient ( Adres, Email, Nazwa, NIP, Telefon) VALUES ( ?, ?, ?, ?, ?)", [ klientData.adres, klientData.email, klientData.nazwa, klientData.nip , klientData.telefon]);
@@ -69,6 +75,7 @@ app.post(
         }
     }
 );
+
 
 app.get('/Klient', async (req: Request, res: Response) => {
     try {
@@ -173,3 +180,4 @@ const connection = await mysql.createConnection({
 console.log("connected to DB");
 
 export default app;
+
