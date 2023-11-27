@@ -1,6 +1,7 @@
 import { createTheme } from "@mui/material";
-import { blue, deepPurple, green, grey, lightGreen } from "@mui/material/colors";
+import { deepPurple, green } from "@mui/material/colors";
 import { plPL } from "@mui/material/locale";
+import { plPL as gridPlPL } from "@mui/x-data-grid";
 
 declare module "@mui/material/styles" {
     interface Theme {
@@ -29,7 +30,8 @@ const theme = createTheme(
             drawerWidth: "230px",
         },
     },
-    plPL
+    plPL,
+    gridPlPL
 );
 
 export default theme;

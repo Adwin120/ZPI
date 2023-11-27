@@ -83,9 +83,6 @@ app.post(
 app.get('/Klient', async (req: Request, res: Response) => {
     try {
         const [results] = await connection.query<RowDataPacket[]>("SELECT * FROM Klient");
-        if (results.length === 0) {
-            return res.status(404).send('Nie znaleziono klientow');
-        }
         return res.json(results);
     } catch (error) {
         console.error(error);
