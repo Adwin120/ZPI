@@ -1,31 +1,37 @@
+import toast from "react-hot-toast";
 import { auth } from "./firebaseAuth";
 import useSWR from "swr";
 import { mutate } from "swr";
 
-export const postToEndpoint =
-    (endpoint: string, then: (res: Response) => unknown = (x) => Promise.resolve(x)) =>
-    async (payload: object) => {
-        console.log(payload);
-        const user = auth.currentUser;
+export const postToEndpoint = (endpoint: string) => async (payload: object) => {
+    console.log(payload);
+    const user = auth.currentUser;
 
-        const headers = new Headers({
-            "Content-Type": "application/json",
-        });
-        if (user) {
-            const token = await user.getIdToken();
-            headers.append("Authorization", "Bearer " + token);
-        }
+    const headers = new Headers({
+        "Content-Type": "application/json",
+    });
+    if (user) {
+        const token = await user.getIdToken();
+        headers.append("Authorization", "Bearer " + token);
+    }
 
-        const data = fetch(endpoint, {
-            headers,
-            body: JSON.stringify(payload),
-            method: "POST",
-        }).then(then);
+    const responsePromise = fetch(endpoint, {
+        headers,
+        body: JSON.stringify(payload),
+        method: "POST",
+    }).then((res) => res.text());
 
-        mutate(endpoint);
-        console.log("posted to", endpoint, "got response", data);
-        return data;
-    };
+    toast.promise(responsePromise, {
+        loading: "Dodawanie...",
+        success: (e) => e,
+        error: (e) => e,
+    });
+
+    const response = await responsePromise;
+    mutate(endpoint);
+    console.log("posted to", endpoint, "got response", response);
+    return response;
+};
 
 const fetchJSON = async (endpoint: RequestInfo) => {
     const user = auth.currentUser;

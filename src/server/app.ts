@@ -22,6 +22,13 @@ app.use("/panel/*",express.static("dist/frontend"));
 app.use(bodyParser.json());
 dotenv.config();
 
+const getErrorMessage = (error: unknown, defaultMessage: string) => {
+    if (typeof error === "object" && error !== null && "message" in error) {
+        return error.message as string
+    }
+    return defaultMessage
+}
+
 app.post(
     "/Klient",
     authenticate,
@@ -35,10 +42,12 @@ app.post(
             const dbConnection = await connection;
             await dbConnection.query("INSERT INTO Klient ( Adres, Email, Nazwa, NIP, Telefon) VALUES ( ?, ?, ?, ?, ?)", [ klientData.adres, klientData.email, klientData.nazwa, klientData.nip , klientData.telefon]);
 
-            res.status(200).send("Dane z formularza dla klienta zostały odebrane");
+            res.status(200).send("Pomyślnie zapisano dane klienta");
         } catch (error) {
             console.error(error);
-            res.status(500).send("Wystąpił błąd podczas zapisywania klienta");
+            res.status(500).send(
+                getErrorMessage(error, "Wystąpił błąd podczas zapisywania klienta")
+            );
         }
     }
 );
