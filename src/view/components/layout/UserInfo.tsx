@@ -1,7 +1,9 @@
 import { Avatar, ButtonBase, Menu, MenuItem, Stack, Typography } from "@mui/material";
 import { blueGrey } from "@mui/material/colors";
+
 import React, { ElementRef, useRef, useState } from "react";
 import { signOut, useUser } from "../../firebaseAuth";
+
 
 interface Props {}
 const UserInfo: React.FC<Props> = () => {

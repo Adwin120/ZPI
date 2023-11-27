@@ -59,21 +59,23 @@ DROP TABLE IF EXISTS `db_main`.`Auto` ;
 
 CREATE TABLE IF NOT EXISTS `db_main`.`Auto` (
   `IdAuto` INT NOT NULL AUTO_INCREMENT,
-  `Model_IdModel` INT NOT NULL,
-  `Klient_IdKlient` INT NOT NULL,
+  `Model_IdModel` INT,
+  `Klient_IdKlient` INT,
   `Rejestracja` VARCHAR(20) NULL DEFAULT NULL,
   `Czas_rozpoczecia` TIMESTAMP NULL DEFAULT NULL,
   `Czas_zakonczenia` TIMESTAMP NULL DEFAULT NULL,
   `Dodatkowe_informacje` VARCHAR(150) NULL DEFAULT NULL,
-  PRIMARY KEY (`IdAuto`, `Klient_IdKlient`),
+  PRIMARY KEY (`IdAuto`),
   INDEX `fk_Auto_Modele1_idx` (`Model_IdModel` ASC) VISIBLE,
   INDEX `fk_Auto_Klient1_idx` (`Klient_IdKlient` ASC) VISIBLE,
   CONSTRAINT `fk_Auto_Klient1`
     FOREIGN KEY (`Klient_IdKlient`)
-    REFERENCES `db_main`.`Klient` (`IdKlient`),
+    REFERENCES `db_main`.`Klient` (`IdKlient`)
+    ON DELETE SET NULL,
   CONSTRAINT `fk_Auto_Modele1`
     FOREIGN KEY (`Model_IdModel`)
-    REFERENCES `db_main`.`Model` (`IdModel`))
+    REFERENCES `db_main`.`Model` (`IdModel`)
+    ON DELETE SET NULL)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb3;
 
@@ -107,10 +109,12 @@ CREATE TABLE IF NOT EXISTS `db_main`.`Auto_Pracownik` (
   INDEX `fk_Pracownik_has_Auto_Pracownik1_idx` (`Pracownik_IdPracownik` ASC) VISIBLE,
   CONSTRAINT `fk_Pracownik_has_Auto_Auto1`
     FOREIGN KEY (`Auto_IdAuto`)
-    REFERENCES `db_main`.`Auto` (`IdAuto`),
+    REFERENCES `db_main`.`Auto` (`IdAuto`)
+    ON DELETE CASCADE,
   CONSTRAINT `fk_Pracownik_has_Auto_Pracownik1`
     FOREIGN KEY (`Pracownik_IdPracownik`)
-    REFERENCES `db_main`.`Pracownik` (`IdPracownik`))
+    REFERENCES `db_main`.`Pracownik` (`IdPracownik`)
+    ON DELETE CASCADE)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb3;
 
@@ -142,10 +146,12 @@ CREATE TABLE IF NOT EXISTS `db_main`.`Auto_Usluga` (
   INDEX `fk_Auto_has_Usluga_Auto1_idx` (`Auto_IdAuto` ASC) VISIBLE,
   CONSTRAINT `fk_Auto_has_Usluga_Auto1`
     FOREIGN KEY (`Auto_IdAuto`)
-    REFERENCES `db_main`.`Auto` (`IdAuto`),
+    REFERENCES `db_main`.`Auto` (`IdAuto`)
+    ON DELETE CASCADE,
   CONSTRAINT `fk_Auto_has_Usluga_Usluga1`
     FOREIGN KEY (`Usluga_IdUsluga`)
-    REFERENCES `db_main`.`Usluga` (`IdUsluga`))
+    REFERENCES `db_main`.`Usluga` (`IdUsluga`)
+    ON DELETE CASCADE)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb3;
 
@@ -157,7 +163,7 @@ DROP TABLE IF EXISTS `db_main`.`Grafik` ;
 
 CREATE TABLE IF NOT EXISTS `db_main`.`Grafik` (
   `IdGrafik` INT NOT NULL AUTO_INCREMENT,
-  `Pracownik_IdPracownik` INT NOT NULL,
+  `Pracownik_IdPracownik` INT,
   `Klient_IdKlient` INT NOT NULL,
   `Czas_rozpoczecia` TIMESTAMP NULL DEFAULT NULL,
   `Czas_zakonczenia` TIMESTAMP NULL DEFAULT NULL,
@@ -167,7 +173,12 @@ CREATE TABLE IF NOT EXISTS `db_main`.`Grafik` (
   INDEX `fk_Grafik_Klient1_idx` (`Klient_IdKlient` ASC) VISIBLE,
   CONSTRAINT `fk_Grafik_Pracownik`
     FOREIGN KEY (`Pracownik_IdPracownik`)
-    REFERENCES `db_main`.`Pracownik` (`IdPracownik`))
+    REFERENCES `db_main`.`Pracownik` (`IdPracownik`)
+    ON DELETE SET NULL,
+  CONSTRAINT `fk_Grafik_Klient1`
+    FOREIGN KEY (`Klient_IdKlient`)
+    REFERENCES `db_main`.`Klient` (`IdKlient`)
+    ON DELETE CASCADE)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb3;
 
@@ -179,14 +190,15 @@ DROP TABLE IF EXISTS `db_main`.`Umowa` ;
 
 CREATE TABLE IF NOT EXISTS `db_main`.`Umowa` (
   `IdUmowa` INT NOT NULL AUTO_INCREMENT,
-  `Klient_IdKlient` INT NOT NULL,
+  `Klient_IdKlient` INT,
   `Data_rozpoczecia` DATE NULL DEFAULT NULL,
   `Data_zakonczenia` DATE NULL DEFAULT NULL,
   PRIMARY KEY (`IdUmowa`),
   INDEX `fk_Umowa_Klient1_idx` (`Klient_IdKlient` ASC) VISIBLE,
   CONSTRAINT `fk_Umowa_Klient1`
     FOREIGN KEY (`Klient_IdKlient`)
-    REFERENCES `db_main`.`Klient` (`IdKlient`))
+    REFERENCES `db_main`.`Klient` (`IdKlient`)
+    ON DELETE SET NULL)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb3;
 
@@ -205,10 +217,12 @@ CREATE TABLE IF NOT EXISTS `db_main`.`Wersja_umowy` (
   INDEX `fk_Usluga_has_Umowa_Usluga1_idx` (`Usluga_IdUsluga` ASC) VISIBLE,
   CONSTRAINT `fk_Usluga_has_Umowa_Umowa1`
     FOREIGN KEY (`Umowa_IdUmowa`)
-    REFERENCES `db_main`.`Umowa` (`IdUmowa`),
+    REFERENCES `db_main`.`Umowa` (`IdUmowa`)
+    ON DELETE CASCADE,
   CONSTRAINT `fk_Usluga_has_Umowa_Usluga1`
     FOREIGN KEY (`Usluga_IdUsluga`)
-    REFERENCES `db_main`.`Usluga` (`IdUsluga`))
+    REFERENCES `db_main`.`Usluga` (`IdUsluga`)
+    ON DELETE CASCADE)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb3;
 
@@ -220,8 +234,8 @@ DROP TABLE IF EXISTS `db_main`.`Zgloszenie` ;
 
 CREATE TABLE IF NOT EXISTS `db_main`.`Zgloszenie` (
   `IdZgloszenie` INT NOT NULL AUTO_INCREMENT,
-  `Pracownik_IdPracownik` INT NOT NULL,
-  `Klient_IdKlient` INT NOT NULL,
+  `Pracownik_IdPracownik` INT,
+  `Klient_IdKlient` INT,
   `Opis` VARCHAR(150) NULL DEFAULT NULL,
   `Status` VARCHAR(45) NULL DEFAULT NULL,
   PRIMARY KEY (`IdZgloszenie`),
@@ -229,10 +243,12 @@ CREATE TABLE IF NOT EXISTS `db_main`.`Zgloszenie` (
   INDEX `fk_Żądanie_Klient1_idx` (`Klient_IdKlient` ASC) VISIBLE,
   CONSTRAINT `fk_Żądanie_Klient1`
     FOREIGN KEY (`Klient_IdKlient`)
-    REFERENCES `db_main`.`Klient` (`IdKlient`),
+    REFERENCES `db_main`.`Klient` (`IdKlient`)
+    ON DELETE CASCADE,
   CONSTRAINT `fk_Żądanie_Pracownik1`
     FOREIGN KEY (`Pracownik_IdPracownik`)
-    REFERENCES `db_main`.`Pracownik` (`IdPracownik`))
+    REFERENCES `db_main`.`Pracownik` (`IdPracownik`)
+    ON DELETE SET NULL)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb3;
 

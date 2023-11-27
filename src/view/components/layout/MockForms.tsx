@@ -5,7 +5,9 @@ import { postToEndpoint } from "../../backendAccess";
 import { klientSchema } from "../../../common/klientSchema";
 import FormTextField from "../FormTextField";
 import { Login, signOut, useUser } from "../../firebaseAuth";
+
 import CommonLayout from "./CommonLayout";
+
 
 interface Props {}
 const MockForms: React.FC<Props> = () => {
@@ -58,7 +60,6 @@ const MockForms: React.FC<Props> = () => {
                 <TextField type="email" name="email" label="E-mail" />
                 <TextField 
                     type="password" 
-                    name="haslo" 
                     label="Hasło" 
                     required 
                     inputProps={{
@@ -82,7 +83,7 @@ const MockForms: React.FC<Props> = () => {
             {/* <FormDialog
                 open={activeFormId === 3}
                 onClose={closeDialog}
-                onSubmit={postToEndpoint("Zadanie")}
+                onSubmit={postToEndpoint("Zgloszenie")}
                 title="formularz 3"
             >
                 <TextField 
@@ -104,6 +105,7 @@ const MockForms: React.FC<Props> = () => {
                 <TextField name="opis" label="Opis" multiline minRows={2} />
                 <TextField name="status" label="Status" />
             </FormDialog> */}
+
         </CommonLayout>
     );
 };
