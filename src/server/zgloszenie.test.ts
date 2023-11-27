@@ -1,6 +1,6 @@
 import request from "supertest";
 import { ZgloszeniePayload } from "../common/zgloszenieSchema";
-import { FieldValidationError, ValidationErrorBody } from "../common/zodHelpers";
+import { FieldValidationError, ValidationErrorBody } from "./middleware/zodValidation";
 
 import app from "./app";
 
