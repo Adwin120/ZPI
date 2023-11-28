@@ -43,9 +43,10 @@ export const authorize: (rule: AuthorizationRule) => RequestHandler =
         const userData = getUserData(res)!;
         const authorized = rule(userData);
         if (!authorized) {
-            res.status(403).send("Twoje konto nie posiada odpowiednich zezwolen");
-            console.log("unauthorized: ", userData);
-            return;
+            //FIXME: this is temporary until we have a way to change user permissions, uncomment lines below
+            // res.status(403).send("Twoje konto nie posiada odpowiednich zezwolen");
+            // console.log("unauthorized: ", userData);
+            // return;
         }
         next();
     };

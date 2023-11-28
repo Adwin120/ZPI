@@ -13,3 +13,11 @@ export const klientSchema = z.object(
 );
 
 export type KlientPayload = z.infer<typeof klientSchema>;
+export type Klient = {
+    IdKlient: number,
+    Adres: string,
+    Email: string,
+    NIP: string,
+    Nazwa: string,
+    Telefon: string
+}

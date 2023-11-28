@@ -1,5 +1,6 @@
 import dotenv from "dotenv";
 dotenv.config();
+process.env["FIREBASE_AUTH_EMULATOR_HOST"] = "127.0.0.1:9099";
 
 import firebaseAdmin from "firebase-admin";
 import firebase from "firebase/compat/app";
