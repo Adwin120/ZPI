@@ -5,7 +5,7 @@ Instrukcja instalacji mysql client:
 a)Mac:
 	-wpisz w terminalu "brew install mysql"
 b)Bill Gates:
-	-pobierz i zainstaluj https://dev.mysql.com/downloads/shell/ (8.0 starczy)
+	-pobierz i zainstaluj -pobierz i zainstaluj https://dev.mysql.com/downloads/workbench/
 	-napraw PATH bo pewnie się nie wpisze "set path=%PATH%;C:\Program Files\MySQL\MySQL Shell 8.0\bin;" 	
 		(wrzuciłem domyślną ścieżkę ale możecie mieć inną jak zmienicie w instalce)
 		sprawdź czy działa wpisując "mysql" w cmd, jak pisze cokolwiek innego niż "mysql is not recognised as an internal or external 			

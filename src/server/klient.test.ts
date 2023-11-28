@@ -22,7 +22,7 @@ describe("Dodawanie Klienta - Testy", () => {
             } satisfies KlientPayload);
 
         expect(response.status).toBe(200);
-        expect(response.text).toBe("Dane z formularza dla klienta zostały odebrane");
+        expect(response.text).toBe("Pomyślnie zapisano dane klienta");
     });
 
     it("nie powinno przetworzyć danych z pustymi polami", async () => {
