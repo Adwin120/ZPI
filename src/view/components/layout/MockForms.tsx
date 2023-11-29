@@ -26,31 +26,6 @@ const MockForms: React.FC<Props> = () => {
                 Dodaj żądanie
             </Button>
 
-            <FormDialog
-                open={activeFormId === 1}
-                onClose={closeDialog}
-                schema={klientSchema}
-                onSubmit={postToEndpoint("Klient", console.log)}
-                title="Dodaj klienta"
-            >
-                <FormTextField name="nazwa" label="Nazwa" required />
-                <FormTextField type="email" name="email" label="E-mail" required />
-                <FormTextField name="adres" label="Adres" required />
-                <FormTextField
-                    name="nip"
-                    label="NIP"
-                    required
-                    helperText="Numer musi mieć dokładnie 10 cyfr"
-                />
-                <FormTextField
-                    type="tel"
-                    name="telefon"
-                    label="Telefon"
-                    required
-                    helperText="Numer musi mieć dokładnie 9 cyfr"
-                />
-            </FormDialog>
-
             {/* <FormDialog
                 open={activeFormId === 2}
                 onClose={closeDialog}
