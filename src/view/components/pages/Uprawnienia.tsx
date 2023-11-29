@@ -10,8 +10,10 @@ import DataTable from "../DataTable";
 import { GridActionsCellItem } from "@mui/x-data-grid";
 
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
+import { useUser } from "../../firebaseAuth";
 
 const Uprawnienia: React.FC = () => {
+    const user = useUser();
     return (
         <CommonLayout subpageTitle="Uprawnienia">
             <Stack alignItems="normal" gap={2}>
@@ -49,7 +51,7 @@ const Uprawnienia: React.FC = () => {
                             width: 50,
                             type: "actions",
                             getActions({ id }) {
-                                return [
+                                return user?.uid === id ? [] : [
                                     <GridActionsCellItem
                                         label="usuń"
                                         icon={<DeleteForeverIcon />}
