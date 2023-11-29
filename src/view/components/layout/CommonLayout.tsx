@@ -83,7 +83,7 @@ const CommonLayout: React.FC<Props> = ({ children, pageTitle = "MOXLY", subpageT
                 <Divider />
                 <List disablePadding>
                     <NavigationListItem href="/panel/klienci">Klienci</NavigationListItem>
-                    <NavigationListItem href="/panel/zlecenia">Zlecenia</NavigationListItem>
+                    <NavigationListItem href="/panel/zgloszenia">Zgłoszenia</NavigationListItem>
                     <NavigationListItem href="/panel/figi">Figi z makiem</NavigationListItem>
                     <NavigationListItem href="/panel/uprawnienia">Uprawnienia</NavigationListItem>
                 </List>

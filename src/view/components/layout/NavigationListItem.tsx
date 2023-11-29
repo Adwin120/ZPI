@@ -1,4 +1,5 @@
 import { ListItem, ListItemButton, ListItemText, SxProps, Theme } from "@mui/material";
+import { grey } from "@mui/material/colors";
 import React, { PropsWithChildren } from "react";
 import { useLocation, useRoute } from "wouter";
 interface Props extends PropsWithChildren {
@@ -10,11 +11,12 @@ const NavigationListItem: React.FC<Props> = ({ children, href }) => {
     const activeStyles: SxProps<Theme> = (t) => ({
         color: t.palette.secondary.dark,
         fontWeight: "bolder",
+        bgcolor: grey["200"]
     });
     return (
-        <ListItem disablePadding onClick={() => navigate(href)}>
+        <ListItem disablePadding onClick={() => navigate(href)} sx={isActive ? activeStyles : {}}>
             <ListItemButton>
-                <ListItemText disableTypography sx={isActive ? activeStyles : {}}>
+                <ListItemText disableTypography >
                     {children}
                 </ListItemText>
             </ListItemButton>

@@ -12,3 +12,10 @@ export const pracownikSchema = z.object(
 );
 
 export type PracownikPayload = z.infer<typeof pracownikSchema>;
+export type Pracownik = {
+    Imie: string;
+    Nazwisko: string;
+    Telefon: string;
+    Email: string;
+    IdPracownik: number
+}

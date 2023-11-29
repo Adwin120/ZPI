@@ -19,7 +19,7 @@ const Uprawnienia: React.FC = () => {
             <Stack alignItems="normal" gap={2}>
                 <div>
                     <AddFormButton
-                        title="uprawnienia"
+                        title="Dodaj autoryzowany email"
                         onSubmit={postToEndpoint("/Uprawnienia")}
                         schema={uprawnienieSchema}
                     >
