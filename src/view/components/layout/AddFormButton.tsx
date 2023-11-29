@@ -1,6 +1,6 @@
 import { Button } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
-import FormDialog from "../FormDialog";
+import FormDialog from "../forms/FormDialog";
 import { ComponentProps, useState } from "react";
 
 type Props = Omit<ComponentProps<typeof FormDialog>, "open" | "onClose">

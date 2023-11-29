@@ -1,10 +1,9 @@
 import toast from "react-hot-toast";
-import { auth } from "./firebaseAuth";
+import { auth, useUser } from "./firebaseAuth";
 import useSWR from "swr";
 import { mutate } from "swr";
 
-export const postToEndpoint = (endpoint: string) => async (payload: object) => {
-    console.log(payload);
+const makeDefaultHeaders = async () => {
     const user = auth.currentUser;
 
     const headers = new Headers({
@@ -15,6 +14,15 @@ export const postToEndpoint = (endpoint: string) => async (payload: object) => {
         headers.append("Authorization", "Bearer " + token);
     }
 
+    return headers;
+};
+
+export type Endpoint = `/${string}`
+
+export const postToEndpoint = (endpoint: Endpoint) => async (payload: object) => {
+    console.log(payload);
+    const headers = await makeDefaultHeaders();
+
     const responsePromise = fetch(endpoint, {
         headers,
         body: JSON.stringify(payload),
@@ -23,13 +31,52 @@ export const postToEndpoint = (endpoint: string) => async (payload: object) => {
 
     toast.promise(responsePromise, {
         loading: "Dodawanie...",
-        success: (e) => e,
+        success: (d) => d,
         error: (e) => e,
     });
 
     const response = await responsePromise;
-    mutate(endpoint);
+    mutate((key) => typeof key === "string" && endpoint.startsWith(key));
     console.log("posted to", endpoint, "got response", response);
+    return response;
+};
+
+export const patchEndpoint = (endpoint: Endpoint) => async (payload: object) => {
+    console.log(payload);
+    const headers = await makeDefaultHeaders();
+
+    const responsePromise = fetch(endpoint, {
+        headers,
+        body: JSON.stringify(payload),
+        method: "PATCH",
+    }).then((res) => res.text());
+
+    toast.promise(responsePromise, {
+        loading: "Edytowanie...",
+        error: (e) => e,
+        success: (d) => d,
+    });
+
+    const response = await responsePromise;
+    mutate((key) => typeof key === "string" && endpoint.startsWith(key));
+    return response;
+};
+
+export const deleteFromEndpoint = (endpoint: Endpoint) => async () => {
+    const headers = await makeDefaultHeaders();
+    const responsePromise = fetch(endpoint, {
+        headers,
+        method: "DELETE",
+    }).then((res) => res.text());
+
+    toast.promise(responsePromise, {
+        loading: "Usuwanie...",
+        error: (e) => e,
+        success: (d) => d,
+    });
+
+    const response = await responsePromise;
+    mutate((key) => typeof key === "string" && endpoint.startsWith(key));
     return response;
 };
 
@@ -46,6 +93,7 @@ const fetchJSON = async (endpoint: RequestInfo) => {
     return data;
 };
 
-export const useGetEndpoint = <Data>(endpoint: string | null) => {
-    return useSWR<Data, Error, string | null>(endpoint, fetchJSON);
+export const useGetEndpoint = <Data>(endpoint: Endpoint | null) => {
+    const user = useUser();
+    return useSWR<Data, Error, string | null>(user ? endpoint : null, fetchJSON);
 };
