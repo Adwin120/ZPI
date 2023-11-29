@@ -8,19 +8,11 @@ import { authenticate, authorize, getUserData } from "./middleware/firebaseAuth"
 import { roleGreaterOrEqual } from "../common/userRoles";
 import {PracownikPayload, pracownikSchema } from "../common/pracownikSchema";
 import {ZgloszeniePayload, zgloszenieSchema } from "../common/zgloszenieSchema";
-import {OptionalZgloszeniePayload, optionalZgloszenieSchema } from "../common/optionalZgloszenieSchema";
-import {OptionalPracownikPayload, optionalPracownikSchema } from "../common/optionalPracownikSchema";
-import {OptionalKlientPayload, optionalKlientSchema } from "../common/optionalKlientSchema";
-import {OptionalAutoPayload, optionalAutoSchema } from "../common/optionalAutoSchema";
 import {AutoPayload, autoSchema } from "../common/autoSchema";
 import {GrafikPayload, grafikSchema } from "../common/grafikSchema";
-import {OptionalGrafikPayload, optionalGrafikSchema } from "../common/optionalGrafikSchema";
 import {UmowaPayload, umowaSchema } from "../common/umowaSchema";
-import {OptionalUmowaPayload, optionalUmowaSchema } from "../common/optionalUmowaSchema";
 import {ModelPayload, modelSchema } from "../common/modelSchema";
-import {OptionalModelPayload, optionalModelSchema } from "../common/optionalModelSchema";
 import {UslugaPayload, uslugaSchema } from "../common/uslugaSchema";
-import {OptionalUslugaPayload, optionalUslugaSchema } from "../common/optionalUslugaSchema"
 
 import mysql, {ResultSetHeader, RowDataPacket } from "mysql2/promise";
 
@@ -237,10 +229,10 @@ app.get('/Zgloszenie', async (req: Request, res: Response) => {
 
 app.patch(
     "/Zgloszenie/:id",
-    validateBody(optionalZgloszenieSchema), 
+    validateBody(zgloszenieSchema.partial()), 
     async (req: Request, res: Response) => {
         const zgloszenieId = req.params["id"];
-        const zgloszenieData = req.body as OptionalZgloszeniePayload; 
+        const zgloszenieData = req.body as Partial<ZgloszeniePayload>; 
 
         const updates = [];
         const values = [];
@@ -275,10 +267,10 @@ app.patch(
 
 app.patch(
     "/Pracownik/:id",
-    validateBody(optionalPracownikSchema), 
+    validateBody(pracownikSchema.partial()), 
     async (req: Request, res: Response) => {
         const pracownikId = req.params["id"];
-        const pracownikData = req.body as OptionalPracownikPayload; 
+        const pracownikData = req.body as Partial<PracownikPayload>; 
 
         const updates = [];
         const values = [];
@@ -313,10 +305,10 @@ app.patch(
 
 app.patch(
     "/Klient/:id",
-    validateBody(optionalKlientSchema), 
+    validateBody(klientSchema.partial()), 
     async (req: Request, res: Response) => {
         const klientId = req.params["id"];
-        const klientData = req.body as OptionalKlientPayload; 
+        const klientData = req.body as Partial<KlientPayload>; 
 
         const updates = [];
         const values = [];
@@ -416,10 +408,10 @@ app.delete('/Auto/:id', async (req: Request, res: Response) => {
 
 app.patch(
     "/Auto/:id",
-    validateBody(optionalAutoSchema), 
+    validateBody(autoSchema.partial()), 
     async (req: Request, res: Response) => {
         const autoId = req.params["id"];
-        const autoData = req.body as OptionalAutoPayload; 
+        const autoData = req.body as Partial<AutoPayload>; 
 
         const updates = [];
         const values = [];
@@ -519,10 +511,10 @@ app.delete('/Grafik/:id', async (req: Request, res: Response) => {
 
 app.patch(
     "/Grafik/:id",
-    validateBody(optionalGrafikSchema), 
+    validateBody(grafikSchema.partial()), 
     async (req: Request, res: Response) => {
         const grafikId = req.params["id"];
-        const grafikData = req.body as OptionalGrafikPayload; 
+        const grafikData = req.body as Partial<GrafikPayload>; 
 
         const updates = [];
         const values = [];
@@ -622,10 +614,10 @@ app.delete('/Umowa/:id', async (req: Request, res: Response) => {
 
 app.patch(
     "/Umowa/:id",
-    validateBody(optionalUmowaSchema), 
+    validateBody(umowaSchema.partial()), 
     async (req: Request, res: Response) => {
         const umowaId = req.params["id"];
-        const umowaData = req.body as OptionalUmowaPayload; 
+        const umowaData = req.body as Partial<UmowaPayload>; 
 
         const updates = [];
         const values = [];
@@ -725,10 +717,10 @@ app.delete('/Model/:id', async (req: Request, res: Response) => {
 
 app.patch(
     "/Model/:id",
-    validateBody(optionalModelSchema), 
+    validateBody(modelSchema.partial()), 
     async (req: Request, res: Response) => {
         const modelId = req.params["id"];
-        const modelData = req.body as OptionalModelPayload; 
+        const modelData = req.body as Partial<ModelPayload>; 
 
         const updates = [];
         const values = [];
@@ -828,10 +820,10 @@ app.delete('Usluga/:id', async (req: Request, res: Response) => {
 
 app.patch(
     "Usluga/:id",
-    validateBody(optionalUslugaSchema), 
+    validateBody(uslugaSchema.partial()), 
     async (req: Request, res: Response) => {
         const uslugaId = req.params["id"];
-        const uslugaData = req.body as OptionalUslugaPayload; 
+        const uslugaData = req.body as Partial<UslugaPayload>; 
 
         const updates = [];
         const values = [];

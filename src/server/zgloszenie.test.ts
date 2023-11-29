@@ -1,6 +1,5 @@
 import request from "supertest";
 import { ZgloszeniePayload } from "../common/zgloszenieSchema";
-import { OptionalZgloszeniePayload } from "../common/optionalZgloszenieSchema";
 import { FieldValidationError, ValidationErrorBody } from "./middleware/zodValidation";
 
 import app from "./app";
@@ -124,8 +123,8 @@ describe('Pobieranie danych Zgloszenia - Testy', () => {
 
       console.log(response.body)
       expect(response.status).toBe(200);
-      expect(response.body).toHaveProperty('Pracownik_IdPracownik', IdPracownik);
-      expect(response.body).toHaveProperty('Klient_IdKlient', IdKlient);
+      expect(response.body).toHaveProperty('pracownikID', IdPracownik);
+      expect(response.body).toHaveProperty('klientID', IdKlient);
       expect(response.body).toHaveProperty('Opis', Opis);
       expect(response.body).toHaveProperty('Status', Status);
   });
@@ -154,8 +153,8 @@ describe('Pobieranie danych Zgloszenia - Testy', () => {
     expect(response.body).toBeInstanceOf(Array);
 
     expect(response.status).toBe(200);
-    expect(response.body[0]).toHaveProperty('Pracownik_IdPracownik', IdPracownik);
-    expect(response.body[0]).toHaveProperty('Klient_IdKlient', IdKlient);
+    expect(response.body[0]).toHaveProperty('pracownikID', IdPracownik);
+    expect(response.body[0]).toHaveProperty('klientID', IdKlient);
     expect(response.body[0]).toHaveProperty('Opis', Opis);
     expect(response.body[0]).toHaveProperty('Status', Status);
 
@@ -165,8 +164,8 @@ describe('Pobieranie danych Zgloszenia - Testy', () => {
     const Status_10 = 'Przeslane'; 
 
     expect(response.status).toBe(200);
-    expect(response.body[9]).toHaveProperty('Pracownik_IdPracownik', IdPracownik_10);
-    expect(response.body[9]).toHaveProperty('Klient_IdKlient', IdKlient_10);
+    expect(response.body[9]).toHaveProperty('pracownikID', IdPracownik_10);
+    expect(response.body[9]).toHaveProperty('klientID', IdKlient_10);
     expect(response.body[9]).toHaveProperty('Opis', Opis_10);
     expect(response.body[9]).toHaveProperty('Status', Status_10);
 });
@@ -198,11 +197,11 @@ describe('Modyfikowanie danych zgloszenia - Testy', () => {
     const response = await request(app)
       .patch(`/Zgloszenie/${IdZgloszenie}`)
       .send({ 
-        Pracownik_IdPracownik: 1, 
-        Klient_IdKlient: 1, 
-        Opis: 'Opis zlecenia', 
-        Status: 'Nowe' 
-      }satisfies OptionalZgloszeniePayload); 
+        pracownikID: 1, 
+        klientID: 1, 
+        opis: 'Opis zlecenia', 
+        status: 'Nowe' 
+      }satisfies Partial<ZgloszeniePayload>); 
 
     expect(response.status).toBe(200);
     expect(response.text).toBe("Zgłoszenie zostało zaktualizowane");
@@ -214,10 +213,10 @@ describe('Modyfikowanie danych zgloszenia - Testy', () => {
     const response = await request(app)
       .patch(`/Zgloszenie/${IdZgloszenie}`)
       .send({ 
-        Pracownik_IdPracownik: 1, 
-        Klient_IdKlient: 1, 
-        Opis: 'Opis zlecenia', 
-      }satisfies OptionalZgloszeniePayload); 
+        pracownikID: 1, 
+        klientID: 1, 
+        opis: 'Opis zlecenia', 
+      }satisfies Partial<ZgloszeniePayload>); 
 
     expect(response.status).toBe(200);
     expect(response.text).toBe("Zgłoszenie zostało zaktualizowane");
@@ -229,9 +228,9 @@ describe('Modyfikowanie danych zgloszenia - Testy', () => {
     const response = await request(app)
       .patch(`/Zgloszenie/${IdZgloszenie}`)
       .send({ 
-        Pracownik_IdPracownik: 1, 
-        Klient_IdKlient: 1, 
-      }satisfies OptionalZgloszeniePayload);
+        pracownikID: 1, 
+        klientID: 1, 
+      }satisfies Partial<ZgloszeniePayload>);
 
     expect(response.status).toBe(200);
     expect(response.text).toBe("Zgłoszenie zostało zaktualizowane");
@@ -243,8 +242,8 @@ describe('Modyfikowanie danych zgloszenia - Testy', () => {
     const response = await request(app)
       .patch(`/Zgloszenie/${IdZgloszenie}`)
       .send({ 
-        Pracownik_IdPracownik: 1, 
-      }satisfies OptionalZgloszeniePayload); 
+        pracownikID: 1, 
+      }satisfies Partial<ZgloszeniePayload>); 
 
     expect(response.status).toBe(200);
     expect(response.text).toBe("Zgłoszenie zostało zaktualizowane");
@@ -255,7 +254,7 @@ describe('Modyfikowanie danych zgloszenia - Testy', () => {
     
     const response = await request(app)
       .patch(`/Zgloszenie/${IdZgloszenie}`)
-      .send({}satisfies OptionalZgloszeniePayload); 
+      .send({}satisfies Partial<ZgloszeniePayload>); 
 
     expect(response.status).toBe(400);
     expect(response.text).toBe("Brak danych do aktualizacji");
@@ -267,8 +266,8 @@ describe('Modyfikowanie danych zgloszenia - Testy', () => {
     const response = await request(app)
       .patch(`/Zgloszenie/${IdZgloszenie}`)
       .send({ 
-        Pracownik_IdPracownik: 1, 
-        Klient_IdKlient: 1, 
+        pracownikID: 1, 
+        klientID: 1, 
         Opis: 'Opis zlecenia', 
         Status: 'Nowe' 
       });  
