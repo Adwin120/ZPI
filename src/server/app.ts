@@ -23,8 +23,6 @@ import {UslugaPayload, uslugaSchema } from "../common/uslugaSchema";
 import {OptionalUslugaPayload, optionalUslugaSchema } from "../common/optionalUslugaSchema"
 
 import mysql, {ResultSetHeader, RowDataPacket } from "mysql2/promise";
-import dotenv from "dotenv";
-
 
 const app = express();
 
@@ -33,7 +31,6 @@ app.use(express.static("dist/frontend"));
 app.use("/panel/*",express.static("dist/frontend"));
 // app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-dotenv.config();
 
 const getErrorMessage = (error: unknown, defaultMessage: string) => {
     if (typeof error === "object" && error !== null && "message" in error) {
