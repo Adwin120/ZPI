@@ -3,8 +3,7 @@ import { auth } from "./firebaseAuth";
 import useSWR from "swr";
 import { mutate } from "swr";
 
-export const postToEndpoint = (endpoint: string) => async (payload: object) => {
-    console.log(payload);
+const makeDefaultHeaders = async () => {
     const user = auth.currentUser;
 
     const headers = new Headers({
@@ -15,6 +14,13 @@ export const postToEndpoint = (endpoint: string) => async (payload: object) => {
         headers.append("Authorization", "Bearer " + token);
     }
 
+    return headers;
+};
+
+export const postToEndpoint = (endpoint: string) => async (payload: object) => {
+    console.log(payload);
+    const headers = await makeDefaultHeaders();
+
     const responsePromise = fetch(endpoint, {
         headers,
         body: JSON.stringify(payload),
@@ -23,13 +29,52 @@ export const postToEndpoint = (endpoint: string) => async (payload: object) => {
 
     toast.promise(responsePromise, {
         loading: "Dodawanie...",
-        success: (e) => e,
+        success: (d) => d,
         error: (e) => e,
     });
 
     const response = await responsePromise;
     mutate(endpoint);
     console.log("posted to", endpoint, "got response", response);
+    return response;
+};
+
+export const patchEndpoint = (endpoint: string) => async (payload: object) => {
+    console.log(payload);
+    const headers = await makeDefaultHeaders();
+
+    const responsePromise = fetch(endpoint, {
+        headers,
+        body: JSON.stringify(payload),
+        method: "PATCH",
+    }).then((res) => res.text());
+
+    toast.promise(responsePromise, {
+        loading: "Edytowanie...",
+        error: (e) => e,
+        success: (d) => d,
+    });
+
+    const response = await responsePromise;
+    mutate(endpoint);
+    return response;
+};
+
+export const deleteFromEndpoint = (endpoint: string) => async () => {
+    const headers = await makeDefaultHeaders();
+    const responsePromise = fetch(endpoint, {
+        headers,
+        method: "DELETE",
+    }).then((res) => res.text());
+
+    toast.promise(responsePromise, {
+        loading: "Usuwanie...",
+        error: (e) => e,
+        success: (d) => d,
+    });
+
+    const response = await responsePromise;
+    mutate(endpoint);
     return response;
 };
 

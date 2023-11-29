@@ -1,8 +1,8 @@
 import { Klient, klientSchema } from "../../../common/klientSchema";
 import { postToEndpoint } from "../../backendAccess";
 import AddFormButton from "../layout/AddFormButton";
-import FormDialog from "../FormDialog";
-import FormTextField from "../FormTextField";
+import FormDialog from "../forms/FormDialog";
+import FormTextField from "../forms/FormTextField";
 import CommonLayout from "../layout/CommonLayout";
 
 import DataTable from "../DataTable";

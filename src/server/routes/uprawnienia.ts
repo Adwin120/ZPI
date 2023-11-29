@@ -12,9 +12,10 @@ app.get("/Uprawnienia", authenticate, authorize("admin"), async (_, res) => {
     const { users } = await auth.listUsers(1000);
     res.status(200).json(
         users.map((user) => ({
+            id: user.uid,
             email: user.email!,
             nazwa: user.displayName!,
-            rola: user.customClaims!["role"],
+            rola: user.customClaims?.["role"] ?? "brak",
         })) satisfies UprawnieniePayload[]
     );
 });

@@ -6,15 +6,12 @@ import {
     Drawer,
     IconButton,
     List,
-    ListItem,
-    ListItemButton,
-    ListItemText,
     Theme,
     Toolbar,
     Typography,
     useMediaQuery,
 } from "@mui/material";
-import React, { PropsWithChildren, useState } from "react";
+import React, { PropsWithChildren } from "react";
 import MenuIcon from "@mui/icons-material/Menu";
 import UserInfo from "./UserInfo";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
@@ -25,9 +22,9 @@ import NavigationListItem from "./NavigationListItem";
 import { useSessionStorage } from "../../hooks/useSessionStorage";
 
 interface Props extends PropsWithChildren {
-    pageTitle: string;
+    pageTitle?: string;
 }
-const CommonLayout: React.FC<Props> = ({ children, pageTitle }) => {
+const CommonLayout: React.FC<Props> = ({ children, pageTitle = "MOXLY" }) => {
     const isDesktop = useMediaQuery((t: Theme) => t.breakpoints.up("md"));
     const [_isDrawerOpen, setDrawerOpen] = useSessionStorage<"true" | "false">("isDrawerOpen", isDesktop ? "true" : "false");
     const isDrawerOpen = _isDrawerOpen === "true"
@@ -83,6 +80,7 @@ const CommonLayout: React.FC<Props> = ({ children, pageTitle }) => {
                     <NavigationListItem href="/panel/klienci">Klienci</NavigationListItem>
                     <NavigationListItem href="/panel/zlecenia">Zlecenia</NavigationListItem>
                     <NavigationListItem href="/panel/figi">Figi z makiem</NavigationListItem>
+                    <NavigationListItem href="/panel/uprawnienia">Uprawnienia</NavigationListItem>
                 </List>
             </Drawer>
             <Box component="main" sx={[{ p: 2 }, contentMovedByDrawer(isDrawerOpen && isDesktop)]}>
