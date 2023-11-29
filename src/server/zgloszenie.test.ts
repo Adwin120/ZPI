@@ -123,8 +123,8 @@ describe('Pobieranie danych Zgloszenia - Testy', () => {
 
       console.log(response.body)
       expect(response.status).toBe(200);
-      expect(response.body).toHaveProperty('pracownikID', IdPracownik);
-      expect(response.body).toHaveProperty('klientID', IdKlient);
+      expect(response.body).toHaveProperty('Pracownik_IdPracownik', IdPracownik);
+      expect(response.body).toHaveProperty('Klient_IdKlient', IdKlient);
       expect(response.body).toHaveProperty('Opis', Opis);
       expect(response.body).toHaveProperty('Status', Status);
   });
@@ -153,8 +153,8 @@ describe('Pobieranie danych Zgloszenia - Testy', () => {
     expect(response.body).toBeInstanceOf(Array);
 
     expect(response.status).toBe(200);
-    expect(response.body[0]).toHaveProperty('pracownikID', IdPracownik);
-    expect(response.body[0]).toHaveProperty('klientID', IdKlient);
+    expect(response.body[0]).toHaveProperty('Pracownik_IdPracownik', IdPracownik);
+    expect(response.body[0]).toHaveProperty('Klient_IdKlient', IdKlient);
     expect(response.body[0]).toHaveProperty('Opis', Opis);
     expect(response.body[0]).toHaveProperty('Status', Status);
 
@@ -164,8 +164,8 @@ describe('Pobieranie danych Zgloszenia - Testy', () => {
     const Status_10 = 'Przeslane'; 
 
     expect(response.status).toBe(200);
-    expect(response.body[9]).toHaveProperty('pracownikID', IdPracownik_10);
-    expect(response.body[9]).toHaveProperty('klientID', IdKlient_10);
+    expect(response.body[9]).toHaveProperty('Pracownik_IdPracownik', IdPracownik_10);
+    expect(response.body[9]).toHaveProperty('Klient_IdKlient', IdKlient_10);
     expect(response.body[9]).toHaveProperty('Opis', Opis_10);
     expect(response.body[9]).toHaveProperty('Status', Status_10);
 });
