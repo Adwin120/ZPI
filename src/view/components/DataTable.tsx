@@ -6,7 +6,7 @@ import {
     type DataGridProps,
 } from "@mui/x-data-grid";
 import { Alert, AlertTitle } from "@mui/material";
-import { useGetEndpoint } from "../backendAccess";
+import { useGetEndpoint } from "./../backendAccess";
 
 interface Props<Row extends GridValidRowModel> extends Partial<DataGridProps<Row>> {
     dataEndpoint: string | null;
