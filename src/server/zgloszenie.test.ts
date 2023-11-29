@@ -1,6 +1,7 @@
 import request from "supertest";
 import { ZgloszeniePayload } from "../common/zgloszenieSchema";
-import { FieldValidationError, ValidationErrorBody } from "../common/zodHelpers";
+import { OptionalZgloszeniePayload } from "../common/optionalZgloszenieSchema";
+import { FieldValidationError, ValidationErrorBody } from "./middleware/zodValidation";
 
 import app from "./app";
 
@@ -112,13 +113,14 @@ describe("Dodawanie Zgloszenia - Testy", () => {
 describe('Pobieranie danych Zgloszenia - Testy', () => {
   it('powinno zwrócić dane zgloszenia dla istniejącego ID', async () => {
    
+      const IdZgloszenie = 1;    
       const IdPracownik = 1; 
       const IdKlient = 1; 
       const Opis = 'Klient zglosil rysy na boku auta.'; 
       const Status = 'Przeslane'; 
 
       const response = await request(app)
-          .get(`/Zgloszenie/${IdPracownik}`);
+          .get(`/Zgloszenie/${IdZgloszenie}`);
 
       console.log(response.body)
       expect(response.status).toBe(200);
@@ -171,3 +173,108 @@ describe('Pobieranie danych Zgloszenia - Testy', () => {
 
 });
 
+// describe('Usuwanie danych zgloszenia - Testy', () => {
+//   it('powinno usunąć zgloszenie o podanym id', async () => {
+//       const IdZgloszenie = 11;  
+//       const response = await request(app).delete(`/Zgloszenie/${IdZgloszenie}`);
+
+//       expect(response.statusCode).toBe(200);
+//       expect(response.text).toBe("Zgloszenie zostało usunięte");
+//   });
+
+//   it('powinno zwrócić błąd 404 dla nieistniejącego ID zgloszenia', async () => {
+//       const nieistniejaceID = 0; 
+//       const response = await request(app).delete(`/Zgloszenie/${nieistniejaceID}`);
+
+//       expect(response.status).toBe(404);
+//       expect(response.text).toBe('Zgloszenie nie zostało znalezione');
+//   });
+// });
+
+describe('Modyfikowanie danych zgloszenia - Testy', () => {
+  it('powinno przetworzyć poprawne dane', async () => {
+    const IdZgloszenie = 3;
+    
+    const response = await request(app)
+      .patch(`/Zgloszenie/${IdZgloszenie}`)
+      .send({ 
+        Pracownik_IdPracownik: 1, 
+        Klient_IdKlient: 1, 
+        Opis: 'Opis zlecenia', 
+        Status: 'Nowe' 
+      }satisfies OptionalZgloszeniePayload); 
+
+    expect(response.status).toBe(200);
+    expect(response.text).toBe("Zgłoszenie zostało zaktualizowane");
+  });
+
+  it('powinno przetworzyć poprawne dane', async () => {
+    const IdZgloszenie = 3;
+    
+    const response = await request(app)
+      .patch(`/Zgloszenie/${IdZgloszenie}`)
+      .send({ 
+        Pracownik_IdPracownik: 1, 
+        Klient_IdKlient: 1, 
+        Opis: 'Opis zlecenia', 
+      }satisfies OptionalZgloszeniePayload); 
+
+    expect(response.status).toBe(200);
+    expect(response.text).toBe("Zgłoszenie zostało zaktualizowane");
+  });
+
+  it('powinno przetworzyć poprawne dane', async () => {
+    const IdZgloszenie = 3;
+    
+    const response = await request(app)
+      .patch(`/Zgloszenie/${IdZgloszenie}`)
+      .send({ 
+        Pracownik_IdPracownik: 1, 
+        Klient_IdKlient: 1, 
+      }satisfies OptionalZgloszeniePayload);
+
+    expect(response.status).toBe(200);
+    expect(response.text).toBe("Zgłoszenie zostało zaktualizowane");
+  });
+
+  it('powinno przetworzyć poprawne dane', async () => {
+    const IdZgloszenie = 3;
+    
+    const response = await request(app)
+      .patch(`/Zgloszenie/${IdZgloszenie}`)
+      .send({ 
+        Pracownik_IdPracownik: 1, 
+      }satisfies OptionalZgloszeniePayload); 
+
+    expect(response.status).toBe(200);
+    expect(response.text).toBe("Zgłoszenie zostało zaktualizowane");
+  });
+
+  it('nie powinno ptrzetworzyć danych, gdy wszystkie pola są puste', async () => {
+    const IdZgloszenie = 3;
+    
+    const response = await request(app)
+      .patch(`/Zgloszenie/${IdZgloszenie}`)
+      .send({}satisfies OptionalZgloszeniePayload); 
+
+    expect(response.status).toBe(400);
+    expect(response.text).toBe("Brak danych do aktualizacji");
+  });
+
+  it('nie powinno przetworzyć danych, gdyzgloszenieID jest mniejsze od 1', async () => {
+    const IdZgloszenie = 0;
+    
+    const response = await request(app)
+      .patch(`/Zgloszenie/${IdZgloszenie}`)
+      .send({ 
+        Pracownik_IdPracownik: 1, 
+        Klient_IdKlient: 1, 
+        Opis: 'Opis zlecenia', 
+        Status: 'Nowe' 
+      });  
+
+    expect(response.status).toBe(404);
+    expect(response.text).toBe("Zgłoszenie nie zostało znalezione");
+  });
+  
+});

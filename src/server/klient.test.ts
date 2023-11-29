@@ -341,3 +341,22 @@ describe('Pobieranie danych Klienta - Testy', () => {
   
 });
 
+// describe('Usuwanie danych Klienta - Testy', () => {
+    
+//     it('powinno usunąć klienta o podanym id', async () => {
+//         const IdKlient1 = 11;  
+//         const response = await request(app).delete(`/Klient/${IdKlient1}`);
+
+//         expect(response.statusCode).toBe(200);
+//         expect(response.text).toBe("Klient został usunięty");
+//     });
+
+//     it('powinno zwrócić błąd 404 dla nieistniejącego ID klienta', async () => {
+//         const nieistniejaceID = 0; 
+//         const response = await request(app).delete(`/Klient/${nieistniejaceID}`);
+  
+//         expect(response.status).toBe(404);
+//         expect(response.text).toBe('Klient nie został znaleziony');
+//     });
+// });
+

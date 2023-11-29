@@ -2,7 +2,7 @@ import request from "supertest";
 
 import app from "./app";
 import { PracownikPayload } from "../common/pracownikSchema";
-import { FieldValidationError, ValidationErrorBody } from "../common/zodHelpers";
+import { FieldValidationError, ValidationErrorBody } from "./middleware/zodValidation";
 
 describe("Dodawanie Pracownika - Testy", () => {
 
@@ -266,3 +266,21 @@ describe('Pobieranie danych Pracownika - Testy', () => {
 });
 
 });
+
+// describe('Usuwanie danych Pracownika - Testy', () => {
+//   it('powinno usunąć pracownika o podanym id', async () => {
+//       const IdPracownik = 21;  
+//       const response = await request(app).delete(`/Pracownik/${IdPracownik}`);
+
+//       expect(response.statusCode).toBe(200);
+//       expect(response.text).toBe("Pracownik został usunięty");
+//   });
+
+//   it('powinno zwrócić błąd 404 dla nieistniejącego ID pracownika', async () => {
+//       const nieistniejaceID = 0; 
+//       const response = await request(app).delete(`/Pracownik/${nieistniejaceID}`);
+
+//       expect(response.status).toBe(404);
+//       expect(response.text).toBe('Pracownik nie został znaleziony');
+//   });
+// });
