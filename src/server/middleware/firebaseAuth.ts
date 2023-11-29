@@ -5,6 +5,7 @@ import { ServiceAccount, initializeApp } from "firebase-admin/app";
 import { User } from "firebase/auth";
 
 import adminCredentials from "../../../firebase-admin.private.json";
+import { Role, roleGreaterOrEqual } from "../../common/userRoles";
 
 initializeApp({
     credential: firebaseAdmin.credential.cert(adminCredentials as ServiceAccount),
@@ -38,10 +39,13 @@ export const authenticate: RequestHandler = async (req, res, next) => {
 };
 
 export type AuthorizationRule = (user: DecodedIdToken) => boolean;
-export const authorize: (rule: AuthorizationRule) => RequestHandler =
+export const authorize: (rule: AuthorizationRule | Role) => RequestHandler =
     (rule) => (req, res, next) => {
         const userData = getUserData(res)!;
-        const authorized = rule(userData);
+        const authorized =
+            typeof rule === "string"
+                ? roleGreaterOrEqual(userData["role"], rule)
+                : rule(userData);
         if (!authorized) {
             //FIXME: this is temporary until we have a way to change user permissions, uncomment lines below
             // res.status(403).send("Twoje konto nie posiada odpowiednich zezwolen");
