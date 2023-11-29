@@ -1,9 +1,9 @@
 import { Button, TextField } from "@mui/material";
 import React, { useCallback, useState } from "react";
-import FormDialog from "../FormDialog";
+import FormDialog from "../forms/FormDialog";
 import { postToEndpoint } from "../../backendAccess";
 import { klientSchema } from "../../../common/klientSchema";
-import FormTextField from "../FormTextField";
+import FormTextField from "../forms/FormTextField";
 import { Login, signOut, useUser } from "../../firebaseAuth";
 
 import CommonLayout from "./CommonLayout";
@@ -15,7 +15,7 @@ const MockForms: React.FC<Props> = () => {
     const closeDialog = useCallback(() => setActiveFormId(null), []);
     const user = useUser();
     return (
-        <CommonLayout pageTitle="MOXLY">
+        <CommonLayout pageTitle="MOXLY" subpageTitle="Panel">
             <Button onClick={() => setActiveFormId(1)} variant="outlined">
                 Dodaj klienta
             </Button>

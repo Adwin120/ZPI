@@ -9,6 +9,7 @@ import Klienci from "./components/pages/Klienci";
 import NotFound from "./components/pages/NotFound";
 import Zlecenia from "./components/pages/Zlecenia";
 import MaterialToaster from "./components/MaterialToaster";
+import Uprawnienia from "./components/pages/Uprawnienia";
 
 const reactContainer = document.getElementById("react-app")!;
 
@@ -23,6 +24,7 @@ root.render(
                 <Route path="/panel/klienci" component={Klienci}></Route>
                 <Route path="/panel/zlecenia" component={Zlecenia}></Route>
                 <Route path="/panel/figi" component={Figi}></Route>
+                <Route path="/panel/uprawnienia" component={Uprawnienia} ></Route>
                 <Route path="/" component={MockForms}></Route>
                 <Route component={NotFound}></Route>
             </Switch>

@@ -1,4 +1,5 @@
 import app from "./app";
+import "./routes/uprawnienia"
 
 const port = 3000;
 
