@@ -1,9 +1,10 @@
 import request from "supertest";
 
-import app from "./app";
-import { KlientPayload } from "../common/klientSchema";
-import { FieldValidationError, ValidationErrorBody } from "./middleware/zodValidation";
-import { getMockBearerTokenWithRole, setupAuthenticationService } from "./testSetup";
+import app from "../app";
+import { KlientPayload } from "../../common/klientSchema";
+import { FieldValidationError, ValidationErrorBody } from "../middleware/zodValidation";
+import { getMockBearerTokenWithRole, setupAuthenticationService } from "../testSetup";
+import "../endpoints/klientEndpoints"
 
 setupAuthenticationService();
 const mockToken = await getMockBearerTokenWithRole("pracownik");
