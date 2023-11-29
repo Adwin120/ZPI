@@ -11,7 +11,7 @@ const dateSchema = z.string().refine((value) => {
 
 export const umowaSchema = z.object(
     {
-        Klient_IdKlient: z.number().min(1,"ID klienta musi być większe od 0.").default(0),
+        Klient_IdKlient: z.number().min(1,"ID klienta musi być większe od 0."),
         Data_rozpoczecia: dateSchema,
         Data_zakonczenia: dateSchema,
     },
