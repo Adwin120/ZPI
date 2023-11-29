@@ -6,10 +6,10 @@ import {
     type DataGridProps,
 } from "@mui/x-data-grid";
 import { Alert, AlertTitle } from "@mui/material";
-import { useGetEndpoint } from "./../backendAccess";
+import { Endpoint, useGetEndpoint } from "./../backendAccess";
 
 interface Props<Row extends GridValidRowModel> extends Partial<DataGridProps<Row>> {
-    dataEndpoint: string | null;
+    dataEndpoint: Endpoint | null;
     schema: GridColDef<Row>[];
 }
 const DataTable = <Row extends GridValidRowModel>({

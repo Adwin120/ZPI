@@ -15,7 +15,7 @@ const MockForms: React.FC<Props> = () => {
     const closeDialog = useCallback(() => setActiveFormId(null), []);
     const user = useUser();
     return (
-        <CommonLayout pageTitle="MOXLY">
+        <CommonLayout pageTitle="MOXLY" subpageTitle="Panel">
             <Button onClick={() => setActiveFormId(1)} variant="outlined">
                 Dodaj klienta
             </Button>

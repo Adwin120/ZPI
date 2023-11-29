@@ -1,6 +1,7 @@
 import {
     AppBar,
     Box,
+    Breadcrumbs,
     Button,
     Divider,
     Drawer,
@@ -23,11 +24,15 @@ import { useSessionStorage } from "../../hooks/useSessionStorage";
 
 interface Props extends PropsWithChildren {
     pageTitle?: string;
+    subpageTitle: string;
 }
-const CommonLayout: React.FC<Props> = ({ children, pageTitle = "MOXLY" }) => {
+const CommonLayout: React.FC<Props> = ({ children, pageTitle = "MOXLY", subpageTitle }) => {
     const isDesktop = useMediaQuery((t: Theme) => t.breakpoints.up("md"));
-    const [_isDrawerOpen, setDrawerOpen] = useSessionStorage<"true" | "false">("isDrawerOpen", isDesktop ? "true" : "false");
-    const isDrawerOpen = _isDrawerOpen === "true"
+    const [_isDrawerOpen, setDrawerOpen] = useSessionStorage<"true" | "false">(
+        "isDrawerOpen",
+        isDesktop ? "true" : "false"
+    );
+    const isDrawerOpen = _isDrawerOpen === "true";
 
     const user = useUser();
     const [_, navigate] = useLocation();
@@ -84,6 +89,9 @@ const CommonLayout: React.FC<Props> = ({ children, pageTitle = "MOXLY" }) => {
                 </List>
             </Drawer>
             <Box component="main" sx={[{ p: 2 }, contentMovedByDrawer(isDrawerOpen && isDesktop)]}>
+                <Typography variant="h5" component="h2" sx={{ pb: 2 }}>
+                    {subpageTitle}
+                </Typography>
                 {children}
             </Box>
         </>

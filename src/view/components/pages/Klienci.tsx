@@ -9,7 +9,7 @@ import DataTable from "../DataTable";
 import { Stack } from "@mui/material";
 
 const Klienci: React.FC = () => (
-    <CommonLayout pageTitle="MOXLY">
+    <CommonLayout pageTitle="MOXLY" subpageTitle="Klienci">
         <Stack alignItems={"normal"} gap={2}>
             <div>
                 <AddFormButton

@@ -13,7 +13,7 @@ import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 
 const Uprawnienia: React.FC = () => {
     return (
-        <CommonLayout>
+        <CommonLayout subpageTitle="Uprawnienia">
             <Stack alignItems="normal" gap={2}>
                 <div>
                     <AddFormButton
@@ -53,7 +53,7 @@ const Uprawnienia: React.FC = () => {
                                     <GridActionsCellItem
                                         label="usuń"
                                         icon={<DeleteForeverIcon />}
-                                        color="inherit"
+                                        color="error"
                                         onClick={deleteFromEndpoint(`/Uprawnienia/${id}`)}
                                     ></GridActionsCellItem>,
                                 ];
