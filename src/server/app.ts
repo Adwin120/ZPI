@@ -42,7 +42,8 @@ app.post(
         console.log("user:", user);
         try {
             const dbConnection = await connection;
-            await dbConnection.query("INSERT INTO Klient ( Adres, Email, Nazwa, NIP, Telefon) VALUES ( ?, ?, ?, ?, ?)", [ klientData.adres, klientData.email, klientData.nazwa, klientData.nip , klientData.telefon]);
+            await dbConnection.query("INSERT INTO Klient ( Adres, Email, Nazwa, NIP, Telefon) VALUES ( ?, ?, ?, ?, ?)", 
+            [ klientData.Adres, klientData.Email, klientData.Nazwa, klientData.NIP , klientData.Telefon]);
 
             res.status(200).send("Pomyślnie zapisano dane klienta");
         } catch (error) {
@@ -62,7 +63,8 @@ app.post(
 
         try {
             const dbConnection = await connection;
-            await dbConnection.query("INSERT INTO Pracownik ( Email, Imie, Nazwisko, Telefon) VALUES ( ?, ?, ?, ?)", [ pracownikData.email, pracownikData.imie, pracownikData.nazwisko, pracownikData.telefon]);
+            await dbConnection.query("INSERT INTO Pracownik ( Email, Imie, Nazwisko, Telefon) VALUES ( ?, ?, ?, ?)", 
+            [ pracownikData.Email, pracownikData.Imie, pracownikData.Nazwisko, pracownikData.Telefon]);
 
             res.status(200).send("Dane z formularza dla pracownika zostały odebrane");
         } catch (error) {
@@ -80,7 +82,8 @@ app.post(
 
         try {
             const dbConnection = await connection;
-            await dbConnection.query("INSERT INTO Zgloszenie ( Pracownik_IdPracownik, Klient_IdKlient, Opis, Status) VALUES ( ?, ?, ?, ?)", [ zgloszenieData.pracownikID, zgloszenieData.klientID, zgloszenieData.opis, zgloszenieData.status]);
+            await dbConnection.query("INSERT INTO Zgloszenie ( Pracownik_IdPracownik, Klient_IdKlient, Opis, Status) VALUES ( ?, ?, ?, ?)",
+             [ zgloszenieData.Pracownik_IdPracownik, zgloszenieData.Klient_IdKlient, zgloszenieData.Opis, zgloszenieData.Status]);
 
             res.status(200).send("Dane z formularza dla zgloszenia zostały odebrane");
         } catch (error) {

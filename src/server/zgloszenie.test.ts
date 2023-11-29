@@ -10,10 +10,10 @@ describe("Dodawanie Zgloszenia - Testy", () => {
     const response = await request(app)
       .post('/Zgloszenie')
       .send({ 
-        pracownikID: 1, 
-        klientID: 1, 
-        opis: 'Opis zlecenia', 
-        status: 'Nowe' 
+        Pracownik_IdPracownik: 1, 
+        Klient_IdKlient: 1, 
+        Opis: 'Opis zlecenia', 
+        Status: 'Nowe' 
       }satisfies ZgloszeniePayload); 
 
     expect(response.status).toBe(200);
@@ -25,7 +25,7 @@ describe("Dodawanie Zgloszenia - Testy", () => {
       const body = response.body as ValidationErrorBody;
       const errorFields = body.errors.map((e) => e.path);
 
-      const requiredFields = ["pracownikID", "klientID", "opis", "status"];
+      const requiredFields = ["Pracownik_IdPracownik", "Klient_IdKlient", "Opis", "Status"];
 
         requiredFields.forEach((field) => {
             const fieldError = body.errors.find((error) => error.path === field);
@@ -39,16 +39,16 @@ describe("Dodawanie Zgloszenia - Testy", () => {
     const response = await request(app)
     .post('/Zgloszenie')
       .send({ 
-        pracownikID: 1, 
-        klientID: 1, 
-        opis: '', 
-        status: 'Nowe' 
+        Pracownik_IdPracownik: 1, 
+        Klient_IdKlient: 1, 
+        Opis: '', 
+        Status: 'Nowe' 
       });
       const body = response.body as ValidationErrorBody;
       
       expect(response.status).toBe(400);
       const descriptionError = body.errors.filter(
-        (blad) => blad.path === "opis" && blad.type === "too_small"
+        (blad) => blad.path === "Opis" && blad.type === "too_small"
     );
       expect(descriptionError.length).toBeGreaterThan(0);
   });
@@ -57,16 +57,16 @@ describe("Dodawanie Zgloszenia - Testy", () => {
     const response = await request(app)
     .post('/Zgloszenie')
     .send({ 
-      pracownikID: 1, 
-      klientID: 1, 
-      opis: 'Opis zlecenia', 
-      status: '' 
+      Pracownik_IdPracownik: 1, 
+      Klient_IdKlient: 1, 
+      Opis: 'Opis zlecenia', 
+      Status: '' 
     });
     const body = response.body as ValidationErrorBody;
 
     expect(response.status).toBe(400);
       const statusError = body.errors.filter(
-        (blad) => blad.path === "status" && blad.type === "too_small"
+        (blad) => blad.path === "Status" && blad.type === "too_small"
     );
       expect(statusError.length).toBeGreaterThan(0);
   });
@@ -75,36 +75,36 @@ describe("Dodawanie Zgloszenia - Testy", () => {
     const response = await request(app)
     .post('/Zgloszenie')
     .send({ 
-      pracownikID: 0, 
-      klientID: 1, 
-      opis: 'Opis zlecenia', 
-      status: 'Nowe' 
+      Pracownik_IdPracownik: 0, 
+      Klient_IdKlient: 1, 
+      Opis: 'Opis zlecenia', 
+      Status: 'Nowe' 
     });
     const body = response.body as ValidationErrorBody;
 
     expect(response.status).toBe(400);
       const pracowniktIDError = body.errors.filter(
-        (blad) => blad.path === "pracownikID" && blad.type === "too_small"
+        (blad) => blad.path === "Pracownik_IdPracownik" && blad.type === "too_small"
     );
       expect(pracowniktIDError.length).toBeGreaterThan(0);
   });
 
-  it('nie powinno przetworzyć danych, gdy klientID jest mniejsze od 1', async () => {
+  it('nie powinno przetworzyć danych, gdy Klient_IdKlient jest mniejsze od 1', async () => {
     const response = await request(app)
     .post('/Zgloszenie')
     .send({ 
-      pracownikID: 1, 
-      klientID: 0, 
-      opis: 'Opis zlecenia', 
-      status: 'Nowe' 
+      Pracownik_IdPracownik: 1, 
+      Klient_IdKlient: 0, 
+      Opis: 'Opis zlecenia', 
+      Status: 'Nowe' 
     });
     const body = response.body as ValidationErrorBody;
 
     expect(response.status).toBe(400);
-      const klientIDError = body.errors.filter(
-        (blad) => blad.path === "klientID" && blad.type === "too_small"
+      const Klient_IdKlientError = body.errors.filter(
+        (blad) => blad.path === "Klient_IdKlient" && blad.type === "too_small"
     );
-      expect(klientIDError.length).toBeGreaterThan(0);
+      expect(Klient_IdKlientError.length).toBeGreaterThan(0);
   });
 
 });
@@ -197,10 +197,10 @@ describe('Modyfikowanie danych zgloszenia - Testy', () => {
     const response = await request(app)
       .patch(`/Zgloszenie/${IdZgloszenie}`)
       .send({ 
-        pracownikID: 1, 
-        klientID: 1, 
-        opis: 'Opis zlecenia', 
-        status: 'Nowe' 
+        Pracownik_IdPracownik: 1, 
+        Klient_IdKlient: 1, 
+        Opis: 'Opis zlecenia', 
+        Status: 'Nowe' 
       }satisfies Partial<ZgloszeniePayload>); 
 
     expect(response.status).toBe(200);
@@ -213,9 +213,9 @@ describe('Modyfikowanie danych zgloszenia - Testy', () => {
     const response = await request(app)
       .patch(`/Zgloszenie/${IdZgloszenie}`)
       .send({ 
-        pracownikID: 1, 
-        klientID: 1, 
-        opis: 'Opis zlecenia', 
+        Pracownik_IdPracownik: 1, 
+        Klient_IdKlient: 1, 
+        Opis: 'Opis zlecenia', 
       }satisfies Partial<ZgloszeniePayload>); 
 
     expect(response.status).toBe(200);
@@ -228,8 +228,8 @@ describe('Modyfikowanie danych zgloszenia - Testy', () => {
     const response = await request(app)
       .patch(`/Zgloszenie/${IdZgloszenie}`)
       .send({ 
-        pracownikID: 1, 
-        klientID: 1, 
+        Pracownik_IdPracownik: 1, 
+        Klient_IdKlient: 1, 
       }satisfies Partial<ZgloszeniePayload>);
 
     expect(response.status).toBe(200);
@@ -242,7 +242,7 @@ describe('Modyfikowanie danych zgloszenia - Testy', () => {
     const response = await request(app)
       .patch(`/Zgloszenie/${IdZgloszenie}`)
       .send({ 
-        pracownikID: 1, 
+        Pracownik_IdPracownik: 1, 
       }satisfies Partial<ZgloszeniePayload>); 
 
     expect(response.status).toBe(200);
@@ -266,8 +266,8 @@ describe('Modyfikowanie danych zgloszenia - Testy', () => {
     const response = await request(app)
       .patch(`/Zgloszenie/${IdZgloszenie}`)
       .send({ 
-        pracownikID: 1, 
-        klientID: 1, 
+        Pracownik_IdPracownik: 1, 
+        Klient_IdKlient: 1, 
         Opis: 'Opis zlecenia', 
         Status: 'Nowe' 
       });  
