@@ -14,11 +14,11 @@ describe("Dodawanie Klienta - Testy", () => {
             .post("/Klient")
             .set({ authorization: "Bearer " + mockToken })
             .send({
-                nazwa: "Testowa Nazwa",
-                adres: "Testowy Adres",
-                email: "test@test.pl",
-                nip: "1234567890",
-                telefon: "123456789",
+                Nazwa: "Testowa Nazwa",
+                Adres: "Testowy Adres",
+                Email: "test@test.pl",
+                NIP: "1234567890",
+                Telefon: "123456789",
             } satisfies KlientPayload);
 
         expect(response.status).toBe(200);
@@ -33,7 +33,7 @@ describe("Dodawanie Klienta - Testy", () => {
         const body = response.body as ValidationErrorBody;
         const errorFields = body.errors.map((e) => e.path);
 
-        const requiredFields = ["nazwa", "adres", "email", "nip", "telefon"];
+        const requiredFields = ["Nazwa", "Adres", "Email", "NIP", "Telefon"];
 
         requiredFields.forEach((field) => {
             const fieldError = body.errors.find((error) => error.path === field);
@@ -48,17 +48,17 @@ describe("Dodawanie Klienta - Testy", () => {
             .post("/Klient")
             .set({ authorization: "Bearer " + mockToken })
             .send({
-                nazwa: "Testowa Nazwa",
-                adres: "Testowy Adres",
-                email: "testtest.pl",
-                nip: "1234567890",
-                telefon: "123456789",
+                Nazwa: "Testowa Nazwa",
+                Adres: "Testowy Adres",
+                Email: "testtest.pl",
+                NIP: "1234567890",
+                Telefon: "123456789",
             });
         const body = response.body as ValidationErrorBody;
 
         expect(response.status).toBe(400);
         const emailError = body.errors.filter(
-            (blad) => blad.path === "email" && blad.type === "invalid_string"
+            (blad) => blad.path === "Email" && blad.type === "invalid_string"
         );
         expect(emailError.length).toBeGreaterThan(0);
     });
@@ -68,17 +68,17 @@ describe("Dodawanie Klienta - Testy", () => {
             .post("/Klient")
             .set({ authorization: "Bearer " + mockToken })
             .send({
-                nazwa: "Testowa Nazwa",
-                adres: "Testowy Adres",
-                email: "test@testpl",
-                nip: "1234567890",
-                telefon: "123456789",
+                Nazwa: "Testowa Nazwa",
+                Adres: "Testowy Adres",
+                Email: "test@testpl",
+                NIP: "1234567890",
+                Telefon: "123456789",
             });
         const body = response.body as ValidationErrorBody;
 
         expect(response.status).toBe(400);
         const emailError = body.errors.filter(
-            (blad) => blad.path === "email" && blad.type === "invalid_string"
+            (blad) => blad.path === "Email" && blad.type === "invalid_string"
         );
         expect(emailError.length).toBeGreaterThan(0);
     });
@@ -88,18 +88,18 @@ describe("Dodawanie Klienta - Testy", () => {
             .post("/Klient")
             .set({ authorization: "Bearer " + mockToken })
             .send({
-                nazwa: "Testowa Nazwa",
-                adres: "Testowy Adres",
-                email: "@test.pl",
-                nip: "1234567890",
-                telefon: "123456789",
+                Nazwa: "Testowa Nazwa",
+                Adres: "Testowy Adres",
+                Email: "@test.pl",
+                NIP: "1234567890",
+                Telefon: "123456789",
             });
         const body = response.body as ValidationErrorBody;
 
         expect(response.status).toBe(400);
         expect(body.errors).toContainEqual({
             type: "invalid_string",
-            path: "email",
+            path: "Email",
             msg: expect.anything(),
         });
     });
@@ -109,17 +109,17 @@ describe("Dodawanie Klienta - Testy", () => {
             .post("/Klient")
             .set({ authorization: "Bearer " + mockToken })
             .send({
-                nazwa: "Testowa Nazwa",
-                adres: "Testowy Adres",
-                email: "test@.pl",
-                nip: "1234567890",
-                telefon: "123456789",
+                Nazwa: "Testowa Nazwa",
+                Adres: "Testowy Adres",
+                Email: "test@.pl",
+                NIP: "1234567890",
+                Telefon: "123456789",
             });
         const body = response.body as ValidationErrorBody;
 
         expect(response.status).toBe(400);
         const emailError = body.errors.filter(
-            (blad) => blad.path === "email" && blad.type === "invalid_string"
+            (blad) => blad.path === "Email" && blad.type === "invalid_string"
         );
         expect(emailError.length).toBeGreaterThan(0);
     });
@@ -129,17 +129,17 @@ describe("Dodawanie Klienta - Testy", () => {
             .post("/Klient")
             .set({ authorization: "Bearer " + mockToken })
             .send({
-                nazwa: "Testowa Nazwa",
-                adres: "Testowy Adres",
-                email: "test@test.",
-                nip: "1234567890",
-                telefon: "123456789",
+                Nazwa: "Testowa Nazwa",
+                Adres: "Testowy Adres",
+                Email: "test@test.",
+                NIP: "1234567890",
+                Telefon: "123456789",
             });
         const body = response.body as ValidationErrorBody;
 
         expect(response.status).toBe(400);
         const emailError = body.errors.filter(
-            (blad) => blad.path === "email" && blad.type === "invalid_string"
+            (blad) => blad.path === "Email" && blad.type === "invalid_string"
         );
         expect(emailError.length).toBeGreaterThan(0);
     });
@@ -149,18 +149,18 @@ describe("Dodawanie Klienta - Testy", () => {
             .post("/Klient")
             .set({ authorization: "Bearer " + mockToken })
             .send({
-                nazwa: "Testowa Nazwa",
-                adres: "Testowy Adres",
-                email: "test@test.",
-                nip: "1234567890",
-                telefon: "12345678",
+                Nazwa: "Testowa Nazwa",
+                Adres: "Testowy Adres",
+                Email: "test@test.",
+                NIP: "1234567890",
+                Telefon: "12345678",
             });
 
         const body = response.body as ValidationErrorBody;
 
         expect(response.status).toBe(400);
         const phoneError = body.errors.filter(
-            (blad) => blad.path === "telefon" && blad.type === "too_small"
+            (blad) => blad.path === "Telefon" && blad.type === "too_small"
         );
         expect(phoneError.length).toBeGreaterThan(0);
     });
@@ -170,17 +170,17 @@ describe("Dodawanie Klienta - Testy", () => {
             .post("/Klient")
             .set({ authorization: "Bearer " + mockToken })
             .send({
-                nazwa: "Testowa Nazwa",
-                adres: "Testowy Adres",
-                email: "test@test.",
-                nip: "1234567890",
-                telefon: "1234567890",
+                Nazwa: "Testowa Nazwa",
+                Adres: "Testowy Adres",
+                Email: "test@test.",
+                NIP: "1234567890",
+                Telefon: "1234567890",
             });
         const body = response.body as ValidationErrorBody;
 
         expect(response.status).toBe(400);
         const phoneError = body.errors.filter(
-            (blad) => blad.path === "telefon" && blad.type === "too_big"
+            (blad) => blad.path === "Telefon" && blad.type === "too_big"
         );
         expect(phoneError.length).toBeGreaterThan(0);
     });
@@ -190,17 +190,17 @@ describe("Dodawanie Klienta - Testy", () => {
             .post("/Klient")
             .set({ authorization: "Bearer " + mockToken })
             .send({
-                nazwa: "Testowa Nazwa",
-                adres: "Testowy Adres",
-                email: "test@test.",
-                nip: "123456789",
-                telefon: "123456789",
+                Nazwa: "Testowa Nazwa",
+                Adres: "Testowy Adres",
+                Email: "test@test.",
+                NIP: "123456789",
+                Telefon: "123456789",
             });
         const body = response.body as ValidationErrorBody;
 
         expect(response.status).toBe(400);
         const nipError = body.errors.filter(
-            (blad) => blad.path === "nip" && blad.type === "too_small"
+            (blad) => blad.path === "NIP" && blad.type === "too_small"
         );
         expect(nipError.length).toBeGreaterThan(0);
     });
@@ -210,17 +210,17 @@ describe("Dodawanie Klienta - Testy", () => {
             .post("/Klient")
             .set({ authorization: "Bearer " + mockToken })
             .send({
-                nazwa: "Testowa Nazwa",
-                adres: "Testowy Adres",
-                email: "test@test.",
-                nip: "12345678900",
-                telefon: "123456789",
+                Nazwa: "Testowa Nazwa",
+                Adres: "Testowy Adres",
+                Email: "test@test.",
+                NIP: "12345678900",
+                Telefon: "123456789",
             });
         const body = response.body as ValidationErrorBody;
 
         expect(response.status).toBe(400);
         const nipError = body.errors.filter(
-            (blad) => blad.path === "nip" && blad.type === "too_big"
+            (blad) => blad.path === "NIP" && blad.type === "too_big"
         );
         expect(nipError.length).toBeGreaterThan(0);
     });
@@ -230,16 +230,16 @@ describe("Dodawanie Klienta - Testy", () => {
             .post("/Klient")
             .set({ authorization: "Bearer " + mockToken })
             .send({
-                nazwa: "Testowa Nazwa",
-                adres: "",
-                email: "test@test.",
-                nip: "1234567890",
-                telefon: "123456789",
+                Nazwa: "Testowa Nazwa",
+                Adres: "",
+                Email: "test@test.",
+                NIP: "1234567890",
+                Telefon: "123456789",
             });
 
         expect(response.status).toBe(400);
         expect(response.body.errors).toContainEqual({
-            path: "adres",
+            path: "Adres",
             type: "too_small",
             msg: expect.anything(),
         } satisfies FieldValidationError);
@@ -250,17 +250,17 @@ describe("Dodawanie Klienta - Testy", () => {
             .post("/Klient")
             .set({ authorization: "Bearer " + mockToken })
             .send({
-                nazwa: "",
-                adres: "Testowy Adres",
-                email: "test@test.",
-                nip: "1234567890",
-                telefon: "123456789",
+                Nazwa: "",
+                Adres: "Testowy Adres",
+                Email: "test@test.",
+                NIP: "1234567890",
+                Telefon: "123456789",
             });
         const body = response.body as ValidationErrorBody;
 
         expect(response.status).toBe(400);
         expect(body.errors).toContainEqual({
-            path: "nazwa",
+            path: "Nazwa",
             type: "too_small",
             msg: expect.anything(),
         } satisfies FieldValidationError);
@@ -340,4 +340,23 @@ describe('Pobieranie danych Klienta - Testy', () => {
   });
   
 });
+
+// describe('Usuwanie danych Klienta - Testy', () => {
+    
+//     it('powinno usunąć klienta o podanym id', async () => {
+//         const IdKlient1 = 11;  
+//         const response = await request(app).delete(`/Klient/${IdKlient1}`);
+
+//         expect(response.statusCode).toBe(200);
+//         expect(response.text).toBe("Klient został usunięty");
+//     });
+
+//     it('powinno zwrócić błąd 404 dla nieistniejącego ID klienta', async () => {
+//         const nieistniejaceID = 0; 
+//         const response = await request(app).delete(`/Klient/${nieistniejaceID}`);
+  
+//         expect(response.status).toBe(404);
+//         expect(response.text).toBe('Klient nie został znaleziony');
+//     });
+// });
 

@@ -10,10 +10,10 @@ describe("Dodawanie Zgloszenia - Testy", () => {
     const response = await request(app)
       .post('/Zgloszenie')
       .send({ 
-        pracownikID: 1, 
-        klientID: 1, 
-        opis: 'Opis zlecenia', 
-        status: 'Nowe' 
+        Pracownik_IdPracownik: 1, 
+        Klient_IdKlient: 1, 
+        Opis: 'Opis zlecenia', 
+        Status: 'Nowe' 
       }satisfies ZgloszeniePayload); 
 
     expect(response.status).toBe(200);
@@ -25,7 +25,7 @@ describe("Dodawanie Zgloszenia - Testy", () => {
       const body = response.body as ValidationErrorBody;
       const errorFields = body.errors.map((e) => e.path);
 
-      const requiredFields = ["pracownikID", "klientID", "opis", "status"];
+      const requiredFields = ["Pracownik_IdPracownik", "Klient_IdKlient", "Opis", "Status"];
 
         requiredFields.forEach((field) => {
             const fieldError = body.errors.find((error) => error.path === field);
@@ -39,16 +39,16 @@ describe("Dodawanie Zgloszenia - Testy", () => {
     const response = await request(app)
     .post('/Zgloszenie')
       .send({ 
-        pracownikID: 1, 
-        klientID: 1, 
-        opis: '', 
-        status: 'Nowe' 
+        Pracownik_IdPracownik: 1, 
+        Klient_IdKlient: 1, 
+        Opis: '', 
+        Status: 'Nowe' 
       });
       const body = response.body as ValidationErrorBody;
       
       expect(response.status).toBe(400);
       const descriptionError = body.errors.filter(
-        (blad) => blad.path === "opis" && blad.type === "too_small"
+        (blad) => blad.path === "Opis" && blad.type === "too_small"
     );
       expect(descriptionError.length).toBeGreaterThan(0);
   });
@@ -57,16 +57,16 @@ describe("Dodawanie Zgloszenia - Testy", () => {
     const response = await request(app)
     .post('/Zgloszenie')
     .send({ 
-      pracownikID: 1, 
-      klientID: 1, 
-      opis: 'Opis zlecenia', 
-      status: '' 
+      Pracownik_IdPracownik: 1, 
+      Klient_IdKlient: 1, 
+      Opis: 'Opis zlecenia', 
+      Status: '' 
     });
     const body = response.body as ValidationErrorBody;
 
     expect(response.status).toBe(400);
       const statusError = body.errors.filter(
-        (blad) => blad.path === "status" && blad.type === "too_small"
+        (blad) => blad.path === "Status" && blad.type === "too_small"
     );
       expect(statusError.length).toBeGreaterThan(0);
   });
@@ -75,36 +75,36 @@ describe("Dodawanie Zgloszenia - Testy", () => {
     const response = await request(app)
     .post('/Zgloszenie')
     .send({ 
-      pracownikID: 0, 
-      klientID: 1, 
-      opis: 'Opis zlecenia', 
-      status: 'Nowe' 
+      Pracownik_IdPracownik: 0, 
+      Klient_IdKlient: 1, 
+      Opis: 'Opis zlecenia', 
+      Status: 'Nowe' 
     });
     const body = response.body as ValidationErrorBody;
 
     expect(response.status).toBe(400);
       const pracowniktIDError = body.errors.filter(
-        (blad) => blad.path === "pracownikID" && blad.type === "too_small"
+        (blad) => blad.path === "Pracownik_IdPracownik" && blad.type === "too_small"
     );
       expect(pracowniktIDError.length).toBeGreaterThan(0);
   });
 
-  it('nie powinno przetworzyć danych, gdy klientID jest mniejsze od 1', async () => {
+  it('nie powinno przetworzyć danych, gdy Klient_IdKlient jest mniejsze od 1', async () => {
     const response = await request(app)
     .post('/Zgloszenie')
     .send({ 
-      pracownikID: 1, 
-      klientID: 0, 
-      opis: 'Opis zlecenia', 
-      status: 'Nowe' 
+      Pracownik_IdPracownik: 1, 
+      Klient_IdKlient: 0, 
+      Opis: 'Opis zlecenia', 
+      Status: 'Nowe' 
     });
     const body = response.body as ValidationErrorBody;
 
     expect(response.status).toBe(400);
-      const klientIDError = body.errors.filter(
-        (blad) => blad.path === "klientID" && blad.type === "too_small"
+      const Klient_IdKlientError = body.errors.filter(
+        (blad) => blad.path === "Klient_IdKlient" && blad.type === "too_small"
     );
-      expect(klientIDError.length).toBeGreaterThan(0);
+      expect(Klient_IdKlientError.length).toBeGreaterThan(0);
   });
 
 });
@@ -112,13 +112,14 @@ describe("Dodawanie Zgloszenia - Testy", () => {
 describe('Pobieranie danych Zgloszenia - Testy', () => {
   it('powinno zwrócić dane zgloszenia dla istniejącego ID', async () => {
    
+      const IdZgloszenie = 1;    
       const IdPracownik = 1; 
       const IdKlient = 1; 
       const Opis = 'Klient zglosil rysy na boku auta.'; 
       const Status = 'Przeslane'; 
 
       const response = await request(app)
-          .get(`/Zgloszenie/${IdPracownik}`);
+          .get(`/Zgloszenie/${IdZgloszenie}`);
 
       console.log(response.body)
       expect(response.status).toBe(200);
@@ -171,3 +172,108 @@ describe('Pobieranie danych Zgloszenia - Testy', () => {
 
 });
 
+// describe('Usuwanie danych zgloszenia - Testy', () => {
+//   it('powinno usunąć zgloszenie o podanym id', async () => {
+//       const IdZgloszenie = 11;  
+//       const response = await request(app).delete(`/Zgloszenie/${IdZgloszenie}`);
+
+//       expect(response.statusCode).toBe(200);
+//       expect(response.text).toBe("Zgloszenie zostało usunięte");
+//   });
+
+//   it('powinno zwrócić błąd 404 dla nieistniejącego ID zgloszenia', async () => {
+//       const nieistniejaceID = 0; 
+//       const response = await request(app).delete(`/Zgloszenie/${nieistniejaceID}`);
+
+//       expect(response.status).toBe(404);
+//       expect(response.text).toBe('Zgloszenie nie zostało znalezione');
+//   });
+// });
+
+describe('Modyfikowanie danych zgloszenia - Testy', () => {
+  it('powinno przetworzyć poprawne dane', async () => {
+    const IdZgloszenie = 3;
+    
+    const response = await request(app)
+      .patch(`/Zgloszenie/${IdZgloszenie}`)
+      .send({ 
+        Pracownik_IdPracownik: 1, 
+        Klient_IdKlient: 1, 
+        Opis: 'Opis zlecenia', 
+        Status: 'Nowe' 
+      }satisfies Partial<ZgloszeniePayload>); 
+
+    expect(response.status).toBe(200);
+    expect(response.text).toBe("Zgłoszenie zostało zaktualizowane");
+  });
+
+  it('powinno przetworzyć poprawne dane', async () => {
+    const IdZgloszenie = 3;
+    
+    const response = await request(app)
+      .patch(`/Zgloszenie/${IdZgloszenie}`)
+      .send({ 
+        Pracownik_IdPracownik: 1, 
+        Klient_IdKlient: 1, 
+        Opis: 'Opis zlecenia', 
+      }satisfies Partial<ZgloszeniePayload>); 
+
+    expect(response.status).toBe(200);
+    expect(response.text).toBe("Zgłoszenie zostało zaktualizowane");
+  });
+
+  it('powinno przetworzyć poprawne dane', async () => {
+    const IdZgloszenie = 3;
+    
+    const response = await request(app)
+      .patch(`/Zgloszenie/${IdZgloszenie}`)
+      .send({ 
+        Pracownik_IdPracownik: 1, 
+        Klient_IdKlient: 1, 
+      }satisfies Partial<ZgloszeniePayload>);
+
+    expect(response.status).toBe(200);
+    expect(response.text).toBe("Zgłoszenie zostało zaktualizowane");
+  });
+
+  it('powinno przetworzyć poprawne dane', async () => {
+    const IdZgloszenie = 3;
+    
+    const response = await request(app)
+      .patch(`/Zgloszenie/${IdZgloszenie}`)
+      .send({ 
+        Pracownik_IdPracownik: 1, 
+      }satisfies Partial<ZgloszeniePayload>); 
+
+    expect(response.status).toBe(200);
+    expect(response.text).toBe("Zgłoszenie zostało zaktualizowane");
+  });
+
+  it('nie powinno ptrzetworzyć danych, gdy wszystkie pola są puste', async () => {
+    const IdZgloszenie = 3;
+    
+    const response = await request(app)
+      .patch(`/Zgloszenie/${IdZgloszenie}`)
+      .send({}satisfies Partial<ZgloszeniePayload>); 
+
+    expect(response.status).toBe(400);
+    expect(response.text).toBe("Brak danych do aktualizacji");
+  });
+
+  it('nie powinno przetworzyć danych, gdyzgloszenieID jest mniejsze od 1', async () => {
+    const IdZgloszenie = 0;
+    
+    const response = await request(app)
+      .patch(`/Zgloszenie/${IdZgloszenie}`)
+      .send({ 
+        Pracownik_IdPracownik: 1, 
+        Klient_IdKlient: 1, 
+        Opis: 'Opis zlecenia', 
+        Status: 'Nowe' 
+      });  
+
+    expect(response.status).toBe(404);
+    expect(response.text).toBe("Zgłoszenie nie zostało znalezione");
+  });
+  
+});
