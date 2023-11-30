@@ -1,10 +1,6 @@
-import { Button, TextField } from "@mui/material";
+import { Button } from "@mui/material";
 import React, { useCallback, useState } from "react";
-import FormDialog from "../forms/FormDialog";
-import { postToEndpoint } from "../../backendAccess";
-import { klientSchema } from "../../../common/klientSchema";
-import FormTextField from "../forms/FormTextField";
-import { Login, signOut, useUser } from "../../firebaseAuth";
+import { useUser } from "../../firebaseAuth";
 
 import CommonLayout from "./CommonLayout";
 

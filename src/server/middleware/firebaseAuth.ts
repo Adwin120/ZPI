@@ -2,8 +2,6 @@ import { RequestHandler, Response } from "express";
 import firebaseAdmin from "firebase-admin";
 import { ServiceAccount, initializeApp } from "firebase-admin/app";
 
-import { User } from "firebase/auth";
-
 import adminCredentials from "../../../firebase-admin.private.json";
 import { Role, roleGreaterOrEqual } from "../../common/userRoles";
 
@@ -65,12 +63,14 @@ export interface DecodedIdToken {
     exp: number;
     firebase: {
         identities: {
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             [key: string]: any;
         };
         sign_in_provider: string;
         sign_in_second_factor?: string;
         second_factor_identifier?: string;
         tenant?: string;
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         [key: string]: any;
     };
     iat: number;
@@ -79,5 +79,6 @@ export interface DecodedIdToken {
     picture?: string;
     sub: string;
     uid: string;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     [key: string]: any;
 }
