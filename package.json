@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "build": "parcel build",
-    "dev": "concurrently \"parcel watch\" \"nodemon --env-file=.env dist/backend/index.js\"",
+    "dev": "concurrently \"parcel watch\" \"nodemon --env-file=test.env dist/backend/index.js\"",
     "start": "node dist/backend/index.js",
     "lint": "eslint .",
     "test": "node --env-file=test.env --experimental-vm-modules --no-warnings node_modules/jest/bin/jest.js",

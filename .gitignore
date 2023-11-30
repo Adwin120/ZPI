@@ -133,3 +133,6 @@ dist
 .pnp.*
 
 database/.DS_Store
+
+.firebase-admin.private.json
+.firebase.public.json

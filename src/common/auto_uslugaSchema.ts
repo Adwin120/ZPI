@@ -10,3 +10,7 @@ export const auto_uslugaSchema = z.object(
 );
 
 export type Auto_uslugaPayload = z.infer<typeof auto_uslugaSchema>;
+export type Auto_usluga = {
+    Auto_IdAuto: number,
+    Usluga_IdUsluga: number
+}

@@ -10,3 +10,7 @@ export const auto_pracownikSchema = z.object(
 );
 
 export type Auto_pracownikPayload = z.infer<typeof auto_pracownikSchema>;
+export type Auto_pracownik = {
+    Pracownik_IdPracownik: number,
+    Auto_IdAuto: number
+}
