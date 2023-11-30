@@ -1,8 +1,9 @@
 import request from "supertest";
 
-import app from "./app";
-import { PracownikPayload } from "../common/pracownikSchema";
-import { FieldValidationError, ValidationErrorBody } from "./middleware/zodValidation";
+import app from "../app";
+import { PracownikPayload } from "../../common/pracownikSchema";
+import { FieldValidationError, ValidationErrorBody } from "../middleware/zodValidation";
+import "../endpoints/pracownikEndpoints"
 
 describe("Dodawanie Pracownika - Testy", () => {
 

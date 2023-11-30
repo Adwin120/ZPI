@@ -11,8 +11,8 @@ const datetimeSchema = z.string().refine((value) => {
 
 export const autoSchema = z.object(
     {
-        Model_IdModel: z.number().min(1,"ID modelu musi być większe od 0.").default(0),
-        Klient_IdKlient: z.number().min(1,"ID klienta musi być większe od 0.").default(0),
+        Model_IdModel: z.number().min(1,"ID modelu musi być większe od 0."),
+        Klient_IdKlient: z.number().min(1,"ID klienta musi być większe od 0."),
         Rejestracja: z.string().min(1, "Rejestracja jest wymagana.").default(""),
         Czas_rozpoczecia: datetimeSchema,
         Czas_zakonczenia: datetimeSchema,
