@@ -57,6 +57,7 @@ const Uprawnienia: React.FC = () => {
                                         icon={<DeleteForeverIcon />}
                                         color="error"
                                         onClick={deleteFromEndpoint(`/Uprawnienia/${id}`)}
+                                        key="delete"
                                     ></GridActionsCellItem>,
                                 ];
                             },

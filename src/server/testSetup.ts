@@ -12,7 +12,7 @@ export const setupAuthenticationService = () => {
 };
 
 export const getMockBearerTokenWithRole = async (role: Role) => {
-    let customToken = await firebaseAdmin.auth().createCustomToken("mockUser_" + role, {
+    const customToken = await firebaseAdmin.auth().createCustomToken("mockUser_" + role, {
         role,
     });
     const mockUser = await firebase.auth().signInWithCustomToken(customToken);

@@ -2,10 +2,14 @@ import { ListItem, ListItemButton, ListItemText, SxProps, Theme } from "@mui/mat
 import { grey } from "@mui/material/colors";
 import React, { PropsWithChildren } from "react";
 import { useLocation, useRoute } from "wouter";
+import { Role, roleGreaterOrEqual } from "../../../common/userRoles";
+import { useRole } from "../../firebaseAuth";
 interface Props extends PropsWithChildren {
     href: string;
+    minimalRole: Role;
 }
-const NavigationListItem: React.FC<Props> = ({ children, href }) => {
+const NavigationListItem: React.FC<Props> = ({ children, href, minimalRole }) => {
+    
     const [_, navigate] = useLocation();
     const [isActive] = useRoute(href);
     const activeStyles: SxProps<Theme> = (t) => ({
@@ -13,6 +17,12 @@ const NavigationListItem: React.FC<Props> = ({ children, href }) => {
         fontWeight: "bolder",
         bgcolor: grey["200"]
     });
+
+    const [role] = useRole()
+    if (!role || roleGreaterOrEqual(role, minimalRole)) {
+        return <></>
+    }
+
     return (
         <ListItem disablePadding onClick={() => navigate(href)} sx={isActive ? activeStyles : {}}>
             <ListItemButton>

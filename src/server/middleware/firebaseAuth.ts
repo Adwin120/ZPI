@@ -2,8 +2,6 @@ import { RequestHandler, Response } from "express";
 import firebaseAdmin from "firebase-admin";
 import { ServiceAccount, initializeApp } from "firebase-admin/app";
 
-import { User } from "firebase/auth";
-
 import adminCredentials from "../../../firebase-admin.private.json";
 import { Role, roleGreaterOrEqual } from "../../common/userRoles";
 

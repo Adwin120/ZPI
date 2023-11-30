@@ -82,11 +82,11 @@ const CommonLayout: React.FC<Props> = ({ children, pageTitle = "MOXLY", subpageT
                 </Toolbar>
                 <Divider />
                 <List disablePadding>
-                    <NavigationListItem href="/panel/klienci">Klienci</NavigationListItem>
-                    <NavigationListItem href="/panel/pracownicy">Pracownicy</NavigationListItem>
-                    <NavigationListItem href="/panel/zgloszenia">Zgłoszenia</NavigationListItem>
-                    <NavigationListItem href="/panel/figi">Figi z makiem</NavigationListItem>
-                    <NavigationListItem href="/panel/uprawnienia">Uprawnienia</NavigationListItem>
+                    <NavigationListItem href="/panel/klienci" minimalRole="pracownik">Klienci</NavigationListItem>
+                    <NavigationListItem href="/panel/pracownicy" minimalRole="pracownik">Pracownicy</NavigationListItem>
+                    <NavigationListItem href="/panel/zgloszenia" minimalRole="pracownik">Zgłoszenia</NavigationListItem>
+                    <NavigationListItem href="/panel/figi" minimalRole="brak">Figi z makiem</NavigationListItem>
+                    <NavigationListItem href="/panel/uprawnienia" minimalRole="admin">Uprawnienia</NavigationListItem>
                 </List>
             </Drawer>
             <Box component="main" sx={[{ p: 2 }, contentMovedByDrawer(isDrawerOpen && isDesktop)]}>
