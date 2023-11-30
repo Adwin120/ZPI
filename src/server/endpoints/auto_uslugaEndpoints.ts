@@ -3,11 +3,14 @@ import {connection} from "../app";
 import { Request, Response } from "express";
 import { validateBody } from "../middleware/zodValidation";
 import { Auto_uslugaPayload, auto_uslugaSchema } from "../../common/auto_uslugaSchema";
-import { getUserData } from "../middleware/firebaseAuth";
+import { authenticate, authorize, getUserData } from "../middleware/firebaseAuth";
 import {ResultSetHeader, RowDataPacket } from "mysql2/promise";
+import { roleGreaterOrEqual } from "../../common/userRoles";
 
 app.post(
     "/Auto_usluga",
+    authenticate,
+    authorize((user) => roleGreaterOrEqual(user["role"], "pracownik")),
     validateBody(auto_uslugaSchema),
     async (req: Request, res: Response) => {
         const auto_uslugaData = req.body as Auto_uslugaPayload;
@@ -26,7 +29,7 @@ app.post(
     }
 );
 
-app.get('/Auto_usluga', async (req: Request, res: Response) => {
+app.get('/Auto_usluga',authenticate, authorize((user) => roleGreaterOrEqual(user["role"], "pracownik")), async (req: Request, res: Response) => {
     try {
         const [results] = await connection.query<RowDataPacket[]>("SELECT * FROM Auto_Usluga");
         if (results.length === 0) {

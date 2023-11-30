@@ -17,7 +17,7 @@ const getErrorMessage = (error: unknown, defaultMessage: string) => {
 app.post(
     "/Klient",
     authenticate,
-    authorize((user) => roleGreaterOrEqual(user["role"], "pracownik")),
+    authorize((user) => roleGreaterOrEqual(user["role"], "kierownik")),
     validateBody(klientSchema),
     async (req: Request, res: Response) => {
         const klientData = req.body as KlientPayload;
@@ -38,7 +38,7 @@ app.post(
     }
 );
 
-app.get('/Klient', async (req: Request, res: Response) => {
+app.get('/Klient',authenticate, authorize((user) => roleGreaterOrEqual(user["role"], "kierownik")), async (req: Request, res: Response) => {
     try {
         const [results] = await connection.query<RowDataPacket[]>("SELECT * FROM Klient");
         if (results.length === 0) {
@@ -51,7 +51,7 @@ app.get('/Klient', async (req: Request, res: Response) => {
     }
 });
 
-app.get('/Klient/:id', async (req: Request, res: Response) => {
+app.get('/Klient/:id', authenticate, authorize((user) => roleGreaterOrEqual(user["role"], "kierownik")), async (req: Request, res: Response) => {
     const klientId = req.params["id"];
 
     const [results] = await connection.query<RowDataPacket[]>("SELECT * FROM Klient WHERE IdKlient = ?", [klientId]);
@@ -67,7 +67,7 @@ app.get('/Klient/:id', async (req: Request, res: Response) => {
    }
 });
 
-app.delete('/Klient/:id', async (req: Request, res: Response) => {
+app.delete('/Klient/:id', authenticate, authorize((user) => roleGreaterOrEqual(user["role"], "admin")), async (req: Request, res: Response) => {
     const klientId = req.params["id"];
 
     const [results] = await connection.query<ResultSetHeader>("DELETE FROM Klient WHERE IdKlient = ?", [klientId]);
@@ -85,6 +85,8 @@ app.delete('/Klient/:id', async (req: Request, res: Response) => {
 
 app.patch(
     "/Klient/:id",
+    authenticate,
+    authorize((user) => roleGreaterOrEqual(user["role"], "kierownik")),
     validateBody(klientSchema.partial()), 
     async (req: Request, res: Response) => {
         const klientId = req.params["id"];

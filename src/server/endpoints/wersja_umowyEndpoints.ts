@@ -3,11 +3,14 @@ import {connection} from "../app";
 import { Request, Response } from "express";
 import { validateBody } from "../middleware/zodValidation";
 import { Wersja_umowyPayload, wersja_umowySchema } from "../../common/wersja_umowySchema";
-import { getUserData } from "../middleware/firebaseAuth";
+import { authenticate, authorize, getUserData } from "../middleware/firebaseAuth";
 import {ResultSetHeader, RowDataPacket } from "mysql2/promise";
+import { roleGreaterOrEqual } from "../../common/userRoles";
 
 app.post(
     "/Wersja_umowy",
+    authenticate,
+    authorize((user) => roleGreaterOrEqual(user["role"], "admin")),
     validateBody(wersja_umowySchema),
     async (req: Request, res: Response) => {
         const wersja_umowyData = req.body as Wersja_umowyPayload;
@@ -26,15 +29,20 @@ app.post(
     }
 );
 
-app.get('/Wersja_umowy', async (req: Request, res: Response) => {
-    try {
-        const [results] = await connection.query<RowDataPacket[]>("SELECT * FROM Wersja_umowy");
-        if (results.length === 0) {
-            return res.status(200).send('Nie znaleziono wersji umowy');
+app.get(
+    '/Wersja_umowy',
+    authenticate,
+    authorize((user) => roleGreaterOrEqual(user["role"], "kierownik")),
+    async (req: Request, res: Response) => {
+        try {
+            const [results] = await connection.query<RowDataPacket[]>("SELECT * FROM Wersja_umowy");
+            if (results.length === 0) {
+                return res.status(200).send('Nie znaleziono wersji umowy');
+            }
+            return res.json(results);
+        } catch (error) {
+            console.error(error);
+            return res.status(500).send('Wystąpił błąd podczas pobierania danych wersji umowy');
         }
-        return res.json(results);
-    } catch (error) {
-        console.error(error);
-        return res.status(500).send('Wystąpił błąd podczas pobierania danych wersji umowy');
     }
-});
+);

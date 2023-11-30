@@ -3,12 +3,15 @@ import {connection} from "../app";
 import { Request, Response } from "express";
 import { validateBody } from "../middleware/zodValidation";
 import {AutoPayload, autoSchema } from "../../common/autoSchema";
-import { getUserData } from "../middleware/firebaseAuth";
+import { authenticate, authorize, getUserData } from "../middleware/firebaseAuth";
 import {ResultSetHeader, RowDataPacket } from "mysql2/promise";
+import { roleGreaterOrEqual } from "../../common/userRoles";
 
 app.post(
     "/Auto",
+    authenticate,
     validateBody(autoSchema),
+    authorize((user) => roleGreaterOrEqual(user["role"], "pracownik")),
     async (req: Request, res: Response) => {
         const autoData = req.body as AutoPayload;
         const user = getUserData(res);
@@ -26,7 +29,7 @@ app.post(
     }
 );
 
-app.get('/Auto', async (req: Request, res: Response) => {
+app.get('/Auto',authenticate, authorize((user) => roleGreaterOrEqual(user["role"], "klient")), async (req: Request, res: Response) => {
     try {
         const [results] = await connection.query<RowDataPacket[]>("SELECT * FROM Auto");
         if (results.length === 0) {
@@ -39,7 +42,7 @@ app.get('/Auto', async (req: Request, res: Response) => {
     }
 });
 
-app.get('/Auto/:id', async (req: Request, res: Response) => {
+app.get('/Auto/:id',authenticate, authorize((user) => roleGreaterOrEqual(user["role"], "klient")), async (req: Request, res: Response) => {
     const autoId = req.params["id"];
 
     const [results] = await connection.query<RowDataPacket[]>("SELECT * FROM Auto WHERE IdAuto = ?", [autoId]);
@@ -55,7 +58,7 @@ app.get('/Auto/:id', async (req: Request, res: Response) => {
    }
 });
 
-app.delete('/Auto/:id', async (req: Request, res: Response) => {
+app.delete('/Auto/:id',authenticate, authorize((user) => roleGreaterOrEqual(user["role"], "admin")), async (req: Request, res: Response) => {
     const autoId = req.params["id"];
 
     const [results] = await connection.query<ResultSetHeader>("DELETE FROM Auto WHERE IdAuto = ?", [autoId]);
@@ -73,6 +76,8 @@ app.delete('/Auto/:id', async (req: Request, res: Response) => {
 
 app.patch(
     "/Auto/:id",
+    authenticate,
+    authorize((user) => roleGreaterOrEqual(user["role"], "pracownik")),
     validateBody(autoSchema.partial()), 
     async (req: Request, res: Response) => {
         const autoId = req.params["id"];

@@ -4,12 +4,17 @@ import app from "../app";
 import { PracownikPayload } from "../../common/pracownikSchema";
 import { FieldValidationError, ValidationErrorBody } from "../middleware/zodValidation";
 import "../endpoints/pracownikEndpoints"
+import { getMockBearerTokenWithRole, setupAuthenticationService } from "../testSetup";
+
+setupAuthenticationService();
+const mockToken = await getMockBearerTokenWithRole("admin");
 
 describe("Dodawanie Pracownika - Testy", () => {
 
   it('powinno przetworzyć poprawne dane', async () => {
     const response = await request(app)
       .post('/Pracownik')
+      .set({ authorization: "Bearer " + mockToken })
       .send({  
           Imie: 'Jan',
           Email: 'test@test.pl',
@@ -22,7 +27,8 @@ describe("Dodawanie Pracownika - Testy", () => {
   });
 
   it('powinien zwrócić błąd, gdy formularz jest pusty', async () => {
-      const response = await request(app).post('/Pracownik').send({})
+      const response = await request(app).post('/Pracownik').
+      set({ authorization: "Bearer " + mockToken }).send({})
       const body = response.body as ValidationErrorBody;
       const errorFields = body.errors.map((e) => e.path);
 
@@ -39,6 +45,7 @@ describe("Dodawanie Pracownika - Testy", () => {
     it('powinien zwrócić błąd, gdy telefon jest za krótki', async () => {
       const response = await request(app)
         .post('/Pracownik')
+        .set({ authorization: "Bearer " + mockToken })
         .send({ 
             Imie: 'Jan',
             Email: 'test@test.pl',
@@ -57,6 +64,7 @@ describe("Dodawanie Pracownika - Testy", () => {
     it('powinien zwrócić błąd, gdy telefon jest za długi', async () => {
       const response = await request(app)
         .post('/Pracownik')
+        .set({ authorization: "Bearer " + mockToken })
         .send({ 
             Imie: 'Jan',
             Email: 'test@test.pl',
@@ -75,6 +83,7 @@ describe("Dodawanie Pracownika - Testy", () => {
     it('powinien zwrócić błąd, gdy imie nie zostalo podane', async () => {
       const response = await request(app)
         .post('/Pracownik')
+        .set({ authorization: "Bearer " + mockToken })
         .send({ 
             Imie: '',
             Email: 'test@test.pl',
@@ -93,6 +102,7 @@ describe("Dodawanie Pracownika - Testy", () => {
     it('powinien zwrócić błąd, gdy nazwisko nie zostalo podane', async () => {
       const response = await request(app)
         .post('/Pracownik')
+        .set({ authorization: "Bearer " + mockToken })
         .send({ 
             Imie: 'Jan',
             Email: 'test@test.pl',
@@ -111,6 +121,7 @@ describe("Dodawanie Pracownika - Testy", () => {
     it('powinien zwrócić błąd, gdy e-mail nie ma znaku @', async () => {
       const response = await request(app)
         .post('/Pracownik')
+        .set({ authorization: "Bearer " + mockToken })
         .send({ 
             Imie: 'Jan',
             Email: 'testtest.pl',
@@ -129,6 +140,7 @@ describe("Dodawanie Pracownika - Testy", () => {
     it('powinien zwrócić błąd, gdy e-mail nie ma znaku .', async () => {
       const response = await request(app)
         .post('/Pracownik')
+        .set({ authorization: "Bearer " + mockToken })
         .send({ 
             Imie: 'Jan',
             Email: 'test@testpl',
@@ -147,6 +159,7 @@ describe("Dodawanie Pracownika - Testy", () => {
     it('powinien zwrócić błąd, gdy e-mail nie ma znaku przed @', async () => {
       const response = await request(app)
         .post('/Pracownik')
+        .set({ authorization: "Bearer " + mockToken })
         .send({ 
             Imie: 'Jan',
             Email: '@test.pl',
@@ -165,6 +178,7 @@ describe("Dodawanie Pracownika - Testy", () => {
     it('powinien zwrócić błąd, gdy e-mail nie ma znaku miedzy @ a .', async () => {
       const response = await request(app)
         .post('/Pracownik')
+        .set({ authorization: "Bearer " + mockToken })
         .send({ 
             Imie: 'Jan',
             Email: 'test@.pl',
@@ -183,6 +197,7 @@ describe("Dodawanie Pracownika - Testy", () => {
     it('powinien zwrócić błąd, gdy e-mail nie ma znaku po . ', async () => {
       const response = await request(app)
         .post('/Pracownik')
+        .set({ authorization: "Bearer " + mockToken })
         .send({
             Imie: 'Jan',
             Email: 'test@test.',
@@ -210,7 +225,7 @@ describe('Pobieranie danych Pracownika - Testy', () => {
       const Telefon = "+48 123 456 789"; 
 
       const response = await request(app)
-          .get(`/Pracownik/${IdPracownik}`);
+          .get(`/Pracownik/${IdPracownik}`).set({ authorization: "Bearer " + mockToken });
 
       console.log(response.body)
       expect(response.status).toBe(200);
@@ -225,7 +240,7 @@ describe('Pobieranie danych Pracownika - Testy', () => {
       const nieistniejaceID = 0; 
 
       const response = await request(app)
-          .get(`/Pracownik/${nieistniejaceID}`);
+          .get(`/Pracownik/${nieistniejaceID}`).set({ authorization: "Bearer " + mockToken });
 
       expect(response.status).toBe(404);
       expect(response.text).toBe('Pracownik nie został znaleziony');
@@ -240,7 +255,7 @@ describe('Pobieranie danych Pracownika - Testy', () => {
     const Telefon = "+48 123 456 789";
 
     const response = await request(app)
-        .get(`/Pracownik`);
+        .get(`/Pracownik`).set({ authorization: "Bearer " + mockToken });
 
     console.log(response.body)
     expect(response.body).toBeInstanceOf(Array);

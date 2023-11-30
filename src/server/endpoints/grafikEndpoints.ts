@@ -3,11 +3,14 @@ import {connection} from "../app";
 import { Request, Response } from "express";
 import { validateBody } from "../middleware/zodValidation";
 import { GrafikPayload, grafikSchema } from "../../common/grafikSchema";
-import { getUserData } from "../middleware/firebaseAuth";
+import { authenticate, authorize, getUserData } from "../middleware/firebaseAuth";
 import {ResultSetHeader, RowDataPacket } from "mysql2/promise";
+import { roleGreaterOrEqual } from "../../common/userRoles";
 
 app.post(
     "/Grafik",
+    authenticate,
+    authorize((user) => roleGreaterOrEqual(user["role"], "pracownik")),
     validateBody(grafikSchema),
     async (req: Request, res: Response) => {
         const grafikData = req.body as GrafikPayload;
@@ -26,7 +29,7 @@ app.post(
     }
 );
 
-app.get('/Grafik', async (req: Request, res: Response) => {
+app.get('/Grafik',authenticate, authorize((user) => roleGreaterOrEqual(user["role"], "pracownik")), async (req: Request, res: Response) => {
     try {
         const [results] = await connection.query<RowDataPacket[]>("SELECT * FROM Grafik");
         if (results.length === 0) {
@@ -39,7 +42,7 @@ app.get('/Grafik', async (req: Request, res: Response) => {
     }
 });
 
-app.get('/Grafik/:id', async (req: Request, res: Response) => {
+app.get('/Grafik/:id',authenticate, authorize((user) => roleGreaterOrEqual(user["role"], "pracownik")), async (req: Request, res: Response) => {
     const grafikId = req.params["id"];
 
     const [results] = await connection.query<RowDataPacket[]>("SELECT * FROM Grafik WHERE IdGrafik = ?", [grafikId]);
@@ -55,7 +58,7 @@ app.get('/Grafik/:id', async (req: Request, res: Response) => {
    }
 });
 
-app.delete('/Grafik/:id', async (req: Request, res: Response) => {
+app.delete('/Grafik/:id',authenticate, authorize((user) => roleGreaterOrEqual(user["role"], "admin")), async (req: Request, res: Response) => {
     const grafikId = req.params["id"];
 
     const [results] = await connection.query<ResultSetHeader>("DELETE FROM Grafik WHERE IdGrafik = ?", [grafikId]);
@@ -73,6 +76,8 @@ app.delete('/Grafik/:id', async (req: Request, res: Response) => {
 
 app.patch(
     "/Grafik/:id",
+    authenticate,
+    authorize((user) => roleGreaterOrEqual(user["role"], "pracownik")),
     validateBody(grafikSchema.partial()), 
     async (req: Request, res: Response) => {
         const grafikId = req.params["id"];
