@@ -31,8 +31,10 @@ module.exports = {
         ecmaVersion: "latest",
         sourceType: "module",
     },
+    ignorePatterns: ["/dist/*"],
     plugins: ["@typescript-eslint", "react", "react-hooks"],
     rules: {
         "@typescript-eslint/no-unused-vars": 1,
+        "react/react-in-jsx-scope": 0
     },
 };
