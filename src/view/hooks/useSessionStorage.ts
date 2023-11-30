@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 
 export const useSessionStorage = <T extends string>(key: string, defaultValue: T) => {
     const [value, setValue] = useState<T>(sessionStorage.getItem(key) as T ?? defaultValue);
@@ -6,7 +6,7 @@ export const useSessionStorage = <T extends string>(key: string, defaultValue: T
     const setStorageValue = useCallback((value: T) => {
         sessionStorage.setItem(key, value);
         setValue(value)
-    }, []);
+    }, [key]);
 
     return [value, setStorageValue] as const;
 };

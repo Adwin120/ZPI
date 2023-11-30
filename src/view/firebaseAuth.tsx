@@ -7,7 +7,7 @@ import type firebaseui from "firebaseui";
 import publicConfig from "../../firebase.public.json";
 
 import { Paper, Stack } from "@mui/material";
-
+import { Role } from "../common/userRoles";
 
 declare global {
     interface Window {
@@ -27,10 +27,23 @@ const authUI = new window.firebaseui.auth.AuthUI(auth);
 
 export const useUser = () => {
     const [user, setUser] = useState<firebase.User | null>(auth.currentUser);
+    auth.currentUser?.getIdTokenResult().then((t) => t.claims["role"]);
     useEffect(() => {
         auth.onAuthStateChanged(setUser);
     }, []);
     return user;
+};
+
+export const useRole = () => {
+    const user = useUser();
+    const [role, setRole] = useState<Role | null>(null);
+    useEffect(() => {
+        user?.getIdTokenResult()
+            .then((token) => token.claims["role"])
+            .then(setRole);
+    }, [user]);
+
+    return [role, user] as const
 };
 
 export const Login: React.FC = () => {
@@ -43,7 +56,7 @@ export const Login: React.FC = () => {
                 window.firebase.auth.GoogleAuthProvider.PROVIDER_ID,
             ],
             signInSuccessUrl: window.location.origin,
-            signInFlow: "popup"
+            signInFlow: "popup",
         });
     });
 

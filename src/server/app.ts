@@ -1,5 +1,4 @@
 import express, { Request, Response } from "express";
-import { body, validationResult } from "express-validator";
 import bodyParser from "body-parser";
 import { validateBody } from "./middleware/zodValidation";
 import { KlientPayload, klientSchema } from "../common/klientSchema";
