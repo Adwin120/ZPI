@@ -18,10 +18,10 @@ app.post(
             await dbConnection.query("INSERT INTO Wersja_umowy ( Usluga_IdUsluga, Umowa_IdUmowa, Cena) VALUES ( ?, ?, ?)",
              [ wersja_umowyData.Usluga_IdUsluga, wersja_umowyData.Umowa_IdUmowa , wersja_umowyData.Cena ]);
 
-            res.status(200).send("Dane z formularza dla wersja_umowy zostały odebrane");
+            res.status(200).send("Wersja umowy została pomyślnie dodana");
         } catch (error) {
             console.error(error);
-            res.status(500).send("Wystąpił błąd podczas zapisywania wersja_umowy");
+            res.status(500).send("Wystąpił błąd podczas zapisywania wersji umowy");
         }
     }
 );
@@ -30,11 +30,11 @@ app.get('/Wersja_umowy', async (req: Request, res: Response) => {
     try {
         const [results] = await connection.query<RowDataPacket[]>("SELECT * FROM Wersja_umowy");
         if (results.length === 0) {
-            return res.status(200).send('Nie znaleziono Wersja_umowy');
+            return res.status(200).send('Nie znaleziono wersji umowy');
         }
         return res.json(results);
     } catch (error) {
         console.error(error);
-        return res.status(500).send('Wystąpił błąd podczas pobierania danych Wersja_umowy');
+        return res.status(500).send('Wystąpił błąd podczas pobierania danych wersji umowy');
     }
 });

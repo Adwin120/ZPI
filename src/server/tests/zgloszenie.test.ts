@@ -13,11 +13,11 @@ describe("Dodawanie Zgloszenia - Testy", () => {
         Pracownik_IdPracownik: 1, 
         Klient_IdKlient: 1, 
         Opis: 'Opis zlecenia', 
-        Status: 'Nowe' 
+        Status: "przesłane" 
       }satisfies ZgloszeniePayload); 
 
     expect(response.status).toBe(200);
-    expect(response.text).toBe('Dane z formularza dla zgloszenia zostały odebrane');
+    expect(response.text).toBe('Zgłoszenie zostało pomyślnie dodane');
   });
 
   it('nie powinno przetworzyć danych z pustymi polami', async () => {
@@ -25,7 +25,7 @@ describe("Dodawanie Zgloszenia - Testy", () => {
       const body = response.body as ValidationErrorBody;
       const errorFields = body.errors.map((e) => e.path);
 
-      const requiredFields = ["Pracownik_IdPracownik", "Klient_IdKlient", "Opis", "Status"];
+      const requiredFields = ["Pracownik_IdPracownik", "Klient_IdKlient", "Opis"];
 
         requiredFields.forEach((field) => {
             const fieldError = body.errors.find((error) => error.path === field);
@@ -42,7 +42,7 @@ describe("Dodawanie Zgloszenia - Testy", () => {
         Pracownik_IdPracownik: 1, 
         Klient_IdKlient: 1, 
         Opis: '', 
-        Status: 'Nowe' 
+        Status: "przesłane" 
       });
       const body = response.body as ValidationErrorBody;
       
@@ -53,12 +53,12 @@ describe("Dodawanie Zgloszenia - Testy", () => {
       expect(descriptionError.length).toBeGreaterThan(0);
   });
 
-  it('nie powinno przetworzyć danych, gdy status jest pusty', async () => {
+  it('nie powinno przetworzyć danych, gdy status nie jest wartoscia z enum', async () => {
     const response = await request(app)
     .post('/Zgloszenie')
     .send({ 
       Pracownik_IdPracownik: 1, 
-      Klient_IdKlient: 1, 
+      Klient_IdKlient: "1", 
       Opis: 'Opis zlecenia', 
       Status: '' 
     });
@@ -66,7 +66,7 @@ describe("Dodawanie Zgloszenia - Testy", () => {
 
     expect(response.status).toBe(400);
       const statusError = body.errors.filter(
-        (blad) => blad.path === "Status" && blad.type === "too_small"
+        (blad) => blad.path === "Status" && blad.type === "invalid_enum_value"
     );
       expect(statusError.length).toBeGreaterThan(0);
   });
@@ -78,7 +78,7 @@ describe("Dodawanie Zgloszenia - Testy", () => {
       Pracownik_IdPracownik: 0, 
       Klient_IdKlient: 1, 
       Opis: 'Opis zlecenia', 
-      Status: 'Nowe' 
+      Status: "przesłane" 
     });
     const body = response.body as ValidationErrorBody;
 
@@ -96,7 +96,7 @@ describe("Dodawanie Zgloszenia - Testy", () => {
       Pracownik_IdPracownik: 1, 
       Klient_IdKlient: 0, 
       Opis: 'Opis zlecenia', 
-      Status: 'Nowe' 
+      Status: "przesłane" 
     });
     const body = response.body as ValidationErrorBody;
 
@@ -136,7 +136,7 @@ describe('Pobieranie danych Zgloszenia - Testy', () => {
           .get(`/Zgloszenie/${nieistniejaceID}`);
 
       expect(response.status).toBe(404);
-      expect(response.text).toBe('Zgloszenie nie zostało znalezione');
+      expect(response.text).toBe('Zgłoszenie nie zostało znalezione');
   });
 
   it('powinno zwrócić dane zgloszen', async () => {
@@ -186,7 +186,7 @@ describe('Pobieranie danych Zgloszenia - Testy', () => {
 //       const response = await request(app).delete(`/Zgloszenie/${nieistniejaceID}`);
 
 //       expect(response.status).toBe(404);
-//       expect(response.text).toBe('Zgloszenie nie zostało znalezione');
+//       expect(response.text).toBe('Zgłoszenie nie zostało znalezione');
 //   });
 // });
 
@@ -200,7 +200,7 @@ describe('Modyfikowanie danych zgloszenia - Testy', () => {
         Pracownik_IdPracownik: 1, 
         Klient_IdKlient: 1, 
         Opis: 'Opis zlecenia', 
-        Status: 'Nowe' 
+        Status: "przesłane" 
       }satisfies Partial<ZgloszeniePayload>); 
 
     expect(response.status).toBe(200);
@@ -269,7 +269,7 @@ describe('Modyfikowanie danych zgloszenia - Testy', () => {
         Pracownik_IdPracownik: 1, 
         Klient_IdKlient: 1, 
         Opis: 'Opis zlecenia', 
-        Status: 'Nowe' 
+        Status: "przesłane" 
       });  
 
     expect(response.status).toBe(404);

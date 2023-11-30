@@ -18,10 +18,10 @@ app.post(
             await dbConnection.query("INSERT INTO Usluga ( Opis, Nazwa) VALUES ( ?, ?)",
              [ uslugaData.Opis, uslugaData.Nazwa ]);
 
-            res.status(200).send("Dane z formularza dla uslugi zostały odebrane");
+            res.status(200).send("Usługa została dodana pomyślnie");
         } catch (error) {
             console.error(error);
-            res.status(500).send("Wystąpił błąd podczas zapisywania uslugi");
+            res.status(500).send("Wystąpił błąd podczas zapisywania usługi");
         }
     }
 );
@@ -30,12 +30,12 @@ app.get('Usluga', async (req: Request, res: Response) => {
     try {
         const [results] = await connection.query<RowDataPacket[]>("SELECT * FROM Usluga");
         if (results.length === 0) {
-            return res.status(200).send('Nie znaleziono uslug');
+            return res.status(200).send('Nie znaleziono usług');
         }
         return res.json(results);
     } catch (error) {
         console.error(error);
-        return res.status(500).send('Wystąpił błąd podczas pobierania danych uslug');
+        return res.status(500).send('Wystąpił błąd podczas pobierania danych usług');
     }
 });
 
@@ -46,12 +46,12 @@ app.get('Usluga/:id', async (req: Request, res: Response) => {
    try {
       console.log(results);
        if (results.length === 0) {
-           return res.status(404).send('Usluga nie została znaleziona');
+           return res.status(404).send('Usługa nie została znaleziona');
        }
       return res.json(results[0]);
    } catch (error) {
        console.error(error);
-       return res.status(500).send('Wystąpił błąd podczas pobierania danych uslugi');
+       return res.status(500).send('Wystąpił błąd podczas pobierania danych usługi');
    }
 });
 
@@ -62,12 +62,12 @@ app.delete('Usluga/:id', async (req: Request, res: Response) => {
    try {
       console.log(results);
        if (results.affectedRows === 0) {
-           return res.status(404).send('Usluga nie została znaleziona');
+           return res.status(404).send('Usługa nie została znaleziona');
        }
-       return res.status(200).send("Usluga została usunięta");
+       return res.status(200).send("Usługa została usunięta");
    } catch (error) {
        console.error(error);
-       return res.status(500).send('Wystąpił błąd podczas usuwania danych uslugi');
+       return res.status(500).send('Wystąpił błąd podczas usuwania danych usługi');
    }
 });
 
@@ -98,13 +98,13 @@ app.patch(
             const [results] = await connection.query<ResultSetHeader>(query, values);
 
             if (results.affectedRows === 0) {
-                return res.status(404).send("Usluga nie została znaleziona");
+                return res.status(404).send("Usługa nie została znaleziona");
             }
 
-            return res.status(200).send("Usluga została zaktualizowana");
+            return res.status(200).send("Usługa została zaktualizowana");
         } catch (error) {
             console.error(error);
-            return res.status(500).send("Wystąpił błąd podczas aktualizacji uslugi");
+            return res.status(500).send("Wystąpił błąd podczas aktualizacji usługi");
         }
     }
 );

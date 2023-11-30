@@ -18,7 +18,7 @@ describe("Dodawanie Pracownika - Testy", () => {
         }satisfies PracownikPayload)
 
     expect(response.status).toBe(200);
-    expect(response.text).toBe('Dane z formularza dla pracownika zostały odebrane');
+    expect(response.text).toBe('Pracownik został pomyślnie dodany');
   });
 
   it('powinien zwrócić błąd, gdy formularz jest pusty', async () => {

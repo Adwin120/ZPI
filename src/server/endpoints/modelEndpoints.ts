@@ -18,7 +18,7 @@ app.post(
             await dbConnection.query("INSERT INTO Model ( Marka, Model) VALUES ( ?, ?)",
              [ modelData.Marka, modelData.Model ]);
 
-            res.status(200).send("Dane z formularza dla modelu zostały odebrane");
+            res.status(200).send("Model został pomyślnie dodany");
         } catch (error) {
             console.error(error);
             res.status(500).send("Wystąpił błąd podczas zapisywania modelu");

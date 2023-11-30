@@ -18,7 +18,7 @@ app.post(
             await dbConnection.query("INSERT INTO Umowa ( Klient_IdKlient, Data_rozpoczecia, Data_zakonczenia) VALUES ( ?, ?, ?)",
              [ umowaData.Klient_IdKlient, umowaData.Data_rozpoczecia , umowaData.Data_zakonczenia ]);
 
-            res.status(200).send("Dane z formularza dla umowy zostały odebrane");
+            res.status(200).send("Umowa została pomyślnie dodana");
         } catch (error) {
             console.error(error);
             res.status(500).send("Wystąpił błąd podczas zapisywania umowy");

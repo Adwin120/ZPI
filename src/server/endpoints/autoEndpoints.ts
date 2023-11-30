@@ -18,7 +18,7 @@ app.post(
             await dbConnection.query("INSERT INTO Auto ( Model_IdModel, Klient_IdKlient, Rejestracja, Czas_rozpoczecia, Czas_zakonczenia, Dodatkowe_informacje) VALUES ( ?, ?, ?, ?, ?, ?)",
              [ autoData.Model_IdModel, autoData.Klient_IdKlient, autoData.Rejestracja, autoData.Czas_rozpoczecia , autoData.Czas_zakonczenia, autoData.Dodatkowe_informacje]);
 
-            res.status(200).send("Dane z formularza dla auta zostały odebrane");
+            res.status(200).send("Auto zostało dodane pomyślnie");
         } catch (error) {
             console.error(error);
             res.status(500).send("Wystąpił błąd podczas zapisywania auta");
@@ -30,7 +30,7 @@ app.get('/Auto', async (req: Request, res: Response) => {
     try {
         const [results] = await connection.query<RowDataPacket[]>("SELECT * FROM Auto");
         if (results.length === 0) {
-            return res.status(200).send('Nie znaleziono aut');
+            return res.status(200).send('Nie znaleziono żadnych aut');
         }
         return res.json(results);
     } catch (error) {

@@ -42,12 +42,12 @@ app.get('/Klient', async (req: Request, res: Response) => {
     try {
         const [results] = await connection.query<RowDataPacket[]>("SELECT * FROM Klient");
         if (results.length === 0) {
-            return res.status(200).send('Nie znaleziono klientow');
+            return res.status(200).send('Nie znaleziono klientów');
         }
         return res.json(results);
     } catch (error) {
         console.error(error);
-        return res.status(500).send('Wystąpił błąd podczas pobierania danych klientow');
+        return res.status(500).send('Wystąpił błąd podczas pobierania danych klientów');
     }
 });
 
