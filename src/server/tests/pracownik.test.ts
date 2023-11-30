@@ -1,9 +1,9 @@
 import request from "supertest";
 
-import app from "./app";
-import { PracownikPayload } from "../common/pracownikSchema";
-import { FieldValidationError, ValidationErrorBody } from "./middleware/zodValidation";
-
+import app from "../app";
+import { PracownikPayload } from "../../common/pracownikSchema";
+import { FieldValidationError, ValidationErrorBody } from "../middleware/zodValidation";
+import "../endpoints/pracownikEndpoints"
 
 describe("Dodawanie Pracownika - Testy", () => {
 
@@ -11,10 +11,10 @@ describe("Dodawanie Pracownika - Testy", () => {
     const response = await request(app)
       .post('/Pracownik')
       .send({  
-          imie: 'Jan',
-          email: 'test@test.pl',
-          nazwisko: 'Kowalski',
-          telefon: '123456789'
+          Imie: 'Jan',
+          Email: 'test@test.pl',
+          Nazwisko: 'Kowalski',
+          Telefon: '123456789'
         }satisfies PracownikPayload)
 
     expect(response.status).toBe(200);
@@ -26,7 +26,7 @@ describe("Dodawanie Pracownika - Testy", () => {
       const body = response.body as ValidationErrorBody;
       const errorFields = body.errors.map((e) => e.path);
 
-      const requiredFields = ["telefon", "email", "imie", "nazwisko"];
+      const requiredFields = ["Telefon", "Email", "Imie", "Nazwisko"];
 
         requiredFields.forEach((field) => {
             const fieldError = body.errors.find((error) => error.path === field);
@@ -40,16 +40,16 @@ describe("Dodawanie Pracownika - Testy", () => {
       const response = await request(app)
         .post('/Pracownik')
         .send({ 
-            imie: 'Jan',
-            email: 'test@test.pl',
-            nazwisko: 'Kowalski',
-            telefon: '12345678'
+            Imie: 'Jan',
+            Email: 'test@test.pl',
+            Nazwisko: 'Kowalski',
+            Telefon: '12345678'
           })
           const body = response.body as ValidationErrorBody;
   
       expect(response.status).toBe(400);
       const phoneError = body.errors.filter(
-        (blad) => blad.path === "telefon" && blad.type === "too_small"
+        (blad) => blad.path === "Telefon" && blad.type === "too_small"
     );
       expect(phoneError.length).toBeGreaterThan(0);
     });
@@ -58,16 +58,16 @@ describe("Dodawanie Pracownika - Testy", () => {
       const response = await request(app)
         .post('/Pracownik')
         .send({ 
-            imie: 'Jan',
-            email: 'test@test.pl',
-            nazwisko: 'Kowalski',
-            telefon: '1234567890'
+            Imie: 'Jan',
+            Email: 'test@test.pl',
+            Nazwisko: 'Kowalski',
+            Telefon: '1234567890'
           })
           const body = response.body as ValidationErrorBody;
   
           expect(response.status).toBe(400);
           const phoneError = body.errors.filter(
-            (blad) => blad.path === "telefon" && blad.type === "too_big"
+            (blad) => blad.path === "Telefon" && blad.type === "too_big"
         );
           expect(phoneError.length).toBeGreaterThan(0);
     });
@@ -76,16 +76,16 @@ describe("Dodawanie Pracownika - Testy", () => {
       const response = await request(app)
         .post('/Pracownik')
         .send({ 
-            imie: '',
-            email: 'test@test.pl',
-            nazwisko: 'Kowalski',
-            telefon: '123456789'
+            Imie: '',
+            Email: 'test@test.pl',
+            Nazwisko: 'Kowalski',
+            Telefon: '123456789'
           })
           const body = response.body as ValidationErrorBody;
   
           expect(response.status).toBe(400);
           const nameError = body.errors.filter(
-            (blad) => blad.path === "imie" && blad.type === "too_small"
+            (blad) => blad.path === "Imie" && blad.type === "too_small"
         );
           expect(nameError.length).toBeGreaterThan(0);
     });
@@ -94,16 +94,16 @@ describe("Dodawanie Pracownika - Testy", () => {
       const response = await request(app)
         .post('/Pracownik')
         .send({ 
-            imie: 'Jan',
-            email: 'test@test.pl',
-            nazwisko: '',
-            telefon: '123456789'
+            Imie: 'Jan',
+            Email: 'test@test.pl',
+            Nazwisko: '',
+            Telefon: '123456789'
           })
           const body = response.body as ValidationErrorBody;
   
           expect(response.status).toBe(400);
           const surnamenameError = body.errors.filter(
-            (blad) => blad.path === "nazwisko" && blad.type === "too_small"
+            (blad) => blad.path === "Nazwisko" && blad.type === "too_small"
         );
           expect(surnamenameError.length).toBeGreaterThan(0);
     });
@@ -112,16 +112,16 @@ describe("Dodawanie Pracownika - Testy", () => {
       const response = await request(app)
         .post('/Pracownik')
         .send({ 
-            imie: 'Jan',
-            email: 'testtest.pl',
-            nazwisko: 'Kowalski',
-            telefon: '123456789'
+            Imie: 'Jan',
+            Email: 'testtest.pl',
+            Nazwisko: 'Kowalski',
+            Telefon: '123456789'
           })
           const body = response.body as ValidationErrorBody;
   
           expect(response.status).toBe(400);
           const emailError = body.errors.filter(
-              (blad) => blad.path === "email" && blad.type === "invalid_string"
+              (blad) => blad.path === "Email" && blad.type === "invalid_string"
           );
           expect(emailError.length).toBeGreaterThan(0);
     });
@@ -130,16 +130,16 @@ describe("Dodawanie Pracownika - Testy", () => {
       const response = await request(app)
         .post('/Pracownik')
         .send({ 
-            imie: 'Jan',
-            email: 'test@testpl',
-            nazwisko: 'Kowalski',
-            telefon: '123456789'
+            Imie: 'Jan',
+            Email: 'test@testpl',
+            Nazwisko: 'Kowalski',
+            Telefon: '123456789'
           })
           const body = response.body as ValidationErrorBody;
   
           expect(response.status).toBe(400);
           const emailError = body.errors.filter(
-              (blad) => blad.path === "email" && blad.type === "invalid_string"
+              (blad) => blad.path === "Email" && blad.type === "invalid_string"
           );
           expect(emailError.length).toBeGreaterThan(0);
     });
@@ -148,16 +148,16 @@ describe("Dodawanie Pracownika - Testy", () => {
       const response = await request(app)
         .post('/Pracownik')
         .send({ 
-            imie: 'Jan',
-            email: '@test.pl',
-            nazwisko: 'Kowalski',
-            telefon: '123456789'
+            Imie: 'Jan',
+            Email: '@test.pl',
+            Nazwisko: 'Kowalski',
+            Telefon: '123456789'
           })
           const body = response.body as ValidationErrorBody;
   
           expect(response.status).toBe(400);
           const emailError = body.errors.filter(
-              (blad) => blad.path === "email" && blad.type === "invalid_string"
+              (blad) => blad.path === "Email" && blad.type === "invalid_string"
           );
           expect(emailError.length).toBeGreaterThan(0);
     });
@@ -166,16 +166,16 @@ describe("Dodawanie Pracownika - Testy", () => {
       const response = await request(app)
         .post('/Pracownik')
         .send({ 
-            imie: 'Jan',
-            email: 'test@.pl',
-            nazwisko: 'Kowalski',
-            telefon: '123456789'
+            Imie: 'Jan',
+            Email: 'test@.pl',
+            Nazwisko: 'Kowalski',
+            Telefon: '123456789'
           })
           const body = response.body as ValidationErrorBody;
   
           expect(response.status).toBe(400);
           const emailError = body.errors.filter(
-              (blad) => blad.path === "email" && blad.type === "invalid_string"
+              (blad) => blad.path === "Email" && blad.type === "invalid_string"
           );
           expect(emailError.length).toBeGreaterThan(0);
     });
@@ -184,16 +184,16 @@ describe("Dodawanie Pracownika - Testy", () => {
       const response = await request(app)
         .post('/Pracownik')
         .send({
-            imie: 'Jan',
-            email: 'test@test.',
-            nazwisko: 'Kowalski',
-            telefon: '123456789'
+            Imie: 'Jan',
+            Email: 'test@test.',
+            Nazwisko: 'Kowalski',
+            Telefon: '123456789'
           })
           const body = response.body as ValidationErrorBody;
   
           expect(response.status).toBe(400);
           const emailError = body.errors.filter(
-              (blad) => blad.path === "email" && blad.type === "invalid_string"
+              (blad) => blad.path === "Email" && blad.type === "invalid_string"
           );
           expect(emailError.length).toBeGreaterThan(0);
     });
@@ -267,3 +267,21 @@ describe('Pobieranie danych Pracownika - Testy', () => {
 });
 
 });
+
+// describe('Usuwanie danych Pracownika - Testy', () => {
+//   it('powinno usunąć pracownika o podanym id', async () => {
+//       const IdPracownik = 21;  
+//       const response = await request(app).delete(`/Pracownik/${IdPracownik}`);
+
+//       expect(response.statusCode).toBe(200);
+//       expect(response.text).toBe("Pracownik został usunięty");
+//   });
+
+//   it('powinno zwrócić błąd 404 dla nieistniejącego ID pracownika', async () => {
+//       const nieistniejaceID = 0; 
+//       const response = await request(app).delete(`/Pracownik/${nieistniejaceID}`);
+
+//       expect(response.status).toBe(404);
+//       expect(response.text).toBe('Pracownik nie został znaleziony');
+//   });
+// });
