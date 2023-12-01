@@ -18,4 +18,6 @@ export type Zgloszenie = {
     IdZgloszenie: number,
     Opis: string,
     Status: ZgloszeniePayload["Status"]
+    Practownik_IdPracownik: number,
+    Klient_IdKlient: number,
 }
