@@ -6,6 +6,7 @@ import { validateBody } from "../middleware/zodValidation";
 import {ResultSetHeader, RowDataPacket } from "mysql2/promise";
 import { authenticate, authorize } from "../middleware/firebaseAuth";
 import { roleGreaterOrEqual } from "../../common/userRoles";
+import { z } from "zod";
 
 app.post(
     "/Zgloszenie",
@@ -124,6 +125,44 @@ app.patch(
         } catch (error) {
             console.error(error);
             return res.status(500).send("Wystąpił błąd podczas aktualizacji zgłoszenia");
+        }
+    }
+);
+
+app.put(
+    "/Zgloszenie/:id/acceptance",
+    authenticate,
+    authorize("kierownik"),
+    async (req: Request, res: Response) => {
+        const zgloszeniekId = req.params["id"];
+
+        try {
+            const dbConnection = await connection;
+            await dbConnection.query("UPDATE Zgloszenie SET Status = 'Zaakceptowane' WHERE IdZgloszenie = ?", [zgloszeniekId]);
+
+            res.status(200).send("Zgłoszenie zostało zaakceptowane");
+        } catch (error) {
+            console.error(error);
+            res.status(500).send("Wystąpił błąd podczas aktualizacji zgłoszenia");
+        }
+    }
+);
+
+app.delete(
+    "/Zgloszenie/:id/acceptance",
+    authenticate,
+    authorize("kierownik"),
+    async (req: Request, res: Response) => {
+        const zgloszenieId = req.params["id"];
+
+        try {
+            const dbConnection = await connection;
+            await dbConnection.query("UPDATE Zgloszenie SET Status = 'Odrzucone' WHERE IdZgloszenie = ?", [zgloszenieId]);
+
+            res.status(200).send("Zgłoszenie zostało odrzucone");
+        } catch (error) {
+            console.error(error);
+            res.status(500).send("Wystąpił błąd podczas aktualizacji zgłoszenia");
         }
     }
 );
