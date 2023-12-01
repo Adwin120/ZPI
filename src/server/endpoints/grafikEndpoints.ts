@@ -115,7 +115,7 @@ app.patch(
 );
 
 app.put(
-    "/grafik/:id/acceptance",
+    "/Grafik/:id/acceptance",
     authenticate,
     authorize("kierownik"),
     async (req: Request, res: Response) => {
@@ -134,7 +134,7 @@ app.put(
 );
 
 app.delete(
-    "/grafik/:id/acceptance",
+    "/Grafik/:id/acceptance",
     authenticate,
     authorize("kierownik"),
     async (req: Request, res: Response) => {
