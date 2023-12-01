@@ -4,7 +4,7 @@ import app from "../app";
 import {connection} from "../app";
 import { validateBody } from "../middleware/zodValidation";
 import {ResultSetHeader, RowDataPacket } from "mysql2/promise";
-import { authenticate, authorize, getUserData } from "../middleware/firebaseAuth";
+import { authenticate, authorize } from "../middleware/firebaseAuth";
 import { roleGreaterOrEqual } from "../../common/userRoles";
 
 app.post(
@@ -18,7 +18,7 @@ app.post(
         try {
             const dbConnection = await connection;
             await dbConnection.query("INSERT INTO Zgloszenie ( Pracownik_IdPracownik, Klient_IdKlient, Opis, Status) VALUES ( ?, ?, ?, ?)",
-             [ zgloszenieData.pracownikID, zgloszenieData.klientID, zgloszenieData.opis, zgloszenieData.status]);
+             [ zgloszenieData.Pracownik_IdPracownik, zgloszenieData.Klient_IdKlient, zgloszenieData.Opis, zgloszenieData.Status]);
 
             res.status(200).send("Zgłoszenie zostało pomyślnie dodane");
         } catch (error) {
