@@ -29,7 +29,7 @@ app.post(
     }
 );
 
-app.get('/Auto',authenticate, authorize((user) => roleGreaterOrEqual(user["role"], "klient")), async (req: Request, res: Response) => {
+app.get('/Auto',authenticate, authorize((user) => roleGreaterOrEqual(user["role"], "pracownik")), async (req: Request, res: Response) => {
     try {
         const [results] = await connection.query<RowDataPacket[]>("SELECT * FROM Auto");
         if (results.length === 0) {
@@ -42,7 +42,7 @@ app.get('/Auto',authenticate, authorize((user) => roleGreaterOrEqual(user["role"
     }
 });
 
-app.get('/Auto/:id',authenticate, authorize((user) => roleGreaterOrEqual(user["role"], "klient")), async (req: Request, res: Response) => {
+app.get('/Auto/:id',authenticate, authorize((user) => roleGreaterOrEqual(user["role"], "pracownik")), async (req: Request, res: Response) => {
     const autoId = req.params["id"];
 
     const [results] = await connection.query<RowDataPacket[]>("SELECT * FROM Auto WHERE IdAuto = ?", [autoId]);

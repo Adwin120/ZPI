@@ -10,7 +10,7 @@ import { roleGreaterOrEqual } from "../../common/userRoles";
 app.post(
     "/Grafik",
     authenticate,
-    authorize((user) => roleGreaterOrEqual(user["role"], "pracownik")),
+    authorize((user) => roleGreaterOrEqual(user["role"], "kierownik")),
     validateBody(grafikSchema),
     async (req: Request, res: Response) => {
         const grafikData = req.body as GrafikPayload;
@@ -29,7 +29,7 @@ app.post(
     }
 );
 
-app.get('/Grafik',authenticate, authorize((user) => roleGreaterOrEqual(user["role"], "pracownik")), async (req: Request, res: Response) => {
+app.get('/Grafik',authenticate, authorize((user) => roleGreaterOrEqual(user["role"], "kierownik")), async (req: Request, res: Response) => {
     try {
         const [results] = await connection.query<RowDataPacket[]>("SELECT * FROM Grafik");
         if (results.length === 0) {
@@ -42,7 +42,7 @@ app.get('/Grafik',authenticate, authorize((user) => roleGreaterOrEqual(user["rol
     }
 });
 
-app.get('/Grafik/:id',authenticate, authorize((user) => roleGreaterOrEqual(user["role"], "pracownik")), async (req: Request, res: Response) => {
+app.get('/Grafik/:id',authenticate, authorize((user) => roleGreaterOrEqual(user["role"], "kierownik")), async (req: Request, res: Response) => {
     const grafikId = req.params["id"];
 
     const [results] = await connection.query<RowDataPacket[]>("SELECT * FROM Grafik WHERE IdGrafik = ?", [grafikId]);
@@ -77,7 +77,7 @@ app.delete('/Grafik/:id',authenticate, authorize((user) => roleGreaterOrEqual(us
 app.patch(
     "/Grafik/:id",
     authenticate,
-    authorize((user) => roleGreaterOrEqual(user["role"], "pracownik")),
+    authorize((user) => roleGreaterOrEqual(user["role"], "kierownik")),
     validateBody(grafikSchema.partial()), 
     async (req: Request, res: Response) => {
         const grafikId = req.params["id"];

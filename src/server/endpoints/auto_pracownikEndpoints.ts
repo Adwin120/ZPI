@@ -7,11 +7,6 @@ import { authenticate, authorize, getUserData } from "../middleware/firebaseAuth
 import {ResultSetHeader, RowDataPacket } from "mysql2/promise";
 import { roleGreaterOrEqual } from "../../common/userRoles";
 
-
-import { authenticate, authorize, getUserData } from "../middleware/firebaseAuth";
-import {ResultSetHeader, RowDataPacket } from "mysql2/promise";
-import { roleGreaterOrEqual } from "../../common/userRoles";
-
 app.post(
     "/Auto_pracownik",
     authenticate,

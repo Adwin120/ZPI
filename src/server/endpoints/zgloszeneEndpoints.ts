@@ -94,8 +94,20 @@ app.patch(
     authorize((user) => roleGreaterOrEqual(user["role"], "pracownik")), 
     validateBody(zgloszenieSchema.partial()), 
     async (req: Request, res: Response) => {
+
+        const user = getUserData(res);
         const zgloszenieId = req.params["id"];
         const zgloszenieData = req.body as Partial<ZgloszeniePayload>; 
+
+        if(user &&user['role'] === "pracownik")
+        {
+            const [zgloszenieResult] = await connection.query<RowDataPacket[]>("SELECT Status FROM Klient WHERE IdZgloszenie = ? AND Status <> 'zaakceptowane'", [zgloszenieId]);
+
+            if (zgloszenieResult.length === 0 || !zgloszenieResult[0]) {
+                return res.status(404).send('Pracownik nie może modyfikować zaakceptowanych zgłoszeń');
+            }
+        }
+
 
         const updates = [];
         const values = [];
