@@ -2,7 +2,7 @@ import { Stack } from "@mui/material";
 import CommonLayout from "../layout/CommonLayout";
 import AddFormButton from "../layout/AddFormButton";
 import { postToEndpoint } from "../../backendAccess";
-import { autoSchema } from "../../../common/autoSchema";
+import { Auto, autoSchema } from "../../../common/autoSchema";
 import FormTextField from "../forms/FormTextField";
 import FormAutocompleteFromEndpoint from "../forms/FormAutocompleteFromEndpoint";
 import { Klient } from "../../../common/klientSchema";
@@ -47,12 +47,13 @@ const Auta: React.FC = () => {
                         />
                     </AddFormButton>
                 </div>
-                <DataTable
+                <DataTable<Auto>
                     dataEndpoint={"/Auto"}
+                    getRowId={row => row.IdAuto}
                     schema={[
                         { field: "Rejestracja", flex: 1 },
-                        { field: "Czas_rozpoczecia", flex: 1, headerName: "Czas rozpoczęcia" },
-                        { field: "Czas_zakonczenia", flex: 1, headerName: "Czas zakończenia" },
+                        { field: "Czas_rozpoczecia", flex: 1, headerName: "Czas rozpoczęcia", type: "dateTime" },
+                        { field: "Czas_zakonczenia", flex: 1, headerName: "Czas zakończenia", type: "dateTime" },
                         {
                             field: "Dodatkowe_informacje",
                             flex: 1,
