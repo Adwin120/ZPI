@@ -17,7 +17,15 @@ const makeDefaultHeaders = async () => {
     return headers;
 };
 
-export type Endpoint = `/${string}`
+const guardResponseOk = (res: Response) => {
+    if (res.ok) {
+        return Promise.resolve(res);
+    } else {
+        return res.text().then((text) => Promise.reject(text));
+    }
+};
+
+export type Endpoint = `/${string}`;
 
 export const postToEndpoint = (endpoint: Endpoint) => async (payload: object) => {
     console.log(payload);
@@ -27,7 +35,9 @@ export const postToEndpoint = (endpoint: Endpoint) => async (payload: object) =>
         headers,
         body: JSON.stringify(payload),
         method: "POST",
-    }).then((res) => res.text());
+    })
+        .then(guardResponseOk)
+        .then((res) => res.text());
 
     toast.promise(responsePromise, {
         loading: "Dodawanie...",
@@ -49,7 +59,9 @@ export const patchEndpoint = (endpoint: Endpoint) => async (payload: object) => 
         headers,
         body: JSON.stringify(payload),
         method: "PATCH",
-    }).then((res) => res.text());
+    })
+        .then(guardResponseOk)
+        .then((res) => res.text());
 
     toast.promise(responsePromise, {
         loading: "Edytowanie...",
@@ -67,7 +79,9 @@ export const deleteFromEndpoint = (endpoint: Endpoint) => async () => {
     const responsePromise = fetch(endpoint, {
         headers,
         method: "DELETE",
-    }).then((res) => res.text());
+    })
+        .then(guardResponseOk)
+        .then((res) => res.text());
 
     toast.promise(responsePromise, {
         loading: "Usuwanie...",
@@ -88,12 +102,16 @@ const fetchJSON = async (endpoint: RequestInfo) => {
         headers.append("Authorization", "Bearer " + token);
     }
 
-    const data = await fetch(endpoint, { headers }).then((res) => res.json());
+    const data = await fetch(endpoint, { headers })
+        .then(guardResponseOk)
+        .then((res) => res.json());
     console.log("fetched from", endpoint, data);
     return data;
 };
 
 export const useGetEndpoint = <Data>(endpoint: Endpoint | null) => {
-    const user = useUser();
+    const [user] = useUser();
     return useSWR<Data, Error, string | null>(user ? endpoint : null, fetchJSON);
 };
+
+export const DateTimeFormatFromServer = "YYYY-MM-DDTHH-mm-ss.SSS";

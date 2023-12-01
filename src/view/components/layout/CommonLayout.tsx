@@ -1,7 +1,6 @@
 import {
     AppBar,
     Box,
-    Breadcrumbs,
     Button,
     Divider,
     Drawer,
@@ -34,7 +33,7 @@ const CommonLayout: React.FC<Props> = ({ children, pageTitle = "MOXLY", subpageT
     );
     const isDrawerOpen = _isDrawerOpen === "true";
 
-    const user = useUser();
+    const [user] = useUser();
     const [_, navigate] = useLocation();
     const loggedIn = Boolean(user);
     const SignIn = (
@@ -82,10 +81,14 @@ const CommonLayout: React.FC<Props> = ({ children, pageTitle = "MOXLY", subpageT
                 </Toolbar>
                 <Divider />
                 <List disablePadding>
-                    <NavigationListItem href="/panel/klienci" minimalRole="pracownik">Klienci</NavigationListItem>
-                    <NavigationListItem href="/panel/pracownicy" minimalRole="pracownik">Pracownicy</NavigationListItem>
+                    <NavigationListItem href="/panel/auta" minimalRole="pracownik">Auta</NavigationListItem>
+                    <NavigationListItem href="/panel/grafik" minimalRole="kierownik">Grafik</NavigationListItem>
+                    <NavigationListItem href="/panel/klienci" minimalRole="kierownik">Klienci</NavigationListItem>
+                    <NavigationListItem href="/panel/modele" minimalRole="kierownik">Modele</NavigationListItem>
+                    <NavigationListItem href="/panel/pracownicy" minimalRole="kierownik">Pracownicy</NavigationListItem>
+                    <NavigationListItem href="/panel/umowy" minimalRole="kierownik">Umowy</NavigationListItem>
+                    <NavigationListItem href="/panel/uslugi" minimalRole="klient">Usługi</NavigationListItem>
                     <NavigationListItem href="/panel/zgloszenia" minimalRole="pracownik">Zgłoszenia</NavigationListItem>
-                    <NavigationListItem href="/panel/figi" minimalRole="brak">Figi z makiem</NavigationListItem>
                     <NavigationListItem href="/panel/uprawnienia" minimalRole="admin">Uprawnienia</NavigationListItem>
                 </List>
             </Drawer>

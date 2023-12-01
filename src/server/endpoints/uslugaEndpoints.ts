@@ -8,7 +8,7 @@ import {ResultSetHeader, RowDataPacket } from "mysql2/promise";
 import { roleGreaterOrEqual } from "../../common/userRoles";
 
 app.post(
-    "Usluga",
+    "/Usluga",
     authenticate,
     authorize((user) => roleGreaterOrEqual(user["role"], "kierownik")),
     validateBody(uslugaSchema),
@@ -29,12 +29,9 @@ app.post(
     }
 );
 
-app.get('Usluga', authenticate, authorize((user) => roleGreaterOrEqual(user["role"], "pracownik")), async (req: Request, res: Response) => {
+app.get('/Usluga', authenticate, authorize((user) => roleGreaterOrEqual(user["role"], "pracownik")), async (req: Request, res: Response) => {
     try {
         const [results] = await connection.query<RowDataPacket[]>("SELECT * FROM Usluga");
-        if (results.length === 0) {
-            return res.status(200).send('Nie znaleziono usług');
-        }
         return res.json(results);
     } catch (error) {
         console.error(error);
@@ -42,7 +39,7 @@ app.get('Usluga', authenticate, authorize((user) => roleGreaterOrEqual(user["rol
     }
 });
 
-app.get('Usluga/:id', authenticate, authorize((user) => roleGreaterOrEqual(user["role"], "pracownik")), async (req: Request, res: Response) => {
+app.get('/Usluga/:id', authenticate, authorize((user) => roleGreaterOrEqual(user["role"], "pracownik")), async (req: Request, res: Response) => {
     const uslugaId = req.params["id"];
 
     const [results] = await connection.query<RowDataPacket[]>("SELECT * FROM Usluga WHERE IdUsluga = ?", [uslugaId]);
@@ -58,7 +55,7 @@ app.get('Usluga/:id', authenticate, authorize((user) => roleGreaterOrEqual(user[
    }
 });
 
-app.delete('Usluga/:id', authenticate, authorize((user) => roleGreaterOrEqual(user["role"], "admin")), async (req: Request, res: Response) => {
+app.delete('/Usluga/:id', authenticate, authorize((user) => roleGreaterOrEqual(user["role"], "admin")), async (req: Request, res: Response) => {
     const uslugaId = req.params["id"];
 
     const [results] = await connection.query<ResultSetHeader>("DELETE FROM Usluga WHERE IdUsluga = ?", [uslugaId]);
@@ -75,7 +72,7 @@ app.delete('Usluga/:id', authenticate, authorize((user) => roleGreaterOrEqual(us
 });
 
 app.patch(
-    "Usluga/:id",
+    "/Usluga/:id",
     authenticate,
     authorize((user) => roleGreaterOrEqual(user["role"], "kierownik")),
     validateBody(uslugaSchema.partial()), 

@@ -3,7 +3,7 @@ import {connection} from "../app";
 import { Request, Response } from "express";
 import { validateBody } from "../middleware/zodValidation";
 import {PracownikPayload, pracownikSchema } from "../../common/pracownikSchema";
-import { authenticate, authorize, getUserData } from "../middleware/firebaseAuth";
+import { authenticate, authorize } from "../middleware/firebaseAuth";
 import {ResultSetHeader, RowDataPacket } from "mysql2/promise";
 import { roleGreaterOrEqual } from "../../common/userRoles";
 import { GrafikPayload, grafikSchema } from "../../common/grafikSchema";

@@ -1,6 +1,6 @@
 import app from "./app";
 import "./endpoints/uprawnienia"
-import "./endpoints/zgloszeneEndpoints"
+import "./endpoints/zgloszenieEndpoints"
 import "./endpoints/klientEndpoints"
 import "./endpoints/pracownikEndpoints"
 import "./endpoints/autoEndpoints"

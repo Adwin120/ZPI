@@ -19,7 +19,7 @@ const NavigationListItem: React.FC<Props> = ({ children, href, minimalRole }) =>
     });
 
     const [role] = useRole()
-    if (!role || roleGreaterOrEqual(role, minimalRole)) {
+    if (!role || !roleGreaterOrEqual(role, minimalRole)) {
         return <></>
     }
 

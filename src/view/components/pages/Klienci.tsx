@@ -12,22 +12,23 @@ const Klienci: React.FC = () => (
         <Stack alignItems={"normal"} gap={2}>
             <div>
                 <AddFormButton
+                    minimalRole="kierownik"
                     schema={klientSchema}
                     onSubmit={postToEndpoint("/Klient")}
                     title="Dodaj klienta"
                 >
-                    <FormTextField name="nazwa" label="Nazwa" required />
-                    <FormTextField type="email" name="email" label="E-mail" required />
-                    <FormTextField name="adres" label="Adres" required />
+                    <FormTextField name="Nazwa" label="Nazwa" required />
+                    <FormTextField type="email" name="Email" label="E-mail" required />
+                    <FormTextField name="Adres" label="Adres" required />
                     <FormTextField
-                        name="nip"
+                        name="NIP"
                         label="NIP"
                         required
                         // helperText="Numer musi mieć dokładnie 10 cyfr"
                     />
                     <FormTextField
                         type="tel"
-                        name="telefon"
+                        name="Telefon"
                         label="Telefon"
                         required
                         // helperText="Numer musi mieć dokładnie 9 cyfr"

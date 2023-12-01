@@ -4,7 +4,7 @@ import { Request, Response } from "express";
 import { validateBody } from "../middleware/zodValidation";
 import { Auto_pracownikPayload, auto_pracownikSchema } from "../../common/auto_pracownikSchema";
 import { authenticate, authorize, getUserData } from "../middleware/firebaseAuth";
-import {ResultSetHeader, RowDataPacket } from "mysql2/promise";
+import {RowDataPacket } from "mysql2/promise";
 import { roleGreaterOrEqual } from "../../common/userRoles";
 
 app.post(
