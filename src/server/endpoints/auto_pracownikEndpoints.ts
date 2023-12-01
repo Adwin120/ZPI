@@ -3,6 +3,10 @@ import {connection} from "../app";
 import { Request, Response } from "express";
 import { validateBody } from "../middleware/zodValidation";
 import { Auto_pracownikPayload, auto_pracownikSchema } from "../../common/auto_pracownikSchema";
+import { getUserData } from "../middleware/firebaseAuth";
+import {ResultSetHeader, RowDataPacket } from "mysql2/promise";
+
+
 import { authenticate, authorize, getUserData } from "../middleware/firebaseAuth";
 import {ResultSetHeader, RowDataPacket } from "mysql2/promise";
 import { roleGreaterOrEqual } from "../../common/userRoles";
@@ -20,7 +24,6 @@ app.post(
             const dbConnection = await connection;
             await dbConnection.query("INSERT INTO Auto_Pracownik ( Auto_IdAuto, Pracownik_IdPracownik) VALUES ( ?, ? )",
              [ auto_pracownikData.Auto_IdAuto, auto_pracownikData.Pracownik_IdPracownik ]);
-
             res.status(200).send("Dane dla Auto_pracownik zostały dodane pomyślnie");
         } catch (error) {
             console.error(error);

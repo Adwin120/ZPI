@@ -17,5 +17,7 @@ export type ZgloszeniePayload = z.infer<typeof zgloszenieSchema>;
 export type Zgloszenie = {
     IdZgloszenie: number,
     Opis: string,
-    Status: ZgloszeniePayload["Status"]
+    Status: ZgloszeniePayload["status"]
+    Practownik_IdPracownik: number,
+    Klient_IdKlient: number,
 }

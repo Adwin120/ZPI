@@ -1,5 +1,8 @@
 import { z } from "zod";
-import { defaultMessage } from "./zodHelpers";
+
+import { defaultMessage, numeric } from "./zodHelpers";
+import e from "express";
+
 
 const datetimeRegex = /^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/;
 
@@ -22,3 +25,12 @@ export const autoSchema = z.object(
 );
 
 export type AutoPayload = z.infer<typeof autoSchema>;
+export type Auto = {
+    IdAuto: number,
+    Model_IdModel: number,
+    Klient_IdKlient: number,
+    Rejestracja: string,
+    Czas_rozpoczecia: string,
+    Czas_zakonczenia: string,
+    Dodatkowe_informacje: string
+}
