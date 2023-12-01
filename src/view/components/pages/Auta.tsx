@@ -21,6 +21,9 @@ const Auta: React.FC = () => {
                         title="Dodaj Auto"
                         onSubmit={postToEndpoint("/Auto")}
                         schema={autoSchema}
+                        defaultValues={{
+                            Czas_rozpoczecia: dayjs().format("YYYY-MM-DD HH:mm:ss"),
+                        }}
                     >
                         <FormTextField name="Rejestracja" label="Rejestracja" required />
                         <FormAutocompleteFromEndpoint<Model>
@@ -68,9 +71,10 @@ const Auta: React.FC = () => {
                             flex: 1,
                             headerName: "Czas zakończenia",
                             type: "dateTime",
+                            
                             valueGetter: (row) =>
                                 dayjs(row.value, DateTimeFormatFromServer).toDate(),
-                            valueFormatter: (row) => dayjs(row.value).format(DateTimeFormatToView),
+                            valueFormatter: (row) =>  isNaN(row.value) ? "-" : dayjs(row.value).format(DateTimeFormatToView),
                         },
                         {
                             field: "Dodatkowe_informacje",

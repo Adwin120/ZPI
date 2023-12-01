@@ -1,7 +1,7 @@
 import React, { PropsWithChildren, createContext, useId } from "react";
 import { Dialog, DialogTitle, DialogContent, Stack, Button } from "@mui/material";
 import { ZodType } from "zod";
-import { Control, FieldValues, useForm } from "react-hook-form";
+import { Control, DefaultValues, FieldValues, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 type Consumer<T> = (arg: T) => void;
@@ -13,6 +13,7 @@ interface Props<T> extends PropsWithChildren {
     title: string;
     schema: ZodType<T>;
     onSubmit: Consumer<T>;
+    defaultValues?: DefaultValues<T>
 }
 const FormDialog = <T extends FieldValues>({
     onClose,
@@ -21,9 +22,10 @@ const FormDialog = <T extends FieldValues>({
     title,
     children,
     schema,
+    defaultValues
 }: Props<T>) => {
     const titleId = useId();
-    const { handleSubmit, control } = useForm<T>({ resolver: zodResolver(schema), mode: "onBlur" });
+    const { handleSubmit, control } = useForm<T>({ resolver: zodResolver(schema), mode: "onBlur", defaultValues });
 
     const formSubmit = handleSubmit((data) => {
         onSubmit(data);

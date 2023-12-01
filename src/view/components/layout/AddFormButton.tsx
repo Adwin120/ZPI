@@ -4,11 +4,12 @@ import FormDialog from "../forms/FormDialog";
 import { ComponentProps, useState } from "react";
 import { Role, roleGreaterOrEqual } from "../../../common/userRoles";
 import { useRole } from "../../firebaseAuth";
+import { FieldValues } from "react-hook-form";
 
-type Props = Omit<ComponentProps<typeof FormDialog>, "open" | "onClose"> & {
+type Props<T extends FieldValues> = Omit<ComponentProps<typeof FormDialog<T>>, "open" | "onClose"> & {
     minimalRole?: Role;
 };
-const AddFormButton: React.FC<Props> = ({ minimalRole = "brak", ...formProps }) => {
+const AddFormButton = <T extends FieldValues>({ minimalRole = "brak", ...formProps }: Props<T>) => {
     const [isOpen, setOpen] = useState<boolean>(false);
 
     const [role] = useRole();

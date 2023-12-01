@@ -16,7 +16,7 @@ export const autoSchema = z.object(
         Klient_IdKlient: z.number().min(1,"ID klienta musi być większe od 0."),
         Rejestracja: z.string().min(1, "Rejestracja jest wymagana.").default(""),
         Czas_rozpoczecia: datetimeSchema,
-        Czas_zakonczenia: datetimeSchema,
+        Czas_zakonczenia: datetimeSchema.optional(),
         Dodatkowe_informacje: z.string().default(""),
     },
     defaultMessage("Niepoprawny format")
