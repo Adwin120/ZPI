@@ -1,8 +1,6 @@
 import { z } from "zod";
 
-import { defaultMessage, numeric } from "./zodHelpers";
-import e from "express";
-
+import { defaultMessage } from "./zodHelpers";
 
 const datetimeRegex = /^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/;
 
@@ -18,7 +16,7 @@ export const autoSchema = z.object(
         Klient_IdKlient: z.number().min(1,"ID klienta musi być większe od 0."),
         Rejestracja: z.string().min(1, "Rejestracja jest wymagana.").default(""),
         Czas_rozpoczecia: datetimeSchema,
-        Czas_zakonczenia: datetimeSchema,
+        Czas_zakonczenia: datetimeSchema.optional(),
         Dodatkowe_informacje: z.string().default(""),
     },
     defaultMessage("Niepoprawny format")

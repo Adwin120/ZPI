@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { defaultMessage, numeric } from "./zodHelpers";
+import { defaultMessage } from "./zodHelpers";
 
 export const auto_uslugaSchema = z.object(
     {

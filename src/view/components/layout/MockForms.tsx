@@ -9,7 +9,7 @@ interface Props {}
 const MockForms: React.FC<Props> = () => {
     const [activeFormId, setActiveFormId] = useState<1 | 2 | 3 | null>(null);
     const closeDialog = useCallback(() => setActiveFormId(null), []);
-    const user = useUser();
+    const [user] = useUser();
     return (
         <CommonLayout pageTitle="MOXLY" subpageTitle="Panel">
             <Button onClick={() => setActiveFormId(1)} variant="outlined">

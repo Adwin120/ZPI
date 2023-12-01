@@ -4,7 +4,7 @@ import app from "../app";
 import {connection} from "../app";
 import { validateBody } from "../middleware/zodValidation";
 import {ResultSetHeader, RowDataPacket } from "mysql2/promise";
-import { authenticate, authorize, getUserData } from "../middleware/firebaseAuth";
+import { authenticate, authorize } from "../middleware/firebaseAuth";
 import { roleGreaterOrEqual } from "../../common/userRoles";
 import { z } from "zod";
 

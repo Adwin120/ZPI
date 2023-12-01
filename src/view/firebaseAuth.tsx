@@ -1,4 +1,4 @@
-import { ElementRef, useEffect, useRef, useState } from "react";
+import { ElementRef, useCallback, useEffect, useRef, useState } from "react";
 
 import type firebase from "firebase/compat/app";
 import type { FirebaseOptions } from "firebase/app";
@@ -27,23 +27,31 @@ const authUI = new window.firebaseui.auth.AuthUI(auth);
 
 export const useUser = () => {
     const [user, setUser] = useState<firebase.User | null>(auth.currentUser);
-    auth.currentUser?.getIdTokenResult().then((t) => t.claims["role"]);
-    useEffect(() => {
-        auth.onAuthStateChanged(setUser);
+    const [loading, setLoading] = useState<boolean>(true);
+    const setUserAndLoading = useCallback((user: firebase.User | null) => {
+        setUser(user);
+        setLoading(false);
     }, []);
-    return user;
+    useEffect(() => {
+        auth.onAuthStateChanged(setUserAndLoading);
+    }, [setUserAndLoading]);
+    return [user, loading] as const;
 };
 
 export const useRole = () => {
-    const user = useUser();
+    const [user] = useUser();
     const [role, setRole] = useState<Role | null>(null);
     useEffect(() => {
         user?.getIdTokenResult()
             .then((token) => token.claims["role"])
-            .then(setRole);
+            .then(setRole)
+            .catch(() => setRole(null));
+        if (!user) {
+            setRole(null);
+        }
     }, [user]);
 
-    return [role, user] as const
+    return [role, user] as const;
 };
 
 export const Login: React.FC = () => {

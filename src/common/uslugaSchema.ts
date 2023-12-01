@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { defaultMessage, numeric } from "./zodHelpers";
+import { defaultMessage } from "./zodHelpers";
 
 export const uslugaSchema = z.object(
     {
@@ -10,3 +10,8 @@ export const uslugaSchema = z.object(
 );
 
 export type UslugaPayload = z.infer<typeof uslugaSchema>;
+export type Usluga = {
+    IdUsluga: number;
+    Opis: string;
+    Nazwa: string;
+};

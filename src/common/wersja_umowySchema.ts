@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { defaultMessage, numeric } from "./zodHelpers";
+import { defaultMessage } from "./zodHelpers";
 
 export const wersja_umowySchema = z.object(
     {

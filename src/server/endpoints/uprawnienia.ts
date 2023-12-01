@@ -2,7 +2,6 @@ import { UprawnieniePayload, uprawnienieSchema } from "../../common/uprawnienieS
 import app from "../app";
 import firebaseAdmin from "firebase-admin";
 import { authenticate, authorize } from "../middleware/firebaseAuth";
-import { roleGreaterOrEqual } from "../../common/userRoles";
 import { validateBody } from "../middleware/zodValidation";
 import { z } from "zod";
 

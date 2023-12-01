@@ -6,19 +6,20 @@ import { uprawnienieSchema } from "../../../common/uprawnienieSchema";
 import FormTextField from "../forms/FormTextField";
 import FormAutocomplete from "../forms/FormAutocomplete";
 import { roles } from "../../../common/userRoles";
-import DataTable from "../DataTable";
+import DataTable, { EditableColumnHeader } from "../DataTable";
 import { GridActionsCellItem } from "@mui/x-data-grid";
 
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import { useUser } from "../../firebaseAuth";
 
 const Uprawnienia: React.FC = () => {
-    const user = useUser();
+    const [user] = useUser();
     return (
         <CommonLayout subpageTitle="Uprawnienia">
             <Stack alignItems="normal" gap={2}>
                 <div>
                     <AddFormButton
+                        minimalRole="admin"
                         title="Dodaj autoryzowany email"
                         onSubmit={postToEndpoint("/Uprawnienia")}
                         schema={uprawnienieSchema}
@@ -38,11 +39,17 @@ const Uprawnienia: React.FC = () => {
                     onProcessRowUpdateError={console.error}
                     schema={[
                         { field: "email", flex: 1 },
-                        { field: "nazwa", flex: 1, editable: true },
+                        {
+                            field: "nazwa",
+                            flex: 1,
+                            editable: true,
+                            renderHeader: EditableColumnHeader,
+                        },
                         {
                             field: "rola",
                             flex: 1,
                             editable: true,
+                            renderHeader: EditableColumnHeader,
                             type: "singleSelect",
                             valueOptions: [...roles],
                         },
@@ -51,15 +58,17 @@ const Uprawnienia: React.FC = () => {
                             width: 50,
                             type: "actions",
                             getActions({ id }) {
-                                return user?.uid === id ? [] : [
-                                    <GridActionsCellItem
-                                        label="usuń"
-                                        icon={<DeleteForeverIcon />}
-                                        color="error"
-                                        onClick={deleteFromEndpoint(`/Uprawnienia/${id}`)}
-                                        key="delete"
-                                    ></GridActionsCellItem>,
-                                ];
+                                return user?.uid === id
+                                    ? []
+                                    : [
+                                          <GridActionsCellItem
+                                              label="usuń"
+                                              icon={<DeleteForeverIcon />}
+                                              color="error"
+                                              onClick={deleteFromEndpoint(`/Uprawnienia/${id}`)}
+                                              key="delete"
+                                          ></GridActionsCellItem>,
+                                      ];
                             },
                         },
                     ]}

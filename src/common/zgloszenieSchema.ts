@@ -13,11 +13,10 @@ export const zgloszenieSchema = z.object(
 
 export type ZgloszeniePayload = z.infer<typeof zgloszenieSchema>;
 
-//TODO: add missing properties
 export type Zgloszenie = {
     IdZgloszenie: number,
     Opis: string,
-    Status: ZgloszeniePayload["status"]
+    Status: ZgloszeniePayload["Status"]
     Practownik_IdPracownik: number,
     Klient_IdKlient: number,
 }
