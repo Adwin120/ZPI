@@ -2,7 +2,7 @@ import request from "supertest";
 import { ZgloszeniePayload } from "../../common/zgloszenieSchema";
 import { FieldValidationError, ValidationErrorBody } from "../middleware/zodValidation";
 import app from "../app";
-import "../endpoints/zgloszeneEndpoints"
+import "../endpoints/zgloszenieEndpoints"
 import { getMockBearerTokenWithRole, setupAuthenticationService } from "../testSetup";
 
 setupAuthenticationService();
