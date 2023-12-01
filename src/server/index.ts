@@ -1,5 +1,5 @@
 import app from "./app";
-import "./routes/uprawnienia"
+import "./endpoints/uprawnienia"
 import "./endpoints/zgloszeneEndpoints"
 import "./endpoints/klientEndpoints"
 import "./endpoints/pracownikEndpoints"
