@@ -2,6 +2,7 @@ import { DatePicker, DatePickerProps } from "@mui/x-date-pickers";
 import { useContext } from "react";
 import { ControllerRenderProps, FieldValues, Path, useController } from "react-hook-form";
 import { formContext } from "./FormDialog";
+import dayjs from "dayjs";
 
 type Props<T extends FieldValues> = { name: Path<T>; label: string } & Partial<
     Omit<DatePickerProps<unknown>, keyof ControllerRenderProps<T>>
@@ -19,8 +20,8 @@ export default function FormDateField<T extends FieldValues>({
         <DatePicker<any>
             {...field}
             label={label}
-            value={field.value === undefined ? null : field.value}
-            onChange={v => field.onChange(v?.format("YYYY-MM-DD hh:mm:ss"))}
+            value={dayjs(field.value ?? null, "YYYY-MM-DD")}
+            onChange={(v) => field.onChange(v?.format("YYYY-MM-DD"))}
             slotProps={{
                 textField: {
                     helperText: fieldState.error?.message,

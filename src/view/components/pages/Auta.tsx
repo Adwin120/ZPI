@@ -17,6 +17,7 @@ const Auta: React.FC = () => {
             <Stack alignItems={"normal"} gap={2}>
                 <div>
                     <AddFormButton
+                        minimalRole="pracownik"
                         title="Dodaj Auto"
                         onSubmit={postToEndpoint("/Auto")}
                         schema={autoSchema}
@@ -58,16 +59,18 @@ const Auta: React.FC = () => {
                             flex: 1,
                             headerName: "Czas rozpoczęcia",
                             type: "dateTime",
-                            valueGetter: (row) => dayjs(row.value, DateTimeFormatFromServer).toDate(),
-                            valueFormatter: (row) => dayjs(row.value).format(DateTimeFormatToView)
+                            valueGetter: (row) =>
+                                dayjs(row.value, DateTimeFormatFromServer).toDate(),
+                            valueFormatter: (row) => dayjs(row.value).format(DateTimeFormatToView),
                         },
                         {
                             field: "Czas_zakonczenia",
                             flex: 1,
                             headerName: "Czas zakończenia",
                             type: "dateTime",
-                            valueGetter: (row) => dayjs(row.value, DateTimeFormatFromServer).toDate(),
-                            valueFormatter: (row) => dayjs(row.value).format(DateTimeFormatToView)
+                            valueGetter: (row) =>
+                                dayjs(row.value, DateTimeFormatFromServer).toDate(),
+                            valueFormatter: (row) => dayjs(row.value).format(DateTimeFormatToView),
                         },
                         {
                             field: "Dodatkowe_informacje",

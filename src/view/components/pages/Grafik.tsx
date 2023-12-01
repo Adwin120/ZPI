@@ -17,6 +17,7 @@ const Grafik: React.FC<Props> = () => {
             <Stack alignItems={"normal"} gap={2}>
                 <div>
                     <AddFormButton
+                        minimalRole="kierownik"
                         onSubmit={postToEndpoint("/Grafik")}
                         schema={grafikSchema}
                         title="Dodaj wpis w grafiku"

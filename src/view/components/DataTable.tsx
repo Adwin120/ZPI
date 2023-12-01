@@ -22,12 +22,12 @@ const DataTable = <Row extends GridValidRowModel>({
     const { data, isLoading, error } = useGetEndpoint<Row[]>(dataEndpoint);
 
     if (error) {
-        console.error(error);
+        console.error(error, data);
         return (
             <Alert severity="error">
                 <AlertTitle>Błąd przy pobieraniu danych</AlertTitle>
                 <p>
-                    {error.message}
+                    {error.message ?? error}
                     <small>{error.name}</small>
                 </p>
             </Alert>
@@ -62,11 +62,12 @@ export const EditableColumnHeader: React.FC<GridColumnHeaderParams<any>> = ({
     return (
         <div className="MuiDataGrid-columnHeaderTitle" style={{ fontWeight: 500 }}>
             {headerName ?? field}
-            {editable && <EditIcon sx={{verticalAlign: "middle"}}/>}
+            {editable && <EditIcon color="secondary" sx={{ verticalAlign: "middle", ml: 1 }} />}
         </div>
     );
 };
 
 export const DateTimeFormatToView = "DD-MM-YYYY HH:mm";
+export const DateFormatToView = "DD-MM-YYYY";
 
 export default DataTable;

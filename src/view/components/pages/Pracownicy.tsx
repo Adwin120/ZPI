@@ -12,6 +12,7 @@ const Pracownicy: React.FC = () => {
             <Stack alignItems={"normal"} gap={2}>
                 <div>
                     <AddFormButton
+                        minimalRole="kierownik"
                         onSubmit={postToEndpoint("/Pracownik")}
                         schema={pracownikSchema}
                         title="Dodaj Pracownika"

@@ -7,7 +7,7 @@ import { signOut, useUser } from "../../firebaseAuth";
 
 interface Props {}
 const UserInfo: React.FC<Props> = () => {
-    const user = useUser();
+    const [user] = useUser();
     const name = user?.displayName?.split(" ")[0];
 
     const [isMenuOpen, setMenuOpen] = useState<boolean>(false);

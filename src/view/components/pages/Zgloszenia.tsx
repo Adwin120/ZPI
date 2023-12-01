@@ -17,6 +17,7 @@ const Zgloszenia: React.FC<Props> = () => {
             <Stack alignItems={"normal"} gap={2}>
                 <div>
                     <AddFormButton
+                        minimalRole="pracownik"
                         schema={zgloszenieSchema}
                         title="Dodaj Zgłoszenie"
                         onSubmit={postToEndpoint("/Zgloszenie")}
@@ -24,7 +25,7 @@ const Zgloszenia: React.FC<Props> = () => {
                         <FormAutocompleteFromEndpoint<Pracownik>
                             endpoint="/Pracownik"
                             label="Pracownik"
-                            name="pracownikID"
+                            name="Pracownik_IdPracownik"
                             getOptionId={(option) => option?.IdPracownik ?? 0}
                             getOptionLabel={(option) =>
                                 `${option.Imie} ${option.Nazwisko}\n${option.Email} ${option.IdPracownik}`
@@ -33,13 +34,13 @@ const Zgloszenia: React.FC<Props> = () => {
                         <FormAutocompleteFromEndpoint<Klient>
                             endpoint="/Klient"
                             label="Klient"
-                            name="klientID"
+                            name="Klient_IdKlient"
                             getOptionId={(option) => option?.IdKlient ?? 0}
                             getOptionLabel={(option) =>
                                 `${option.Nazwa}\n${option.NIP} ${option.IdKlient}`
                             }
                         />
-                        <FormTextField name="opis" label="Opis" multiline minRows={3} />
+                        <FormTextField name="Opis" label="Opis" multiline minRows={3} />
                     </AddFormButton>
                 </div>
                 <DataTable<Zgloszenie>

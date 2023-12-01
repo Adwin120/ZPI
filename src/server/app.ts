@@ -15,6 +15,7 @@ export const connection = await mysql.createConnection({
     user: process.env["DB_USER"],
     password: process.env["DB_PASSWORD"],
     database: process.env["DB_NAME"],
+    timezone: "Z"
     // ssl: {
     //     ca: process.env["DB_SSL_CA"],
     //     cert: process.env["DB_SSL_CERT"],

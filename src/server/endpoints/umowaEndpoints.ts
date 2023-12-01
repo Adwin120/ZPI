@@ -32,9 +32,6 @@ app.post(
 app.get('/Umowa', authenticate, authorize((user) => roleGreaterOrEqual(user["role"], "kierownik")), async (req: Request, res: Response) => {
     try {
         const [results] = await connection.query<RowDataPacket[]>("SELECT * FROM Umowa");
-        if (results.length === 0) {
-            return res.status(200).send('Nie znaleziono umów');
-        }
         return res.json(results);
     } catch (error) {
         console.error(error);

@@ -15,6 +15,7 @@ const Modele: React.FC<Props> = () => {
             <Stack alignItems={"normal"} gap={2}>
                 <div>
                     <AddFormButton
+                        minimalRole="kierownik"
                         onSubmit={postToEndpoint("/Model")}
                         schema={modelSchema}
                         title="Dodaj model"
@@ -32,8 +33,18 @@ const Modele: React.FC<Props> = () => {
                     }}
                     getRowId={(row) => row.IdModel}
                     schema={[
-                        { field: "Marka", flex: 1, editable: true, renderHeader: EditableColumnHeader },
-                        { field: "Model", flex: 1, editable: true, renderHeader: EditableColumnHeader },
+                        {
+                            field: "Marka",
+                            flex: 1,
+                            editable: true,
+                            renderHeader: EditableColumnHeader,
+                        },
+                        {
+                            field: "Model",
+                            flex: 1,
+                            editable: true,
+                            renderHeader: EditableColumnHeader,
+                        },
                         {
                             field: "opcje",
                             width: 50,

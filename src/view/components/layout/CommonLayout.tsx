@@ -33,7 +33,7 @@ const CommonLayout: React.FC<Props> = ({ children, pageTitle = "MOXLY", subpageT
     );
     const isDrawerOpen = _isDrawerOpen === "true";
 
-    const user = useUser();
+    const [user] = useUser();
     const [_, navigate] = useLocation();
     const loggedIn = Boolean(user);
     const SignIn = (

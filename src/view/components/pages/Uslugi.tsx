@@ -2,7 +2,7 @@ import { Stack } from "@mui/material";
 import CommonLayout from "../layout/CommonLayout";
 import AddFormButton from "../layout/AddFormButton";
 import { postToEndpoint } from "../../backendAccess";
-import { UslugaPayload, uslugaSchema } from "../../../common/uslugaSchema";
+import { Usluga, uslugaSchema } from "../../../common/uslugaSchema";
 import FormTextField from "../forms/FormTextField";
 import DataTable from "../DataTable";
 
@@ -13,6 +13,7 @@ const Uslugi: React.FC<Props> = () => {
             <Stack alignItems={"normal"} gap={2}>
                 <div>
                     <AddFormButton
+                        minimalRole="kierownik"
                         onSubmit={postToEndpoint("/Usluga")}
                         schema={uslugaSchema}
                         title="Dodaj usługę"
@@ -22,8 +23,9 @@ const Uslugi: React.FC<Props> = () => {
                     </AddFormButton>
                 </div>
 
-                <DataTable<UslugaPayload>
+                <DataTable<Usluga>
                     dataEndpoint="/Usluga"
+                    getRowId={row => row.IdUsluga}
                     schema={[
                         { field: "Nazwa", flex: 1 },
                         { field: "Opis", flex: 3 },
