@@ -3,11 +3,14 @@ import {connection} from "../app";
 import { Request, Response } from "express";
 import { validateBody } from "../middleware/zodValidation";
 import {PracownikPayload, pracownikSchema } from "../../common/pracownikSchema";
-
+import { authenticate, authorize, getUserData } from "../middleware/firebaseAuth";
 import {ResultSetHeader, RowDataPacket } from "mysql2/promise";
+import { roleGreaterOrEqual } from "../../common/userRoles";
 
 app.post(
     "/Pracownik",
+    authenticate,
+    authorize((user) => roleGreaterOrEqual(user["role"], "kierownik")),
     validateBody(pracownikSchema),
     async (req: Request, res: Response) => {
         const pracownikData = req.body as PracownikPayload;
@@ -17,7 +20,7 @@ app.post(
             await dbConnection.query("INSERT INTO Pracownik ( Email, Imie, Nazwisko, Telefon) VALUES ( ?, ?, ?, ?)", 
             [ pracownikData.Email, pracownikData.Imie, pracownikData.Nazwisko, pracownikData.Telefon]);
 
-            res.status(200).send("Dane z formularza dla pracownika zostały odebrane");
+            res.status(200).send("Pracownik został pomyślnie dodany");
         } catch (error) {
             console.error(error);
             res.status(500).send("Wystąpił błąd podczas zapisywania pracownika");
@@ -25,7 +28,7 @@ app.post(
     }
 );
 
-app.get('/Pracownik/:id', async (req: Request, res: Response) => {
+app.get('/Pracownik/:id', authenticate, authorize((user) => roleGreaterOrEqual(user["role"], "pracownik")), async (req: Request, res: Response) => {
     const pracownikID = req.params["id"];
 
     const [results] = await connection.query<RowDataPacket[]>("SELECT * FROM Pracownik WHERE IdPracownik = ?", [pracownikID]);
@@ -41,7 +44,7 @@ app.get('/Pracownik/:id', async (req: Request, res: Response) => {
    }
 });
 
-app.delete('/Pracownik/:id', async (req: Request, res: Response) => {
+app.delete('/Pracownik/:id', authenticate, authorize((user) => roleGreaterOrEqual(user["role"], "admin")), async (req: Request, res: Response) => {
     const pracownikID = req.params["id"];
 
     const [results] = await connection.query<ResultSetHeader>("DELETE FROM Pracownik WHERE IdPracownik = ?", [pracownikID]);
@@ -57,7 +60,7 @@ app.delete('/Pracownik/:id', async (req: Request, res: Response) => {
    }
 });
 
-app.get('/Pracownik', async (req: Request, res: Response) => {
+app.get('/Pracownik', authenticate, authorize((user) => roleGreaterOrEqual(user["role"], "pracownik")), async (req: Request, res: Response) => {
     try {
         const [results] = await connection.query<RowDataPacket[]>("SELECT * FROM Pracownik");
         if (results.length === 0) {
@@ -72,6 +75,8 @@ app.get('/Pracownik', async (req: Request, res: Response) => {
 
 app.patch(
     "/Pracownik/:id",
+    authenticate,
+    authorize((user) => roleGreaterOrEqual(user["role"], "pracownik")),
     validateBody(pracownikSchema.partial()), 
     async (req: Request, res: Response) => {
         const pracownikId = req.params["id"];

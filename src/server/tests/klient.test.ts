@@ -7,7 +7,7 @@ import { getMockBearerTokenWithRole, setupAuthenticationService } from "../testS
 import "../endpoints/klientEndpoints"
 
 setupAuthenticationService();
-const mockToken = await getMockBearerTokenWithRole("pracownik");
+const mockToken = await getMockBearerTokenWithRole("admin");
 
 describe("Dodawanie Klienta - Testy", () => {
     it("powinno przetworzyć poprawne dane", async () => {
@@ -279,7 +279,7 @@ describe('Pobieranie danych Klienta - Testy', () => {
         const Telefon = "+48 123 456 789"; 
   
         const response = await request(app)
-            .get(`/Klient/${IdKlient}`);
+            .get(`/Klient/${IdKlient}`).set({ authorization: "Bearer " + mockToken });
   
         console.log(response.body)
         expect(response.status).toBe(200);
@@ -295,7 +295,7 @@ describe('Pobieranie danych Klienta - Testy', () => {
         const nieistniejaceID = 0; 
   
         const response = await request(app)
-            .get(`/Klient/${nieistniejaceID}`);
+            .get(`/Klient/${nieistniejaceID}`).set({ authorization: "Bearer " + mockToken });
   
         expect(response.status).toBe(404);
         expect(response.text).toBe('Klient nie został znaleziony');
@@ -311,7 +311,7 @@ describe('Pobieranie danych Klienta - Testy', () => {
       const Telefon1 = "+48 123 456 789"; 
   
       const response = await request(app)
-          .get(`/Klient`);
+          .get(`/Klient`).set({ authorization: "Bearer " + mockToken });
   
       console.log(response.body)
       expect(response.body).toBeInstanceOf(Array);

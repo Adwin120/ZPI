@@ -3,29 +3,34 @@ import { ZgloszeniePayload } from "../../common/zgloszenieSchema";
 import { FieldValidationError, ValidationErrorBody } from "../middleware/zodValidation";
 import app from "../app";
 import "../endpoints/zgloszeneEndpoints"
+import { getMockBearerTokenWithRole, setupAuthenticationService } from "../testSetup";
+
+setupAuthenticationService();
+const mockToken = await getMockBearerTokenWithRole("admin");
 
 describe("Dodawanie Zgloszenia - Testy", () => {
 
   it('powinno przetworzyć poprawne dane', async () => {
     const response = await request(app)
       .post('/Zgloszenie')
+      .set({ authorization: "Bearer " + mockToken })
       .send({ 
         Pracownik_IdPracownik: 1, 
         Klient_IdKlient: 1, 
         Opis: 'Opis zlecenia', 
-        Status: 'Nowe' 
+        Status: "przesłane" 
       }satisfies ZgloszeniePayload); 
 
     expect(response.status).toBe(200);
-    expect(response.text).toBe('Dane z formularza dla zgloszenia zostały odebrane');
+    expect(response.text).toBe('Zgłoszenie zostało pomyślnie dodane');
   });
 
   it('nie powinno przetworzyć danych z pustymi polami', async () => {
-    const response = await request(app).post('/Zgloszenie').send({})
+    const response = await request(app).post('/Zgloszenie').set({ authorization: "Bearer " + mockToken }).send({})
       const body = response.body as ValidationErrorBody;
       const errorFields = body.errors.map((e) => e.path);
 
-      const requiredFields = ["Pracownik_IdPracownik", "Klient_IdKlient", "Opis", "Status"];
+      const requiredFields = ["Pracownik_IdPracownik", "Klient_IdKlient", "Opis"];
 
         requiredFields.forEach((field) => {
             const fieldError = body.errors.find((error) => error.path === field);
@@ -38,11 +43,12 @@ describe("Dodawanie Zgloszenia - Testy", () => {
   it('nie powinno przetworzyć danych, gdy opis jest pusty', async () => {
     const response = await request(app)
     .post('/Zgloszenie')
+    .set({ authorization: "Bearer " + mockToken })
       .send({ 
         Pracownik_IdPracownik: 1, 
         Klient_IdKlient: 1, 
         Opis: '', 
-        Status: 'Nowe' 
+        Status: "przesłane" 
       });
       const body = response.body as ValidationErrorBody;
       
@@ -53,12 +59,13 @@ describe("Dodawanie Zgloszenia - Testy", () => {
       expect(descriptionError.length).toBeGreaterThan(0);
   });
 
-  it('nie powinno przetworzyć danych, gdy status jest pusty', async () => {
+  it('nie powinno przetworzyć danych, gdy status nie jest wartoscia z enum', async () => {
     const response = await request(app)
     .post('/Zgloszenie')
+    .set({ authorization: "Bearer " + mockToken })
     .send({ 
       Pracownik_IdPracownik: 1, 
-      Klient_IdKlient: 1, 
+      Klient_IdKlient: "1", 
       Opis: 'Opis zlecenia', 
       Status: '' 
     });
@@ -66,7 +73,7 @@ describe("Dodawanie Zgloszenia - Testy", () => {
 
     expect(response.status).toBe(400);
       const statusError = body.errors.filter(
-        (blad) => blad.path === "Status" && blad.type === "too_small"
+        (blad) => blad.path === "Status" && blad.type === "invalid_enum_value"
     );
       expect(statusError.length).toBeGreaterThan(0);
   });
@@ -74,11 +81,12 @@ describe("Dodawanie Zgloszenia - Testy", () => {
   it('nie powinno przetworzyć danych, gdy pracowniktID jest mniejsze od 1', async () => {
     const response = await request(app)
     .post('/Zgloszenie')
+    .set({ authorization: "Bearer " + mockToken })
     .send({ 
       Pracownik_IdPracownik: 0, 
       Klient_IdKlient: 1, 
       Opis: 'Opis zlecenia', 
-      Status: 'Nowe' 
+      Status: "przesłane" 
     });
     const body = response.body as ValidationErrorBody;
 
@@ -92,11 +100,12 @@ describe("Dodawanie Zgloszenia - Testy", () => {
   it('nie powinno przetworzyć danych, gdy Klient_IdKlient jest mniejsze od 1', async () => {
     const response = await request(app)
     .post('/Zgloszenie')
+    .set({ authorization: "Bearer " + mockToken })
     .send({ 
       Pracownik_IdPracownik: 1, 
       Klient_IdKlient: 0, 
       Opis: 'Opis zlecenia', 
-      Status: 'Nowe' 
+      Status: "przesłane" 
     });
     const body = response.body as ValidationErrorBody;
 
@@ -119,7 +128,7 @@ describe('Pobieranie danych Zgloszenia - Testy', () => {
       const Status = 'Przeslane'; 
 
       const response = await request(app)
-          .get(`/Zgloszenie/${IdZgloszenie}`);
+          .get(`/Zgloszenie/${IdZgloszenie}`).set({ authorization: "Bearer " + mockToken });
 
       console.log(response.body)
       expect(response.status).toBe(200);
@@ -133,10 +142,10 @@ describe('Pobieranie danych Zgloszenia - Testy', () => {
       const nieistniejaceID = 0; 
 
       const response = await request(app)
-          .get(`/Zgloszenie/${nieistniejaceID}`);
+          .get(`/Zgloszenie/${nieistniejaceID}`).set({ authorization: "Bearer " + mockToken });
 
       expect(response.status).toBe(404);
-      expect(response.text).toBe('Zgloszenie nie zostało znalezione');
+      expect(response.text).toBe('Zgłoszenie nie zostało znalezione');
   });
 
   it('powinno zwrócić dane zgloszen', async () => {
@@ -147,7 +156,7 @@ describe('Pobieranie danych Zgloszenia - Testy', () => {
     const Status = 'Przeslane'; 
 
     const response = await request(app)
-        .get(`/Zgloszenie`);
+        .get(`/Zgloszenie`).set({ authorization: "Bearer " + mockToken });
 
     console.log(response.body)
     expect(response.body).toBeInstanceOf(Array);
@@ -186,7 +195,7 @@ describe('Pobieranie danych Zgloszenia - Testy', () => {
 //       const response = await request(app).delete(`/Zgloszenie/${nieistniejaceID}`);
 
 //       expect(response.status).toBe(404);
-//       expect(response.text).toBe('Zgloszenie nie zostało znalezione');
+//       expect(response.text).toBe('Zgłoszenie nie zostało znalezione');
 //   });
 // });
 
@@ -196,11 +205,12 @@ describe('Modyfikowanie danych zgloszenia - Testy', () => {
     
     const response = await request(app)
       .patch(`/Zgloszenie/${IdZgloszenie}`)
+      .set({ authorization: "Bearer " + mockToken })
       .send({ 
         Pracownik_IdPracownik: 1, 
         Klient_IdKlient: 1, 
         Opis: 'Opis zlecenia', 
-        Status: 'Nowe' 
+        Status: "przesłane" 
       }satisfies Partial<ZgloszeniePayload>); 
 
     expect(response.status).toBe(200);
@@ -212,6 +222,7 @@ describe('Modyfikowanie danych zgloszenia - Testy', () => {
     
     const response = await request(app)
       .patch(`/Zgloszenie/${IdZgloszenie}`)
+      .set({ authorization: "Bearer " + mockToken })
       .send({ 
         Pracownik_IdPracownik: 1, 
         Klient_IdKlient: 1, 
@@ -227,6 +238,7 @@ describe('Modyfikowanie danych zgloszenia - Testy', () => {
     
     const response = await request(app)
       .patch(`/Zgloszenie/${IdZgloszenie}`)
+      .set({ authorization: "Bearer " + mockToken })
       .send({ 
         Pracownik_IdPracownik: 1, 
         Klient_IdKlient: 1, 
@@ -241,6 +253,7 @@ describe('Modyfikowanie danych zgloszenia - Testy', () => {
     
     const response = await request(app)
       .patch(`/Zgloszenie/${IdZgloszenie}`)
+      .set({ authorization: "Bearer " + mockToken })
       .send({ 
         Pracownik_IdPracownik: 1, 
       }satisfies Partial<ZgloszeniePayload>); 
@@ -254,6 +267,7 @@ describe('Modyfikowanie danych zgloszenia - Testy', () => {
     
     const response = await request(app)
       .patch(`/Zgloszenie/${IdZgloszenie}`)
+      .set({ authorization: "Bearer " + mockToken })
       .send({}satisfies Partial<ZgloszeniePayload>); 
 
     expect(response.status).toBe(400);
@@ -265,11 +279,12 @@ describe('Modyfikowanie danych zgloszenia - Testy', () => {
     
     const response = await request(app)
       .patch(`/Zgloszenie/${IdZgloszenie}`)
+      .set({ authorization: "Bearer " + mockToken })
       .send({ 
         Pracownik_IdPracownik: 1, 
         Klient_IdKlient: 1, 
         Opis: 'Opis zlecenia', 
-        Status: 'Nowe' 
+        Status: "przesłane" 
       });  
 
     expect(response.status).toBe(404);

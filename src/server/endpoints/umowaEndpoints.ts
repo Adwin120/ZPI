@@ -3,11 +3,14 @@ import {connection} from "../app";
 import { Request, Response } from "express";
 import { validateBody } from "../middleware/zodValidation";
 import { UmowaPayload, umowaSchema } from "../../common/umowaSchema";
-import { getUserData } from "../middleware/firebaseAuth";
+import { authenticate, authorize, getUserData } from "../middleware/firebaseAuth";
 import {ResultSetHeader, RowDataPacket } from "mysql2/promise";
+import { roleGreaterOrEqual } from "../../common/userRoles";
 
 app.post(
     "/Umowa",
+    authenticate,
+    authorize((user) => roleGreaterOrEqual(user["role"], "admin")),
     validateBody(umowaSchema),
     async (req: Request, res: Response) => {
         const umowaData = req.body as UmowaPayload;
@@ -18,7 +21,7 @@ app.post(
             await dbConnection.query("INSERT INTO Umowa ( Klient_IdKlient, Data_rozpoczecia, Data_zakonczenia) VALUES ( ?, ?, ?)",
              [ umowaData.Klient_IdKlient, umowaData.Data_rozpoczecia , umowaData.Data_zakonczenia ]);
 
-            res.status(200).send("Dane z formularza dla umowy zostały odebrane");
+            res.status(200).send("Umowa została pomyślnie dodana");
         } catch (error) {
             console.error(error);
             res.status(500).send("Wystąpił błąd podczas zapisywania umowy");
@@ -26,7 +29,7 @@ app.post(
     }
 );
 
-app.get('/Umowa', async (req: Request, res: Response) => {
+app.get('/Umowa', authenticate, authorize((user) => roleGreaterOrEqual(user["role"], "kierownik")), async (req: Request, res: Response) => {
     try {
         const [results] = await connection.query<RowDataPacket[]>("SELECT * FROM Umowa");
         if (results.length === 0) {
@@ -39,7 +42,7 @@ app.get('/Umowa', async (req: Request, res: Response) => {
     }
 });
 
-app.get('/Umowa/:id', async (req: Request, res: Response) => {
+app.get('/Umowa/:id', authenticate, authorize((user) => roleGreaterOrEqual(user["role"], "kierownik")), async (req: Request, res: Response) => {
     const umowaId = req.params["id"];
 
     const [results] = await connection.query<RowDataPacket[]>("SELECT * FROM Umowa WHERE IdUmowa = ?", [umowaId]);
@@ -55,7 +58,7 @@ app.get('/Umowa/:id', async (req: Request, res: Response) => {
    }
 });
 
-app.delete('/Umowa/:id', async (req: Request, res: Response) => {
+app.delete('/Umowa/:id', authenticate, authorize((user) => roleGreaterOrEqual(user["role"], "admin")), async (req: Request, res: Response) => {
     const umowaId = req.params["id"];
 
     const [results] = await connection.query<ResultSetHeader>("DELETE FROM Umowa WHERE IdUmowa = ?", [umowaId]);
@@ -73,6 +76,8 @@ app.delete('/Umowa/:id', async (req: Request, res: Response) => {
 
 app.patch(
     "/Umowa/:id",
+    authenticate,
+    authorize((user) => roleGreaterOrEqual(user["role"], "admin")),
     validateBody(umowaSchema.partial()), 
     async (req: Request, res: Response) => {
         const umowaId = req.params["id"];
