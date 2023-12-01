@@ -49,7 +49,6 @@ const DataTable = <Row extends GridValidRowModel>({
                     csvOptions: { fileName: dataEndpoint },
                 },
             }}
-            
             {...dataGridProps}
         />
     );
@@ -57,13 +56,16 @@ const DataTable = <Row extends GridValidRowModel>({
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const EditableColumnHeader: React.FC<GridColumnHeaderParams<any>> = ({
-    colDef: { editable, headerName },
-}) => (
-    <span>
-        {editable && <EditIcon />}
-        {headerName}
-    </span>
-);
+    colDef: { editable, headerName, field, headerClassName },
+}) => {
+    console.log("headername", headerClassName);
+    return (
+        <div className="MuiDataGrid-columnHeaderTitle" style={{ fontWeight: 500 }}>
+            {headerName ?? field}
+            {editable && <EditIcon sx={{verticalAlign: "middle"}}/>}
+        </div>
+    );
+};
 
 export const DateTimeFormatToView = "DD-MM-YYYY HH:mm";
 

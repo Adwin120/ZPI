@@ -18,7 +18,6 @@ const FormAutocomplete = <T,>({
 }: Props<T>) => {
     const formControl = useContext(formContext);
     const { field, fieldState } = useController({ name, control: formControl! });
-    console.log(field)
     return (
         <Autocomplete<T>
             {...autocompleteProps}

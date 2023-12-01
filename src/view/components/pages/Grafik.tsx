@@ -1,13 +1,14 @@
 import { Stack } from "@mui/material";
 import CommonLayout from "../layout/CommonLayout";
 import AddFormButton from "../layout/AddFormButton";
-import { postToEndpoint } from "../../backendAccess";
+import { DateTimeFormatFromServer, postToEndpoint } from "../../backendAccess";
 import { Grafik, grafikSchema } from "../../../common/grafikSchema";
 import FormAutocompleteFromEndpoint from "../forms/FormAutocompleteFromEndpoint";
 import { Pracownik } from "../../../common/pracownikSchema";
 import { Klient } from "../../../common/klientSchema";
 import FormDateTimePicker from "../forms/FormDateTimeField";
-import DataTable from "../DataTable";
+import DataTable, { DateTimeFormatToView } from "../DataTable";
+import dayjs from "dayjs";
 
 interface Props {}
 const Grafik: React.FC<Props> = () => {
@@ -23,7 +24,7 @@ const Grafik: React.FC<Props> = () => {
                         <FormAutocompleteFromEndpoint<Pracownik>
                             endpoint="/Pracownik"
                             label="Pracownik"
-                            name="pracownikID"
+                            name="Pracownik_IdPracownik"
                             getOptionId={(option) => option?.IdPracownik ?? 0}
                             getOptionLabel={(option) =>
                                 `${option.Imie} ${option.Nazwisko}\n${option.Email} ${option.IdPracownik}`
@@ -32,7 +33,7 @@ const Grafik: React.FC<Props> = () => {
                         <FormAutocompleteFromEndpoint<Klient>
                             endpoint="/Klient"
                             label="Klient"
-                            name="klientID"
+                            name="Klient_IdKlient"
                             getOptionId={(option) => option?.IdKlient ?? 0}
                             getOptionLabel={(option) =>
                                 `${option.Nazwa}\n${option.NIP} ${option.IdKlient}`
@@ -46,8 +47,22 @@ const Grafik: React.FC<Props> = () => {
                     dataEndpoint="/Grafik"
                     getRowId={(row) => row.IdGrafik}
                     schema={[
-                        { field: "Czas_rozpoczecia", flex: 1, headerName: "Czas rozpoczęcia" },
-                        { field: "Czas_zakonczenia", flex: 1, headerName: "Czas zakończenia" },
+                        {
+                            field: "Czas_rozpoczecia",
+                            flex: 1,
+                            headerName: "Czas rozpoczęcia",
+                            type: "dateTime",
+                            valueGetter: (row) => dayjs(row.value, DateTimeFormatFromServer).toDate(),
+                            valueFormatter: (row) => dayjs(row.value).format(DateTimeFormatToView)
+                        },
+                        {
+                            field: "Czas_zakonczenia",
+                            flex: 1,
+                            headerName: "Czas zakończenia",
+                            type: "dateTime",
+                            valueGetter: (row) => dayjs(row.value, DateTimeFormatFromServer).toDate(),
+                            valueFormatter: (row) => dayjs(row.value).format(DateTimeFormatToView)
+                        },
                         {
                             field: "Status",
                             flex: 0.5,

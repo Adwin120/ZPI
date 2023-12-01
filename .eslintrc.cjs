@@ -34,8 +34,8 @@ module.exports = {
     ignorePatterns: ["/dist/*"],
     plugins: ["@typescript-eslint", "react", "react-hooks"],
     rules: {
-        "@typescript-eslint/no-unused-vars": 1,
+        "@typescript-eslint/no-unused-vars": ["warn", { "varsIgnorePattern": "_" }],
         "react/react-in-jsx-scope": 0,
-        "react/prop-types": 0
+        "react/prop-types": 0,
     },
 };

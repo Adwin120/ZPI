@@ -2,7 +2,7 @@ import { DateTimePicker, DateTimePickerProps, renderTimeViewClock } from "@mui/x
 import { useContext } from "react";
 import { ControllerRenderProps, FieldValues, Path, useController } from "react-hook-form";
 import { formContext } from "./FormDialog";
-import dayjs, { Dayjs } from "dayjs";
+import dayjs from "dayjs";
 
 type Props<T extends FieldValues> = { name: Path<T>; label: string } & Partial<
     Omit<DateTimePickerProps<unknown>, keyof ControllerRenderProps<T>>

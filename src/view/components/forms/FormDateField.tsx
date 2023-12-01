@@ -1,8 +1,7 @@
-import { DatePicker, DatePickerProps, DatePickerSlotsComponentsProps } from "@mui/x-date-pickers";
+import { DatePicker, DatePickerProps } from "@mui/x-date-pickers";
 import { useContext } from "react";
 import { ControllerRenderProps, FieldValues, Path, useController } from "react-hook-form";
 import { formContext } from "./FormDialog";
-import { Dayjs } from "dayjs";
 
 type Props<T extends FieldValues> = { name: Path<T>; label: string } & Partial<
     Omit<DatePickerProps<unknown>, keyof ControllerRenderProps<T>>
