@@ -1,23 +1,31 @@
 import { TextField } from "@mui/material";
+import { DateTimePicker, DateTimePickerProps } from "@mui/x-date-pickers";
+import { useContext } from "react";
 import { Control, ControllerRenderProps, FieldValues, Path, useController } from "react-hook-form";
+import { formContext } from "./FormDialog";
 
-type Props<T extends FieldValues> = { name: Path<T>; control: Control<T>; label: string } & Partial<
-  Omit<DateTimePickerProps<unknown, unknown>, keyof ControllerRenderProps<T>>
+type Props<T extends FieldValues> = { name: Path<T>; label: string } & Partial<
+    Omit<DateTimePickerProps<unknown>, keyof ControllerRenderProps<T>>
 >;
 
 export default function FormDateTimePicker<T extends FieldValues>({
-  control,
-  label,
-  name,
-  ...dateTimeProps
+    label,
+    name,
+    ...dateTimeProps
 }: Props<T>) {
-  const { field, fieldState } = useController<T>({ name, control });
-  return (
-    <DateTimePicker
-      {...field}
-      value={field.value === undefined ? null : field.value}
-      renderInput={(props) => <TextField {...props} helperText={fieldState.error?.message} error={Boolean(fieldState.error)}/>}
-      {...dateTimeProps}
-    />
-  );
+    const formControl = useContext(formContext);
+    const { field, fieldState } = useController({ name, control: formControl! });
+    return (
+        <DateTimePicker
+            {...field}
+            label={label}
+            value={field.value === undefined ? null : field.value}
+            slotProps={{
+                textField: {
+                    helperText: fieldState.error?.message,
+                },
+            }}
+            {...dateTimeProps}
+        />
+    );
 }
