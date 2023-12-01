@@ -13,7 +13,6 @@ export const zgloszenieSchema = z.object(
 
 export type ZgloszeniePayload = z.infer<typeof zgloszenieSchema>;
 
-//TODO: add missing properties
 export type Zgloszenie = {
     IdZgloszenie: number,
     Opis: string,

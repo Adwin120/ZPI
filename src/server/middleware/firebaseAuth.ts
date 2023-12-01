@@ -45,10 +45,9 @@ export const authorize: (rule: AuthorizationRule | Role) => RequestHandler =
                 ? roleGreaterOrEqual(userData["role"], rule)
                 : rule(userData);
         if (!authorized) {
-            //FIXME: this is temporary until we have a way to change user permissions, uncomment lines below
-            // res.status(403).send("Twoje konto nie posiada odpowiednich zezwolen");
-            // console.log("unauthorized: ", userData);
-            // return;
+            res.status(403).send("Twoje konto nie posiada odpowiednich zezwolen");
+            console.log("unauthorized: ", userData);
+            return;
         }
         next();
     };
