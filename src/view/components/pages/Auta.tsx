@@ -1,14 +1,15 @@
 import { Stack } from "@mui/material";
 import CommonLayout from "../layout/CommonLayout";
 import AddFormButton from "../layout/AddFormButton";
-import { postToEndpoint } from "../../backendAccess";
+import { DateTimeFormatFromServer, postToEndpoint } from "../../backendAccess";
 import { Auto, autoSchema } from "../../../common/autoSchema";
 import FormTextField from "../forms/FormTextField";
 import FormAutocompleteFromEndpoint from "../forms/FormAutocompleteFromEndpoint";
 import { Klient } from "../../../common/klientSchema";
 import FormDateTimePicker from "../forms/FormDateTimeField";
-import { ModelPayload } from "../../../common/modelSchema";
-import DataTable from "../DataTable";
+import { Model } from "../../../common/modelSchema";
+import DataTable, { DateTimeFormatToView } from "../DataTable";
+import dayjs from "dayjs";
 
 const Auta: React.FC = () => {
     return (
@@ -21,11 +22,11 @@ const Auta: React.FC = () => {
                         schema={autoSchema}
                     >
                         <FormTextField name="Rejestracja" label="Rejestracja" required />
-                        <FormAutocompleteFromEndpoint<ModelPayload>
+                        <FormAutocompleteFromEndpoint<Model>
                             endpoint="/Model"
                             name="Model_IdModel"
                             label="Model"
-                            getOptionId={(model) => `${model?.Marka} ${model?.Model}`}
+                            getOptionId={(model) => model?.IdModel ?? 0}
                             getOptionLabel={(model) => `${model?.Marka} ${model?.Model}`}
                         />
                         <FormAutocompleteFromEndpoint<Klient>
@@ -49,11 +50,25 @@ const Auta: React.FC = () => {
                 </div>
                 <DataTable<Auto>
                     dataEndpoint={"/Auto"}
-                    getRowId={row => row.IdAuto}
+                    getRowId={(row) => row.IdAuto}
                     schema={[
                         { field: "Rejestracja", flex: 1 },
-                        { field: "Czas_rozpoczecia", flex: 1, headerName: "Czas rozpoczęcia", type: "dateTime" },
-                        { field: "Czas_zakonczenia", flex: 1, headerName: "Czas zakończenia", type: "dateTime" },
+                        {
+                            field: "Czas_rozpoczecia",
+                            flex: 1,
+                            headerName: "Czas rozpoczęcia",
+                            type: "dateTime",
+                            valueGetter: (row) => dayjs(row.value, DateTimeFormatFromServer).toDate(),
+                            valueFormatter: (row) => dayjs(row.value).format(DateTimeFormatToView)
+                        },
+                        {
+                            field: "Czas_zakonczenia",
+                            flex: 1,
+                            headerName: "Czas zakończenia",
+                            type: "dateTime",
+                            valueGetter: (row) => dayjs(row.value, DateTimeFormatFromServer).toDate(),
+                            valueFormatter: (row) => dayjs(row.value).format(DateTimeFormatToView)
+                        },
                         {
                             field: "Dodatkowe_informacje",
                             flex: 1,

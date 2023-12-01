@@ -97,3 +97,5 @@ export const useGetEndpoint = <Data>(endpoint: Endpoint | null) => {
     const user = useUser();
     return useSWR<Data, Error, string | null>(user ? endpoint : null, fetchJSON);
 };
+
+export const DateTimeFormatFromServer = "YYYY-MM-DDTHH-mm-ss.SSS"

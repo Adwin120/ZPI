@@ -65,4 +65,6 @@ export const EditableColumnHeader: React.FC<GridColumnHeaderParams<any>> = ({
     </span>
 );
 
+export const DateTimeFormatToView = "DD-MM-YYYY HH:mm";
+
 export default DataTable;

@@ -32,9 +32,6 @@ app.post(
 app.get('/Auto',authenticate, authorize((user) => roleGreaterOrEqual(user["role"], "klient")), async (req: Request, res: Response) => {
     try {
         const [results] = await connection.query<RowDataPacket[]>("SELECT * FROM Auto");
-        if (results.length === 0) {
-            return res.status(200).send('Nie znaleziono żadnych aut');
-        }
         return res.json(results);
     } catch (error) {
         console.error(error);

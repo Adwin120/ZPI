@@ -3,6 +3,7 @@ import MockForms from "./components/layout/MockForms";
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import "dayjs/locale/pl";
 import theme from "./styles/theme";
 import { Route, Router, Switch } from "wouter";
 import { Login } from "./firebaseAuth";
