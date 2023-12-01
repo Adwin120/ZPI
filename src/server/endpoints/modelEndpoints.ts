@@ -3,11 +3,14 @@ import {connection} from "../app";
 import { Request, Response } from "express";
 import { validateBody } from "../middleware/zodValidation";
 import { ModelPayload, modelSchema } from "../../common/modelSchema";
-import { getUserData } from "../middleware/firebaseAuth";
+import { authenticate, authorize, getUserData } from "../middleware/firebaseAuth";
 import {ResultSetHeader, RowDataPacket } from "mysql2/promise";
+import { roleGreaterOrEqual } from "../../common/userRoles";
 
 app.post(
     "/Model",
+    authenticate,
+    authorize((user) => roleGreaterOrEqual(user["role"], "kierownik")),
     validateBody(modelSchema),
     async (req: Request, res: Response) => {
         const modelData = req.body as ModelPayload;
@@ -18,7 +21,7 @@ app.post(
             await dbConnection.query("INSERT INTO Model ( Marka, Model) VALUES ( ?, ?)",
              [ modelData.Marka, modelData.Model ]);
 
-            res.status(200).send("Dane z formularza dla modelu zostały odebrane");
+            res.status(200).send("Model został pomyślnie dodany");
         } catch (error) {
             console.error(error);
             res.status(500).send("Wystąpił błąd podczas zapisywania modelu");
@@ -26,7 +29,7 @@ app.post(
     }
 );
 
-app.get('/Model', async (req: Request, res: Response) => {
+app.get('/Model', authenticate, authorize((user) => roleGreaterOrEqual(user["role"], "kierownik")), async (req: Request, res: Response) => {
     try {
         const [results] = await connection.query<RowDataPacket[]>("SELECT * FROM Model");
         if (results.length === 0) {
@@ -39,7 +42,7 @@ app.get('/Model', async (req: Request, res: Response) => {
     }
 });
 
-app.get('/Model/:id', async (req: Request, res: Response) => {
+app.get('/Model/:id', authenticate, authorize((user) => roleGreaterOrEqual(user["role"], "kierownik")), async (req: Request, res: Response) => {
     const modelId = req.params["id"];
 
     const [results] = await connection.query<RowDataPacket[]>("SELECT * FROM Model WHERE IdModel = ?", [modelId]);
@@ -55,7 +58,7 @@ app.get('/Model/:id', async (req: Request, res: Response) => {
    }
 });
 
-app.delete('/Model/:id', async (req: Request, res: Response) => {
+app.delete('/Model/:id', authenticate, authorize((user) => roleGreaterOrEqual(user["role"], "admin")), async (req: Request, res: Response) => {
     const modelId = req.params["id"];
 
     const [results] = await connection.query<ResultSetHeader>("DELETE FROM Model WHERE IdModel = ?", [modelId]);
@@ -73,6 +76,8 @@ app.delete('/Model/:id', async (req: Request, res: Response) => {
 
 app.patch(
     "/Model/:id",
+    authenticate,
+    authorize((user) => roleGreaterOrEqual(user["role"], "kierownik")),
     validateBody(modelSchema.partial()), 
     async (req: Request, res: Response) => {
         const modelId = req.params["id"];

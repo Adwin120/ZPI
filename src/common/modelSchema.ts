@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { defaultMessage, numeric } from "./zodHelpers";
+import e from "express";
 
 export const modelSchema = z.object(
     {
@@ -10,3 +11,8 @@ export const modelSchema = z.object(
 );
 
 export type ModelPayload = z.infer<typeof modelSchema>;
+export type Model = {
+    IdModel: number,
+    Marka: string,
+    Model: string,
+}
