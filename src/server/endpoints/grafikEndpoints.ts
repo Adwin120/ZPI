@@ -113,3 +113,41 @@ app.patch(
         }
     }
 );
+
+app.put(
+    "/grafik/:id/acceptance",
+    authenticate,
+    authorize("kierownik"),
+    async (req: Request, res: Response) => {
+        const grafikId = req.params["id"];
+
+        try {
+            const dbConnection = await connection;
+            await dbConnection.query("UPDATE Grafik SET Status = 'Zaakceptowany' WHERE IdGrafik = ?", [grafikId]);
+
+            res.status(200).send("Grafik został zaakceptowany");
+        } catch (error) {
+            console.error(error);
+            res.status(500).send("Wystąpił błąd podczas aktualizacji grafiku");
+        }
+    }
+);
+
+app.delete(
+    "/grafik/:id/acceptance",
+    authenticate,
+    authorize("kierownik"),
+    async (req: Request, res: Response) => {
+        const grafikId = req.params["id"];
+
+        try {
+            const dbConnection = await connection;
+            await dbConnection.query("UPDATE Grafik SET Status = 'Odrzucony' WHERE IdGrafik = ?", [grafikId]);
+
+            res.status(200).send("Grafik został odrzucony");
+        } catch (error) {
+            console.error(error);
+            res.status(500).send("Wystąpił błąd podczas aktualizacji grafiku");
+        }
+    }
+);
