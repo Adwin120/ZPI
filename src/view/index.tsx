@@ -16,6 +16,7 @@ import Grafik from "./components/pages/Grafik";
 import Auta from "./components/pages/Auta";
 import Umowy from "./components/pages/Umowy";
 import Uslugi from "./components/pages/Uslugi";
+import Modele from "./components/pages/Modele";
 
 const reactContainer = document.getElementById("react-app")!;
 
@@ -31,6 +32,7 @@ root.render(
                     <Route path="/panel/auta" component={Auta}></Route>
                     <Route path="/panel/grafik" component={Grafik}></Route>
                     <Route path="/panel/klienci" component={Klienci}></Route>
+                    <Route path="/panel/modele" component={Modele}></Route>
                     <Route path="/panel/pracownicy" component={Pracownicy}></Route>
                     <Route path="/panel/umowy" component={Umowy}></Route>
                     <Route path="/panel/uslugi" component={Uslugi}></Route>

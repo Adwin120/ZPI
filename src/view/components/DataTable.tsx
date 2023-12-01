@@ -4,9 +4,11 @@ import {
     GridToolbar,
     type GridColDef,
     type DataGridProps,
+    GridColumnHeaderParams,
 } from "@mui/x-data-grid";
 import { Alert, AlertTitle } from "@mui/material";
 import { Endpoint, useGetEndpoint } from "./../backendAccess";
+import EditIcon from "@mui/icons-material/Edit";
 
 interface Props<Row extends GridValidRowModel> extends Partial<DataGridProps<Row>> {
     dataEndpoint: Endpoint | null;
@@ -47,9 +49,20 @@ const DataTable = <Row extends GridValidRowModel>({
                     csvOptions: { fileName: dataEndpoint },
                 },
             }}
+            
             {...dataGridProps}
         />
     );
 };
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const EditableColumnHeader: React.FC<GridColumnHeaderParams<any>> = ({
+    colDef: { editable, headerName },
+}) => (
+    <span>
+        {editable && <EditIcon />}
+        {headerName}
+    </span>
+);
 
 export default DataTable;
