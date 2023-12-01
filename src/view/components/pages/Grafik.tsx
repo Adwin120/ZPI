@@ -1,25 +1,24 @@
 import { Stack } from "@mui/material";
-import { Klient } from "../../../common/klientSchema";
-import { Pracownik } from "../../../common/pracownikSchema";
-import { Zgloszenie, zgloszenieSchema } from "../../../common/zgloszenieSchema";
-import { postToEndpoint } from "../../backendAccess";
-import DataTable from "../DataTable";
-import FormAutocompleteFromEndpoint from "../forms/FormAutocompleteFromEndpoint";
-import FormTextField from "../forms/FormTextField";
-import AddFormButton from "../layout/AddFormButton";
 import CommonLayout from "../layout/CommonLayout";
-import { grafikSchema } from "../../../common/grafikSchema";
+import AddFormButton from "../layout/AddFormButton";
+import { postToEndpoint } from "../../backendAccess";
+import { Grafik, grafikSchema } from "../../../common/grafikSchema";
+import FormAutocompleteFromEndpoint from "../forms/FormAutocompleteFromEndpoint";
+import { Pracownik } from "../../../common/pracownikSchema";
+import { Klient } from "../../../common/klientSchema";
+import FormDateTimePicker from "../forms/FormDateTimeField";
+import DataTable from "../DataTable";
 
 interface Props {}
-const Zgloszenia: React.FC<Props> = () => {
+const Grafik: React.FC<Props> = () => {
     return (
-        <CommonLayout subpageTitle="Zgłoszenia">
+        <CommonLayout subpageTitle="Grafik">
             <Stack alignItems={"normal"} gap={2}>
                 <div>
                     <AddFormButton
-                        schema={zgloszenieSchema}
-                        title="Dodaj Zgłoszenie"
-                        onSubmit={postToEndpoint("/Zgloszenie")}
+                        onSubmit={postToEndpoint("/Grafik")}
+                        schema={grafikSchema}
+                        title="Dodaj wpis w grafiku"
                     >
                         <FormAutocompleteFromEndpoint<Pracownik>
                             endpoint="/Pracownik"
@@ -39,21 +38,22 @@ const Zgloszenia: React.FC<Props> = () => {
                                 `${option.Nazwa}\n${option.NIP} ${option.IdKlient}`
                             }
                         />
-                        <FormTextField name="opis" label="Opis" multiline minRows={3} />
+                        <FormDateTimePicker name="Czas_rozpoczecia" label="Czas rozpoczęcia" />
+                        <FormDateTimePicker name="Czas_zakonczenia" label="Czas zakończenia" />
                     </AddFormButton>
                 </div>
-                <DataTable<Zgloszenie>
-                    dataEndpoint="/Zgloszenie"
-                    getRowId={(row) => row.IdZgloszenie}
+                <DataTable<Grafik>
+                    dataEndpoint="/Grafik"
+                    getRowId={(row) => row.IdGrafik}
                     schema={[
-                        { field: "Opis", flex: 1 },
+                        { field: "Czas_rozpoczecia", flex: 1, headerName: "Czas rozpoczęcia" },
+                        { field: "Czas_zakonczenia", flex: 1, headerName: "Czas zakończenia" },
                         {
                             field: "Status",
-                            flex: 1,
+                            flex: 0.5,
                             type: "singleSelect",
                             valueOptions: grafikSchema.shape.Status.removeDefault().options,
                         },
-                        // TODO: add missing fields
                     ]}
                 />
             </Stack>
@@ -61,4 +61,4 @@ const Zgloszenia: React.FC<Props> = () => {
     );
 };
 
-export default Zgloszenia;
+export default Grafik;
