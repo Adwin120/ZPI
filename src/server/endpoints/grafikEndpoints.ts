@@ -31,7 +31,20 @@ app.post(
 
 app.get('/Grafik',authenticate, authorize((user) => roleGreaterOrEqual(user["role"], "kierownik")), async (req: Request, res: Response) => {
     try {
-        const [results] = await connection.query<RowDataPacket[]>("SELECT * FROM Grafik");
+        const [results] = await connection.query<RowDataPacket[]>(`
+            SELECT
+                G.IdGrafik,
+                G.Pracownik_IdPracownik,
+                G.Klient_IdKlient,
+                P.Imie, 
+                P.Nazwisko,
+                K.Nazwa,
+                G.Czas_rozpoczecia,
+                G.Czas_zakonczenia,
+                G.Status
+            FROM db_main.Grafik G LEFT JOIN db_main.Pracownik P ON G.Pracownik_IdPracownik = P.IdPracownik
+            LEFT JOIN db_main.Klient K ON G.Klient_IdKlient = K.IdKlient;
+        `);
         return res.json(results);
     } catch (error) {
         console.error(error);
@@ -42,7 +55,20 @@ app.get('/Grafik',authenticate, authorize((user) => roleGreaterOrEqual(user["rol
 app.get('/Grafik/:id',authenticate, authorize((user) => roleGreaterOrEqual(user["role"], "kierownik")), async (req: Request, res: Response) => {
     const grafikId = req.params["id"];
 
-    const [results] = await connection.query<RowDataPacket[]>("SELECT * FROM Grafik WHERE IdGrafik = ?", [grafikId]);
+    const [results] = await connection.query<RowDataPacket[]>(`
+    SELECT
+        G.IdGrafik,
+        G.Pracownik_IdPracownik,
+        G.Klient_IdKlient,
+        P.Imie, 
+        P.Nazwisko,
+        K.Nazwa,
+        G.Czas_rozpoczecia,
+        G.Czas_zakonczenia,
+        G.Status
+    FROM db_main.Grafik G LEFT JOIN db_main.Pracownik P ON G.Pracownik_IdPracownik = P.IdPracownik
+    LEFT JOIN db_main.Klient K ON G.Klient_IdKlient = K.IdKlient
+    WHERE G.IdGrafik = ?;`,[grafikId]);
    try {
       console.log(results);
        if (results.length === 0) {

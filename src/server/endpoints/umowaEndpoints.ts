@@ -31,7 +31,14 @@ app.post(
 
 app.get('/Umowa', authenticate, authorize((user) => roleGreaterOrEqual(user["role"], "kierownik")), async (req: Request, res: Response) => {
     try {
-        const [results] = await connection.query<RowDataPacket[]>("SELECT * FROM Umowa");
+        const [results] = await connection.query<RowDataPacket[]>(`
+        SELECT 
+            U.IdUmowa,
+            U.Klient_IdKlient,
+            K.Nazwa_klienta,
+            U.Data_rozpoczecia,
+            U.Data_zakonczenia
+        FROM db_main.Umowa U LEFT JOIN db_main.Klient K ON U.Klient_IdKlient = K.IdKlient;`);
         return res.json(results);
     } catch (error) {
         console.error(error);
@@ -42,7 +49,19 @@ app.get('/Umowa', authenticate, authorize((user) => roleGreaterOrEqual(user["rol
 app.get('/Umowa/:id', authenticate, authorize((user) => roleGreaterOrEqual(user["role"], "kierownik")), async (req: Request, res: Response) => {
     const umowaId = req.params["id"];
 
-    const [results] = await connection.query<RowDataPacket[]>("SELECT * FROM Umowa WHERE IdUmowa = ?", [umowaId]);
+    const [results] = await connection.query<RowDataPacket[]>(`
+    SELECT U.IdUmowa,
+        U.Klient_IdKlient,
+        UU.IdUsluga,
+        K.Nazwa_klienta,
+        UU.Nazwa_uslugi,
+        WU.Cena,
+        U.Data_rozpoczecia,
+        U.Data_zakonczenia
+    FROM db_main.Umowa U LEFT JOIN db_main.Klient K ON U.Klient_IdKlient = K.IdKlient
+    JOIN db_main.Wersja_umowy WU ON U.IdUmowa = WU.Umowa_IdUmowa
+    LEFT JOIN db_main.Usluga UU ON WU.Usluga_IdUsluga = UU.IdUsluga 
+    WHERE U.IdUmowa = ?`, [umowaId]);
    try {
       console.log(results);
        if (results.length === 0) {
