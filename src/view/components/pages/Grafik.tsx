@@ -1,6 +1,6 @@
 import { Stack } from "@mui/material";
 import CommonLayout from "../layout/CommonLayout";
-import AddFormButton from "../layout/AddFormButton";
+import FormButton from "../layout/FormButton";
 import { DateTimeFormatFromServer, postToEndpoint } from "../../backendAccess";
 import { Grafik, grafikSchema } from "../../../common/grafikSchema";
 import FormAutocompleteFromEndpoint from "../forms/FormAutocompleteFromEndpoint";
@@ -16,7 +16,7 @@ const Grafik: React.FC<Props> = () => {
         <CommonLayout subpageTitle="Grafik">
             <Stack alignItems={"normal"} gap={2}>
                 <div>
-                    <AddFormButton
+                    <FormButton
                         minimalRole="kierownik"
                         onSubmit={postToEndpoint("/Grafik")}
                         schema={grafikSchema}
@@ -42,7 +42,7 @@ const Grafik: React.FC<Props> = () => {
                         />
                         <FormDateTimePicker name="Czas_rozpoczecia" label="Czas rozpoczęcia" />
                         <FormDateTimePicker name="Czas_zakonczenia" label="Czas zakończenia" />
-                    </AddFormButton>
+                    </FormButton>
                 </div>
                 <DataTable<Grafik>
                     dataEndpoint="/Grafik"

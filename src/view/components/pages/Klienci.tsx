@@ -1,6 +1,6 @@
 import { Klient, klientSchema } from "../../../common/klientSchema";
 import { postToEndpoint } from "../../backendAccess";
-import AddFormButton from "../layout/AddFormButton";
+import FormButton from "../layout/FormButton";
 import FormTextField from "../forms/FormTextField";
 import CommonLayout from "../layout/CommonLayout";
 
@@ -11,7 +11,7 @@ const Klienci: React.FC = () => (
     <CommonLayout pageTitle="MOXLY" subpageTitle="Klienci">
         <Stack alignItems={"normal"} gap={2}>
             <div>
-                <AddFormButton
+                <FormButton
                     minimalRole="kierownik"
                     schema={klientSchema}
                     onSubmit={postToEndpoint("/Klient")}
@@ -33,7 +33,7 @@ const Klienci: React.FC = () => (
                         required
                         // helperText="Numer musi mieć dokładnie 9 cyfr"
                     />
-                </AddFormButton>
+                </FormButton>
             </div>
             <DataTable<Klient>
                 dataEndpoint="/Klient"

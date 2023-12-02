@@ -6,7 +6,7 @@ import { postToEndpoint } from "../../backendAccess";
 import DataTable from "../DataTable";
 import FormAutocompleteFromEndpoint from "../forms/FormAutocompleteFromEndpoint";
 import FormTextField from "../forms/FormTextField";
-import AddFormButton from "../layout/AddFormButton";
+import FormButton from "../layout/FormButton";
 import CommonLayout from "../layout/CommonLayout";
 import { grafikSchema } from "../../../common/grafikSchema";
 
@@ -16,7 +16,7 @@ const Zgloszenia: React.FC<Props> = () => {
         <CommonLayout subpageTitle="Zgłoszenia">
             <Stack alignItems={"normal"} gap={2}>
                 <div>
-                    <AddFormButton
+                    <FormButton
                         minimalRole="pracownik"
                         schema={zgloszenieSchema}
                         title="Dodaj Zgłoszenie"
@@ -41,7 +41,7 @@ const Zgloszenia: React.FC<Props> = () => {
                             }
                         />
                         <FormTextField name="Opis" label="Opis" multiline minRows={3} />
-                    </AddFormButton>
+                    </FormButton>
                 </div>
                 <DataTable<Zgloszenie>
                     dataEndpoint="/Zgloszenie"

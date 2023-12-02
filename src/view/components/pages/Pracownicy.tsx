@@ -1,6 +1,6 @@
 import { Stack } from "@mui/material";
 import CommonLayout from "../layout/CommonLayout";
-import AddFormButton from "../layout/AddFormButton";
+import FormButton from "../layout/FormButton";
 import { postToEndpoint } from "../../backendAccess";
 import { Pracownik, pracownikSchema } from "../../../common/pracownikSchema";
 import FormTextField from "../forms/FormTextField";
@@ -11,7 +11,7 @@ const Pracownicy: React.FC = () => {
         <CommonLayout subpageTitle="Pracownicy">
             <Stack alignItems={"normal"} gap={2}>
                 <div>
-                    <AddFormButton
+                    <FormButton
                         minimalRole="kierownik"
                         onSubmit={postToEndpoint("/Pracownik")}
                         schema={pracownikSchema}
@@ -21,7 +21,7 @@ const Pracownicy: React.FC = () => {
                         <FormTextField name="imie" label="Imię" />
                         <FormTextField name="nazwisko" label="Nazwisko" />
                         <FormTextField name="telefon" label="Telefon" type="tel" />
-                    </AddFormButton>
+                    </FormButton>
                 </div>
                 <DataTable<Pracownik>
                     dataEndpoint="/Pracownik"

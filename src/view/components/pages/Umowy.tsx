@@ -1,6 +1,6 @@
 import { Stack } from "@mui/material";
 import CommonLayout from "../layout/CommonLayout";
-import AddFormButton from "../layout/AddFormButton";
+import FormButton from "../layout/FormButton";
 import { DateTimeFormatFromServer, postToEndpoint } from "../../backendAccess";
 import { Umowa, umowaSchema } from "../../../common/umowaSchema";
 import FormAutocompleteFromEndpoint from "../forms/FormAutocompleteFromEndpoint";
@@ -15,7 +15,7 @@ const Umowy: React.FC<Props> = () => {
         <CommonLayout subpageTitle="Umowy">
             <Stack alignItems={"normal"} gap={2}>
                 <div>
-                    <AddFormButton
+                    <FormButton
                         minimalRole="admin"
                         onSubmit={postToEndpoint("/Umowa")}
                         title="Dodaj umowę"
@@ -32,7 +32,7 @@ const Umowy: React.FC<Props> = () => {
                         />
                         <FormDateField name="Data_rozpoczecia" label="Data rozpoczęcia" />
                         <FormDateField name="Data_zakonczenia" label="Data zakończenia" />
-                    </AddFormButton>
+                    </FormButton>
                 </div>
                 <DataTable<Umowa>
                     dataEndpoint="/Umowa"

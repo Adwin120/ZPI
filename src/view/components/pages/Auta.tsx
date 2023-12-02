@@ -1,6 +1,6 @@
 import { Stack } from "@mui/material";
 import CommonLayout from "../layout/CommonLayout";
-import AddFormButton from "../layout/AddFormButton";
+import FormButton from "../layout/FormButton";
 import { DateTimeFormatFromServer, postToEndpoint } from "../../backendAccess";
 import { Auto, autoSchema } from "../../../common/autoSchema";
 import FormTextField from "../forms/FormTextField";
@@ -10,13 +10,43 @@ import FormDateTimePicker from "../forms/FormDateTimeField";
 import { Model } from "../../../common/modelSchema";
 import DataTable, { DateTimeFormatToView } from "../DataTable";
 import dayjs from "dayjs";
+import { useLocation } from "wouter";
+
+export const AutaFormFields = (
+    <>
+        <FormTextField name="Rejestracja" label="Rejestracja" required />
+        <FormAutocompleteFromEndpoint<Model>
+            endpoint="/Model"
+            name="Model_IdModel"
+            label="Model"
+            getOptionId={(model) => model?.IdModel ?? 0}
+            getOptionLabel={(model) => `${model?.Marka} ${model?.Model}`}
+        />
+        <FormAutocompleteFromEndpoint<Klient>
+            endpoint="/Klient"
+            label="Klient"
+            name="Klient_IdKlient"
+            getOptionId={(option) => option?.IdKlient ?? 0}
+            getOptionLabel={(option) => `${option.Nazwa}\n${option.NIP} ${option.IdKlient}`}
+        />
+        <FormDateTimePicker name="Czas_rozpoczecia" label="Czas rozpoczęcia" />
+        <FormDateTimePicker name="Czas_zakonczenia" label="Czas zakończenia" />
+        <FormTextField
+            name="Dodatkowe_informacje"
+            label="Dodatkowe informacje"
+            multiline
+            minRows={3}
+        />
+    </>
+);
 
 const Auta: React.FC = () => {
+    const [_, navigate] = useLocation();
     return (
         <CommonLayout subpageTitle="Auta">
             <Stack alignItems={"normal"} gap={2}>
                 <div>
-                    <AddFormButton
+                    <FormButton
                         minimalRole="pracownik"
                         title="Dodaj Auto"
                         onSubmit={postToEndpoint("/Auto")}
@@ -25,36 +55,13 @@ const Auta: React.FC = () => {
                             Czas_rozpoczecia: dayjs().format("YYYY-MM-DD HH:mm:ss"),
                         }}
                     >
-                        <FormTextField name="Rejestracja" label="Rejestracja" required />
-                        <FormAutocompleteFromEndpoint<Model>
-                            endpoint="/Model"
-                            name="Model_IdModel"
-                            label="Model"
-                            getOptionId={(model) => model?.IdModel ?? 0}
-                            getOptionLabel={(model) => `${model?.Marka} ${model?.Model}`}
-                        />
-                        <FormAutocompleteFromEndpoint<Klient>
-                            endpoint="/Klient"
-                            label="Klient"
-                            name="Klient_IdKlient"
-                            getOptionId={(option) => option?.IdKlient ?? 0}
-                            getOptionLabel={(option) =>
-                                `${option.Nazwa}\n${option.NIP} ${option.IdKlient}`
-                            }
-                        />
-                        <FormDateTimePicker name="Czas_rozpoczecia" label="Czas rozpoczęcia" />
-                        <FormDateTimePicker name="Czas_zakonczenia" label="Czas zakończenia" />
-                        <FormTextField
-                            name="Dodatkowe_informacje"
-                            label="Dodatkowe informacje"
-                            multiline
-                            minRows={3}
-                        />
-                    </AddFormButton>
+                        {AutaFormFields}
+                    </FormButton>
                 </div>
                 <DataTable<Auto>
                     dataEndpoint={"/Auto"}
                     getRowId={(row) => row.IdAuto}
+                    onRowDoubleClick={({ row }) => navigate(`/panel/auta/${row.IdAuto}`)}
                     schema={[
                         { field: "Rejestracja", flex: 1 },
                         {
@@ -71,10 +78,13 @@ const Auta: React.FC = () => {
                             flex: 1,
                             headerName: "Czas zakończenia",
                             type: "dateTime",
-                            
+
                             valueGetter: (row) =>
                                 dayjs(row.value, DateTimeFormatFromServer).toDate(),
-                            valueFormatter: (row) =>  isNaN(row.value) ? "-" : dayjs(row.value).format(DateTimeFormatToView),
+                            valueFormatter: (row) =>
+                                isNaN(row.value)
+                                    ? "-"
+                                    : dayjs(row.value).format(DateTimeFormatToView),
                         },
                         {
                             field: "Dodatkowe_informacje",

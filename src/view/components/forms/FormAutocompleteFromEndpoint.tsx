@@ -22,7 +22,7 @@ const FormAutocompleteFromEndpoint = <T,>({
             name={name}
             loading={isLoading}
             options={data ?? []}
-            isOptionEqualToValue={(option, value) => getOptionId(option) === getOptionId(value)}
+            isOptionEqualToValue={(option, value) => getOptionId(option) === getOptionId(value) || getOptionId(option) === value}
             getOptionLabel={getOptionLabel}
             optionToValue={getOptionId}
         />

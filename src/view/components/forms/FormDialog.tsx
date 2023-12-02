@@ -25,8 +25,7 @@ const FormDialog = <T extends FieldValues>({
     defaultValues
 }: Props<T>) => {
     const titleId = useId();
-    const { handleSubmit, control } = useForm<T>({ resolver: zodResolver(schema), mode: "onBlur", defaultValues });
-
+    const { handleSubmit, control, formState } = useForm<T>({ resolver: zodResolver(schema), mode: "onBlur", defaultValues });
     const formSubmit = handleSubmit((data) => {
         onSubmit(data);
         onClose();
