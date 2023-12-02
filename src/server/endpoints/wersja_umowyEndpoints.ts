@@ -105,7 +105,27 @@ app.delete('/Wersja_umowy/:idUslugi/:idUmowy',
             if (results.affectedRows === 0) {
                 return res.status(404).send("Nie znaleziono wersji umowy do usunięcia");
             }
+            return res.status(200).send("Wersja umowy została usunięta");
+        } catch (error) {
+            console.error(error);
+            return res.status(500).send("Wystąpił błąd podczas usuwania wersji umowy");
+        }
+    }
+);
 
+app.delete(
+    "/Umowa/:idumowy/wersja_umowy/:iduslugi",
+    authenticate,
+    authorize("admin"),
+    async (req: Request, res: Response) => {
+        const idumowy = req.params["idumowy"];
+        const iduslugi = req.params["iduslugi"];
+        try {
+            const dbConnection = await connection;
+            const [results] = await dbConnection.query<ResultSetHeader>("DELETE FROM Wersja_umowy WHERE Umowa_IdUmowa = ? AND Usluga_IdUsluga = ?", [idumowy, iduslugi]);
+            if (results.affectedRows === 0) {
+                return res.status(404).send("Nie znaleziono wersji umowy");
+            }
             return res.status(200).send("Wersja umowy została usunięta");
         } catch (error) {
             console.error(error);
@@ -161,6 +181,44 @@ app.patch('/Wersja_umowy/:idUslugi/:idUmowy',
         } catch (error) {
             console.error(error);
             return res.status(500).send("Wystąpił błąd podczas aktualizacji wersji umowy");
+        }
+    }
+);
+app.patch(
+    "/Umowa/:idumowy/wersja_umowy/:iduslugi",
+    authenticate,
+    authorize("admin"),
+    validateBody(wersja_umowySchema.partial()),
+    async (req: Request, res: Response) => {
+        const idumowy = req.params["idumowy"];
+        const iduslugi = req.params["iduslugi"];
+        const wersja_umowyData = req.body as Wersja_umowyPayload;
+        try {
+            const dbConnection = await connection;
+            const [results] = await dbConnection.query<ResultSetHeader>("UPDATE Wersja_umowy SET ? WHERE Umowa_IdUmowa = ? AND Usluga_IdUsluga = ?", [wersja_umowyData, idumowy, iduslugi]);
+            if (results.affectedRows === 0) {
+                return res.status(404).send("Nie znaleziono wersji umowy");
+            }
+            return res.status(200).send("Wersja umowy została zaktualizowana");
+        } catch (error) {
+            console.error(error);
+            return res.status(500).send("Wystąpił błąd podczas aktualizowania wersji umowy");
+        }
+    }
+);
+
+app.get(
+    '/Umowa/:idumowy/wersja_umowy',
+    authenticate,
+    authorize("kierownik"),
+    async (req: Request, res: Response) => {
+        const idumowy = req.params["idumowy"];
+        try {
+            const [results] = await connection.query<RowDataPacket[]>("SELECT * FROM Wersja_umowy WHERE Umowa_IdUmowa = ?", [idumowy]);
+            return res.json(results);
+        } catch (error) {
+            console.error(error);
+            return res.status(500).send('Wystąpił błąd podczas pobierania danych wersji umowy');
         }
     }
 );
