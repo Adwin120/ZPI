@@ -29,11 +29,16 @@ const PracownikDetails: React.FC<Props> = ({ params: { id } }) => {
                         schema={pracownikSchema}
                         isLoading={isLoading}
                         defaultValues={data}
-                    >{PracownicyFormFields}</FormButton>
-                    <DeleteButton onClick={() => {
-                        deleteFromEndpoint(endpoint)();
-                        navigate("/panel/pracownicy")
-                    }}/>
+                    >
+                        {PracownicyFormFields}
+                    </FormButton>
+                    <DeleteButton
+                        onClick={() => {
+                            deleteFromEndpoint(endpoint)().then(() => {
+                                navigate("/panel/pracownicy");
+                            });
+                        }}
+                    />
                 </ActionRow>
                 <DetailsCard title="Dane kontaktowe">
                     <dl>

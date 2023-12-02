@@ -28,11 +28,14 @@ const KlientDetails: React.FC<Props> = ({ params: { id } }) => {
                         title="Edytuj dane klienta"
                         isLoading={isLoading}
                         defaultValues={data}
-                    >{KlienciFormFields}</FormButton>
+                    >
+                        {KlienciFormFields}
+                    </FormButton>
                     <DeleteButton
                         onClick={() => {
-                            deleteFromEndpoint(endpoint)();
-                            navigate("/panel/klienci");
+                            deleteFromEndpoint(endpoint)().then(() => {
+                                navigate("/panel/klienci");
+                            });
                         }}
                     />
                 </ActionRow>

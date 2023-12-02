@@ -45,8 +45,9 @@ const AutoDetails: React.FC<Props> = ({ params: { id } }) => {
                     </FormButton>
                     <DeleteButton
                         onClick={() => {
-                            deleteFromEndpoint(`/Auto/${id}`)();
-                            navigate("/panel/auta");
+                            deleteFromEndpoint(`/Auto/${id}`)().then(() => {
+                                navigate("/panel/auta");
+                            });
                         }}
                     />
                 </ActionRow>

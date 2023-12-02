@@ -22,25 +22,7 @@ const Zgloszenia: React.FC<Props> = () => {
                         title="Dodaj Zgłoszenie"
                         onSubmit={postToEndpoint("/Zgloszenie")}
                     >
-                        <FormAutocompleteFromEndpoint<Pracownik>
-                            endpoint="/Pracownik"
-                            label="Pracownik"
-                            name="Pracownik_IdPracownik"
-                            getOptionId={(option) => option?.IdPracownik ?? 0}
-                            getOptionLabel={(option) =>
-                                `${option.Imie} ${option.Nazwisko}\n${option.Email} ${option.IdPracownik}`
-                            }
-                        />
-                        <FormAutocompleteFromEndpoint<Klient>
-                            endpoint="/Klient"
-                            label="Klient"
-                            name="Klient_IdKlient"
-                            getOptionId={(option) => option?.IdKlient ?? 0}
-                            getOptionLabel={(option) =>
-                                `${option.Nazwa}\n${option.NIP} ${option.IdKlient}`
-                            }
-                        />
-                        <FormTextField name="Opis" label="Opis" multiline minRows={3} />
+                        {ZgloszeniaFormFields}
                     </FormButton>
                 </div>
                 <DataTable<Zgloszenie>
@@ -62,4 +44,25 @@ const Zgloszenia: React.FC<Props> = () => {
     );
 };
 
+export const ZgloszeniaFormFields = (
+    <>
+        <FormAutocompleteFromEndpoint<Pracownik>
+            endpoint="/Pracownik"
+            label="Pracownik"
+            name="Pracownik_IdPracownik"
+            getOptionId={(option) => option?.IdPracownik ?? 0}
+            getOptionLabel={(option) =>
+                `${option.Imie} ${option.Nazwisko}\n${option.Email} ${option.IdPracownik}`
+            }
+        />
+        <FormAutocompleteFromEndpoint<Klient>
+            endpoint="/Klient"
+            label="Klient"
+            name="Klient_IdKlient"
+            getOptionId={(option) => option?.IdKlient ?? 0}
+            getOptionLabel={(option) => `${option.Nazwa}\n${option.NIP} ${option.IdKlient}`}
+        />
+        <FormTextField name="Opis" label="Opis" multiline minRows={3} />
+    </>
+);
 export default Zgloszenia;

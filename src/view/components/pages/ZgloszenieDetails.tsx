@@ -1,0 +1,60 @@
+import { Stack } from "@mui/material";
+import CommonLayout from "../layout/CommonLayout";
+import { Zgloszenie, zgloszenieSchema } from "../../../common/zgloszenieSchema";
+import { deleteFromEndpoint, patchEndpoint, useGetEndpoint } from "../../backendAccess";
+import { useLocation } from "wouter";
+import ActionRow from "../layout/ActionRow";
+import FormButton from "../layout/FormButton";
+import { ZgloszeniaFormFields } from "./Zgloszenia";
+import DeleteButton from "../layout/DeleteButton";
+import DetailsCard from "../layout/DetailsCard";
+
+interface Props {
+    params: {
+        id: string;
+    };
+}
+const ZgloszenieDetails: React.FC<Props> = ({ params: { id } }) => {
+    const endpoint = `/Zgloszenie/${id}` as const;
+    const { data, isLoading } = useGetEndpoint<Zgloszenie>(endpoint);
+    const [_, navigate] = useLocation();
+    return (
+        <CommonLayout subpageTitle={`Zgłoszenie do salonu ${data?.Klient_IdKlient}`}>
+            <Stack alignItems={"center"} gap={3}>
+                <ActionRow>
+                    <FormButton
+                        variant="edit"
+                        onSubmit={patchEndpoint(endpoint)}
+                        schema={zgloszenieSchema}
+                        title="Edytuj zgłoszenie"
+                        isLoading={isLoading}
+                        defaultValues={data}
+                    >
+                        {ZgloszeniaFormFields}
+                    </FormButton>
+                    <DeleteButton
+                        onClick={() => {
+                            deleteFromEndpoint(endpoint)().then(() => {
+                                navigate("/panel/zgloszenia");
+                            });
+                        }}
+                    />
+                </ActionRow>
+                <DetailsCard title="Status">
+                    {data?.Status}
+                </DetailsCard>
+                <DetailsCard title="Dane klienta">
+                        {data?.Klient_IdKlient}
+                </DetailsCard>
+                <DetailsCard title="Pracownik odpowiedzialny">
+                        {data?.Practownik_IdPracownik}
+                </DetailsCard>
+                <DetailsCard title="Opis">
+                    {data?.Opis}
+                </DetailsCard>
+            </Stack>
+        </CommonLayout>
+    );
+};
+
+export default ZgloszenieDetails;

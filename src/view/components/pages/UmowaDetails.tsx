@@ -54,8 +54,9 @@ const UmowaDetails: React.FC<Props> = ({ params: { id } }) => {
                     ></FormButton>
                     <DeleteButton
                         onClick={() => {
-                            deleteFromEndpoint(endpoint)();
-                            navigate("/panel/umowy");
+                            deleteFromEndpoint(endpoint)().then(() => {
+                                navigate("/panel/umowy");
+                            });
                         }}
                     />
                 </ActionRow>
@@ -78,13 +79,15 @@ const UmowaDetails: React.FC<Props> = ({ params: { id } }) => {
                             name="Usluga_IdUsluga"
                             endpoint="/Usluga"
                             label="Usługa"
-                            getOptionId={x => x?.IdUsluga ?? 0}
-                            getOptionLabel={x => x.Nazwa}
+                            getOptionId={(x) => x?.IdUsluga ?? 0}
+                            getOptionLabel={(x) => x.Nazwa}
                         />
                         <FormTextField
                             name="Cena"
                             type="number"
-                            InputProps={{ endAdornment: <InputAdornment position="end">zł</InputAdornment> }}
+                            InputProps={{
+                                endAdornment: <InputAdornment position="end">zł</InputAdornment>,
+                            }}
                         />
                     </FormButton>
                     <DataTable<Wersja_umowy>
