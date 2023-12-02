@@ -1,6 +1,13 @@
 import { Button, Stack, Typography } from "@mui/material";
 import { Auto, autoSchema } from "../../../common/autoSchema";
-import { DateTimeFormatFromServer, deleteFromEndpoint, patchEndpoint, useGetEndpoint } from "../../backendAccess";
+import {
+    DateTimeFormatFromServer,
+    formDateTime,
+    deleteFromEndpoint,
+    patchEndpoint,
+    useGetEndpoint,
+    showDateTime,
+} from "../../backendAccess";
 import CommonLayout from "../layout/CommonLayout";
 import DetailsCard from "../layout/DetailsCard";
 import DataTable, { DateTimeFormatToView } from "../DataTable";
@@ -9,9 +16,10 @@ import ActionRow from "../layout/ActionRow";
 import FormButton from "../layout/FormButton";
 import { AutaFormFields } from "./Auta";
 
-import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
+
 import { useLocation } from "wouter";
 import { DateTimeFormFormat } from "../forms/FormDateTimeField";
+import DeleteButton from "../layout/DeleteButton";
 
 interface Props {
     params: {
@@ -33,27 +41,18 @@ const AutoDetails: React.FC<Props> = ({ params: { id } }) => {
                         isLoading={isLoading}
                         defaultValues={{
                             ...data,
-                            Czas_rozpoczecia: dayjs(data?.Czas_rozpoczecia, DateTimeFormatFromServer).format(
-                                DateTimeFormFormat
-                            ),
-                            Czas_zakonczenia: dayjs(data?.Czas_zakonczenia, DateTimeFormatFromServer).format(
-                                DateTimeFormFormat
-                            ),
+                            Czas_rozpoczecia: formDateTime(data?.Czas_rozpoczecia),
+                            Czas_zakonczenia: formDateTime(data?.Czas_zakonczenia),
                         }}
                     >
                         {AutaFormFields}
                     </FormButton>
-                    <Button
-                        color="error"
-                        variant="outlined"
-                        startIcon={<DeleteForeverIcon />}
+                    <DeleteButton
                         onClick={() => {
                             deleteFromEndpoint(`/Auto/${id}`)();
                             navigate("/panel/auta");
                         }}
-                    >
-                        Usuń
-                    </Button>
+                    />
                 </ActionRow>
                 <DetailsCard title="Specyfikacja">
                     <dl>
@@ -66,9 +65,9 @@ const AutoDetails: React.FC<Props> = ({ params: { id } }) => {
                 <DetailsCard title="Przedział pracy">
                     <dl>
                         <dt>Czas rozpoczęcia</dt>
-                        <dd>{dayjs(data?.Czas_rozpoczecia, DateTimeFormatFromServer).format(DateTimeFormatToView)}</dd>
+                        <dd>{showDateTime(data?.Czas_rozpoczecia)}</dd>
                         <dt>Czas zakończenia</dt>
-                        <dd>{dayjs(data?.Czas_zakonczenia, DateTimeFormatFromServer).format(DateTimeFormatToView)}</dd>
+                        <dd>{showDateTime(data?.Czas_zakonczenia)}</dd>
                     </dl>
                 </DetailsCard>
                 <DetailsCard title="Klient">{data?.Klient_IdKlient}</DetailsCard>

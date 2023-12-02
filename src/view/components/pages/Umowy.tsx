@@ -9,6 +9,20 @@ import FormDateField from "../forms/FormDateField";
 import DataTable, { DateFormatToView } from "../DataTable";
 import dayjs from "dayjs";
 
+export const UmowaFields = (
+    <>
+        <FormAutocompleteFromEndpoint<Klient>
+            endpoint="/Klient"
+            label="Klient"
+            name="Klient_IdKlient"
+            getOptionId={(option) => option?.IdKlient ?? 0}
+            getOptionLabel={(option) => `${option.Nazwa}\n${option.NIP} ${option.IdKlient}`}
+        />
+        <FormDateField name="Data_rozpoczecia" label="Data rozpoczęcia" />
+        <FormDateField name="Data_zakonczenia" label="Data zakończenia" />
+    </>
+);
+
 interface Props {}
 const Umowy: React.FC<Props> = () => {
     return (
@@ -20,19 +34,7 @@ const Umowy: React.FC<Props> = () => {
                         onSubmit={postToEndpoint("/Umowa")}
                         title="Dodaj umowę"
                         schema={umowaSchema}
-                    >
-                        <FormAutocompleteFromEndpoint<Klient>
-                            endpoint="/Klient"
-                            label="Klient"
-                            name="Klient_IdKlient"
-                            getOptionId={(option) => option?.IdKlient ?? 0}
-                            getOptionLabel={(option) =>
-                                `${option.Nazwa}\n${option.NIP} ${option.IdKlient}`
-                            }
-                        />
-                        <FormDateField name="Data_rozpoczecia" label="Data rozpoczęcia" />
-                        <FormDateField name="Data_zakonczenia" label="Data zakończenia" />
-                    </FormButton>
+                    >{UmowaFields}</FormButton>
                 </div>
                 <DataTable<Umowa>
                     dataEndpoint="/Umowa"

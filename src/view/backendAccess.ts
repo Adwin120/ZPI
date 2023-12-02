@@ -2,6 +2,9 @@ import toast from "react-hot-toast";
 import { auth, useUser } from "./firebaseAuth";
 import useSWR from "swr";
 import { mutate } from "swr";
+import { DateTimeFormatToView } from "./components/DataTable";
+import dayjs from "dayjs";
+import { DateTimeFormFormat } from "./components/forms/FormDateTimeField";
 
 const makeDefaultHeaders = async () => {
     const user = auth.currentUser;
@@ -115,3 +118,9 @@ export const useGetEndpoint = <Data>(endpoint: Endpoint | null) => {
 };
 
 export const DateTimeFormatFromServer = "YYYY-MM-DDTHH-mm-ss.SSS";
+
+export const showDateTime = (date: string | null | undefined) =>
+    dayjs(date, DateTimeFormatFromServer).format(DateTimeFormatToView);
+
+export const formDateTime = (date: string | null | undefined) =>
+    dayjs(date, DateTimeFormatFromServer).format(DateTimeFormFormat);
