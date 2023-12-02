@@ -9,9 +9,11 @@ import FormTextField from "../forms/FormTextField";
 import FormButton from "../layout/FormButton";
 import CommonLayout from "../layout/CommonLayout";
 import { grafikSchema } from "../../../common/grafikSchema";
+import { useLocation } from "wouter";
 
 interface Props {}
 const Zgloszenia: React.FC<Props> = () => {
+    const [_, navigate] = useLocation();
     return (
         <CommonLayout subpageTitle="Zgłoszenia">
             <Stack alignItems={"normal"} gap={2}>
@@ -28,6 +30,9 @@ const Zgloszenia: React.FC<Props> = () => {
                 <DataTable<Zgloszenie>
                     dataEndpoint="/Zgloszenie"
                     getRowId={(row) => row.IdZgloszenie}
+                    onRowDoubleClick={({ row }) =>
+                        navigate(`/panel/zgloszenia/${row.IdZgloszenie}`)
+                    }
                     schema={[
                         { field: "Opis", flex: 1 },
                         {

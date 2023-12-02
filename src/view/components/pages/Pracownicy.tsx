@@ -5,8 +5,10 @@ import { postToEndpoint } from "../../backendAccess";
 import { Pracownik, pracownikSchema } from "../../../common/pracownikSchema";
 import FormTextField from "../forms/FormTextField";
 import DataTable from "../DataTable";
+import { useLocation } from "wouter";
 
 const Pracownicy: React.FC = () => {
+    const [_, navigate] = useLocation();
     return (
         <CommonLayout subpageTitle="Pracownicy">
             <Stack alignItems={"normal"} gap={2}>
@@ -21,6 +23,7 @@ const Pracownicy: React.FC = () => {
                 <DataTable<Pracownik>
                     dataEndpoint="/Pracownik"
                     getRowId={(row) => row.IdPracownik}
+                    onRowDoubleClick={({row}) => navigate(`/panel/pracownicy/${row.IdPracownik}`)}
                     schema={[
                         { field: "Email", flex: 1 },
                         { field: "Imie", flex: 1 },

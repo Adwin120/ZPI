@@ -6,6 +6,39 @@ import CommonLayout from "../layout/CommonLayout";
 
 import DataTable from "../DataTable";
 import { Stack } from "@mui/material";
+import { useLocation } from "wouter";
+
+const Klienci: React.FC = () => {
+    const [_, navigate] = useLocation();
+    return (
+        <CommonLayout pageTitle="MOXLY" subpageTitle="Klienci">
+            <Stack alignItems={"normal"} gap={2}>
+                <div>
+                    <FormButton
+                        minimalRole="kierownik"
+                        schema={klientSchema}
+                        onSubmit={postToEndpoint("/Klient")}
+                        title="Dodaj klienta"
+                    >
+                        {KlienciFormFields}
+                    </FormButton>
+                </div>
+                <DataTable<Klient>
+                    dataEndpoint="/Klient"
+                    getRowId={(row) => row.IdKlient}
+                    onRowDoubleClick={({ row }) => navigate(`/panel/klienci/${row.IdKlient}`)}
+                    schema={[
+                        { field: "Nazwa", flex: 1 },
+                        { field: "Email", flex: 1 },
+                        { field: "Adres", flex: 1 },
+                        { field: "NIP", flex: 0.5 },
+                        { field: "Telefon", flex: 1 },
+                    ]}
+                />
+            </Stack>
+        </CommonLayout>
+    );
+};
 
 export const KlienciFormFields = (
     <>
@@ -26,32 +59,6 @@ export const KlienciFormFields = (
             // helperText="Numer musi mieć dokładnie 9 cyfr"
         />
     </>
-);
-
-const Klienci: React.FC = () => (
-    <CommonLayout pageTitle="MOXLY" subpageTitle="Klienci">
-        <Stack alignItems={"normal"} gap={2}>
-            <div>
-                <FormButton
-                    minimalRole="kierownik"
-                    schema={klientSchema}
-                    onSubmit={postToEndpoint("/Klient")}
-                    title="Dodaj klienta"
-                >{KlienciFormFields}</FormButton>
-            </div>
-            <DataTable<Klient>
-                dataEndpoint="/Klient"
-                getRowId={(row) => row.IdKlient}
-                schema={[
-                    { field: "Nazwa", flex: 1 },
-                    { field: "Email", flex: 1 },
-                    { field: "Adres", flex: 1 },
-                    { field: "NIP", flex: 0.5 },
-                    { field: "Telefon", flex: 1 },
-                ]}
-            />
-        </Stack>
-    </CommonLayout>
 );
 
 export default Klienci;

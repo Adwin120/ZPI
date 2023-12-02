@@ -9,9 +9,11 @@ import { Klient } from "../../../common/klientSchema";
 import FormDateTimePicker from "../forms/FormDateTimeField";
 import DataTable, { DateTimeFormatToView } from "../DataTable";
 import dayjs from "dayjs";
+import { useLocation } from "wouter";
 
 interface Props {}
 const Grafik: React.FC<Props> = () => {
+    const [_, navigate] = useLocation()
     return (
         <CommonLayout subpageTitle="Grafik">
             <Stack alignItems={"normal"} gap={2}>
@@ -26,6 +28,7 @@ const Grafik: React.FC<Props> = () => {
                 <DataTable<Grafik>
                     dataEndpoint="/Grafik"
                     getRowId={(row) => row.IdGrafik}
+                    onRowDoubleClick={({row}) => navigate(`/panel/auta/${row.IdGrafik}`)}
                     schema={[
                         {
                             field: "Czas_rozpoczecia",

@@ -8,23 +8,11 @@ import { Klient } from "../../../common/klientSchema";
 import FormDateField from "../forms/FormDateField";
 import DataTable, { DateFormatToView } from "../DataTable";
 import dayjs from "dayjs";
-
-export const UmowaFields = (
-    <>
-        <FormAutocompleteFromEndpoint<Klient>
-            endpoint="/Klient"
-            label="Klient"
-            name="Klient_IdKlient"
-            getOptionId={(option) => option?.IdKlient ?? 0}
-            getOptionLabel={(option) => `${option.Nazwa}\n${option.NIP} ${option.IdKlient}`}
-        />
-        <FormDateField name="Data_rozpoczecia" label="Data rozpoczęcia" />
-        <FormDateField name="Data_zakonczenia" label="Data zakończenia" />
-    </>
-);
+import { useLocation } from "wouter";
 
 interface Props {}
 const Umowy: React.FC<Props> = () => {
+    const [_, navigate] = useLocation();
     return (
         <CommonLayout subpageTitle="Umowy">
             <Stack alignItems={"normal"} gap={2}>
@@ -34,11 +22,14 @@ const Umowy: React.FC<Props> = () => {
                         onSubmit={postToEndpoint("/Umowa")}
                         title="Dodaj umowę"
                         schema={umowaSchema}
-                    >{UmowaFields}</FormButton>
+                    >
+                        {UmowaFields}
+                    </FormButton>
                 </div>
                 <DataTable<Umowa>
                     dataEndpoint="/Umowa"
                     getRowId={(row) => row.IdUmowa}
+                    onRowDoubleClick={({ row }) => navigate(`/panel/umowy/${row.IdUmowa}`)}
                     schema={[
                         {
                             field: "Data_rozpoczecia",
@@ -64,5 +55,19 @@ const Umowy: React.FC<Props> = () => {
         </CommonLayout>
     );
 };
+
+export const UmowaFields = (
+    <>
+        <FormAutocompleteFromEndpoint<Klient>
+            endpoint="/Klient"
+            label="Klient"
+            name="Klient_IdKlient"
+            getOptionId={(option) => option?.IdKlient ?? 0}
+            getOptionLabel={(option) => `${option.Nazwa}\n${option.NIP} ${option.IdKlient}`}
+        />
+        <FormDateField name="Data_rozpoczecia" label="Data rozpoczęcia" />
+        <FormDateField name="Data_zakonczenia" label="Data zakończenia" />
+    </>
+);
 
 export default Umowy;
