@@ -35,7 +35,7 @@ app.get('/Umowa', authenticate, authorize((user) => roleGreaterOrEqual(user["rol
         SELECT 
             U.IdUmowa,
             U.Klient_IdKlient,
-            K.Nazwa_klienta,
+            K.Nazwa,
             U.Data_rozpoczecia,
             U.Data_zakonczenia
         FROM db_main.Umowa U LEFT JOIN db_main.Klient K ON U.Klient_IdKlient = K.IdKlient;`);
