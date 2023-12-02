@@ -53,7 +53,7 @@ app.get('/Umowa/:id', authenticate, authorize((user) => roleGreaterOrEqual(user[
     SELECT U.IdUmowa,
         U.Klient_IdKlient,
         UU.IdUsluga,
-        K.Nazwa_klienta,
+        K.Nazwa,
         UU.Nazwa_uslugi,
         WU.Cena,
         U.Data_rozpoczecia,

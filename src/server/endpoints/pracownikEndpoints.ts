@@ -45,7 +45,7 @@ app.get('/Pracownik/:id', authenticate, authorize((user) => roleGreaterOrEqual(u
    }
 });
 
-app.get('/Pracownik/:email/grafik', authenticate, async (req: Request, res: Response) => {                                //tylko swoj grafik
+app.get('/Pracownik/:email', authenticate, async (req: Request, res: Response) => {                                //tylko swoj grafik
     const emailParam = req.params["email"];
 
     if (!emailParam) {
@@ -60,7 +60,7 @@ app.get('/Pracownik/:email/grafik', authenticate, async (req: Request, res: Resp
     }
 
     if (user.email !== email) {
-        return res.status(403).send("Brak uprawnień do przeglądania tego grafiku");
+        return res.status(403).send("Brak uprawnień do przeglądania danych tego pracownika");
     }
 
     try {
@@ -77,11 +77,11 @@ app.get('/Pracownik/:email/grafik', authenticate, async (req: Request, res: Resp
         return res.json(grafikResults);
     } catch (error) {
         console.error(error);
-        return res.status(500).send('Wystąpił błąd podczas pobierania grafiku pracownika');
+        return res.status(500).send('Wystąpił błąd podczas pobierania danych pracownika');
     }
 });
 
-app.get('/Pracownik/:email', authenticate, async (req: Request, res: Response) => {                           //tylko swoje dane
+app.get('/Pracownik/:email/grafik', authenticate, async (req: Request, res: Response) => {                           //tylko swoje dane
     const emailParam = req.params["email"];
 
     if (!emailParam) {
