@@ -1,6 +1,6 @@
 import { Button, Stack, Typography } from "@mui/material";
 import { Auto, autoSchema } from "../../../common/autoSchema";
-import { deleteFromEndpoint, patchEndpoint, useGetEndpoint } from "../../backendAccess";
+import { DateTimeFormatFromServer, deleteFromEndpoint, patchEndpoint, useGetEndpoint } from "../../backendAccess";
 import CommonLayout from "../layout/CommonLayout";
 import DetailsCard from "../layout/DetailsCard";
 import DataTable, { DateTimeFormatToView } from "../DataTable";
@@ -33,10 +33,10 @@ const AutoDetails: React.FC<Props> = ({ params: { id } }) => {
                         isLoading={isLoading}
                         defaultValues={{
                             ...data,
-                            Czas_rozpoczecia: dayjs(data?.Czas_rozpoczecia).format(
+                            Czas_rozpoczecia: dayjs(data?.Czas_rozpoczecia, DateTimeFormatFromServer).format(
                                 DateTimeFormFormat
                             ),
-                            Czas_zakonczenia: dayjs(data?.Czas_zakonczenia).format(
+                            Czas_zakonczenia: dayjs(data?.Czas_zakonczenia, DateTimeFormatFromServer).format(
                                 DateTimeFormFormat
                             ),
                         }}
@@ -66,9 +66,9 @@ const AutoDetails: React.FC<Props> = ({ params: { id } }) => {
                 <DetailsCard title="Przedział pracy">
                     <dl>
                         <dt>Czas rozpoczęcia</dt>
-                        <dd>{dayjs(data?.Czas_rozpoczecia).format(DateTimeFormatToView)}</dd>
+                        <dd>{dayjs(data?.Czas_rozpoczecia, DateTimeFormatFromServer).format(DateTimeFormatToView)}</dd>
                         <dt>Czas zakończenia</dt>
-                        <dd>{dayjs(data?.Czas_zakonczenia).format(DateTimeFormatToView)}</dd>
+                        <dd>{dayjs(data?.Czas_zakonczenia, DateTimeFormatFromServer).format(DateTimeFormatToView)}</dd>
                     </dl>
                 </DetailsCard>
                 <DetailsCard title="Klient">{data?.Klient_IdKlient}</DetailsCard>
