@@ -21,28 +21,7 @@ const Grafik: React.FC<Props> = () => {
                         onSubmit={postToEndpoint("/Grafik")}
                         schema={grafikSchema}
                         title="Dodaj wpis w grafiku"
-                    >
-                        <FormAutocompleteFromEndpoint<Pracownik>
-                            endpoint="/Pracownik"
-                            label="Pracownik"
-                            name="Pracownik_IdPracownik"
-                            getOptionId={(option) => option?.IdPracownik ?? 0}
-                            getOptionLabel={(option) =>
-                                `${option.Imie} ${option.Nazwisko}\n${option.Email} ${option.IdPracownik}`
-                            }
-                        />
-                        <FormAutocompleteFromEndpoint<Klient>
-                            endpoint="/Klient"
-                            label="Klient"
-                            name="Klient_IdKlient"
-                            getOptionId={(option) => option?.IdKlient ?? 0}
-                            getOptionLabel={(option) =>
-                                `${option.Nazwa}\n${option.NIP} ${option.IdKlient}`
-                            }
-                        />
-                        <FormDateTimePicker name="Czas_rozpoczecia" label="Czas rozpoczęcia" />
-                        <FormDateTimePicker name="Czas_zakonczenia" label="Czas zakończenia" />
-                    </FormButton>
+                    >{GrafikFormFields}</FormButton>
                 </div>
                 <DataTable<Grafik>
                     dataEndpoint="/Grafik"
@@ -53,16 +32,18 @@ const Grafik: React.FC<Props> = () => {
                             flex: 1,
                             headerName: "Czas rozpoczęcia",
                             type: "dateTime",
-                            valueGetter: (row) => dayjs(row.value, DateTimeFormatFromServer).toDate(),
-                            valueFormatter: (row) => dayjs(row.value).format(DateTimeFormatToView)
+                            valueGetter: (row) =>
+                                dayjs(row.value, DateTimeFormatFromServer).toDate(),
+                            valueFormatter: (row) => dayjs(row.value).format(DateTimeFormatToView),
                         },
                         {
                             field: "Czas_zakonczenia",
                             flex: 1,
                             headerName: "Czas zakończenia",
                             type: "dateTime",
-                            valueGetter: (row) => dayjs(row.value, DateTimeFormatFromServer).toDate(),
-                            valueFormatter: (row) => dayjs(row.value).format(DateTimeFormatToView)
+                            valueGetter: (row) =>
+                                dayjs(row.value, DateTimeFormatFromServer).toDate(),
+                            valueFormatter: (row) => dayjs(row.value).format(DateTimeFormatToView),
                         },
                         {
                             field: "Status",
@@ -76,5 +57,28 @@ const Grafik: React.FC<Props> = () => {
         </CommonLayout>
     );
 };
+
+export const GrafikFormFields = (
+    <>
+        <FormAutocompleteFromEndpoint<Pracownik>
+            endpoint="/Pracownik"
+            label="Pracownik"
+            name="Pracownik_IdPracownik"
+            getOptionId={(option) => option?.IdPracownik ?? 0}
+            getOptionLabel={(option) =>
+                `${option.Imie} ${option.Nazwisko}\n${option.Email} ${option.IdPracownik}`
+            }
+        />
+        <FormAutocompleteFromEndpoint<Klient>
+            endpoint="/Klient"
+            label="Klient"
+            name="Klient_IdKlient"
+            getOptionId={(option) => option?.IdKlient ?? 0}
+            getOptionLabel={(option) => `${option.Nazwa}\n${option.NIP} ${option.IdKlient}`}
+        />
+        <FormDateTimePicker name="Czas_rozpoczecia" label="Czas rozpoczęcia" />
+        <FormDateTimePicker name="Czas_zakonczenia" label="Czas zakończenia" />
+    </>
+);
 
 export default Grafik;
