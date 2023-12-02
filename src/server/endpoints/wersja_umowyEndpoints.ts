@@ -99,9 +99,6 @@ app.get(
         const idumowy = req.params["idumowy"];
         try {
             const [results] = await connection.query<RowDataPacket[]>("SELECT * FROM Wersja_umowy WHERE Umowa_IdUmowa = ?", [idumowy]);
-            if (results.length === 0) {
-                return res.status(200).send('Nie znaleziono wersji umowy');
-            }
             return res.json(results);
         } catch (error) {
             console.error(error);
