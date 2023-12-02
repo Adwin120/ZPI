@@ -16,12 +16,7 @@ const Pracownicy: React.FC = () => {
                         onSubmit={postToEndpoint("/Pracownik")}
                         schema={pracownikSchema}
                         title="Dodaj Pracownika"
-                    >
-                        <FormTextField name="email" label="E-mail" type="email" required />
-                        <FormTextField name="imie" label="Imię" />
-                        <FormTextField name="nazwisko" label="Nazwisko" />
-                        <FormTextField name="telefon" label="Telefon" type="tel" />
-                    </FormButton>
+                    >{PracownicyFormFields}</FormButton>
                 </div>
                 <DataTable<Pracownik>
                     dataEndpoint="/Pracownik"
@@ -37,5 +32,14 @@ const Pracownicy: React.FC = () => {
         </CommonLayout>
     );
 };
+
+export const PracownicyFormFields = (
+    <>
+        <FormTextField name="email" label="E-mail" type="email" required />
+        <FormTextField name="imie" label="Imię" />
+        <FormTextField name="nazwisko" label="Nazwisko" />
+        <FormTextField name="telefon" label="Telefon" type="tel" />
+    </>
+);
 
 export default Pracownicy;

@@ -1,7 +1,6 @@
-import { Button, Stack, Typography } from "@mui/material";
+import { Stack } from "@mui/material";
 import { Auto, autoSchema } from "../../../common/autoSchema";
 import {
-    DateTimeFormatFromServer,
     formDateTime,
     deleteFromEndpoint,
     patchEndpoint,
@@ -10,15 +9,12 @@ import {
 } from "../../backendAccess";
 import CommonLayout from "../layout/CommonLayout";
 import DetailsCard from "../layout/DetailsCard";
-import DataTable, { DateTimeFormatToView } from "../DataTable";
-import dayjs from "dayjs";
+import DataTable from "../DataTable";
 import ActionRow from "../layout/ActionRow";
 import FormButton from "../layout/FormButton";
 import { AutaFormFields } from "./Auta";
 
-
 import { useLocation } from "wouter";
-import { DateTimeFormFormat } from "../forms/FormDateTimeField";
 import DeleteButton from "../layout/DeleteButton";
 
 interface Props {
