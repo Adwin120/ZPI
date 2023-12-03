@@ -25,10 +25,10 @@ export const autoSchema = z.object(
 export type AutoPayload = z.infer<typeof autoSchema>;
 export type Auto = {
     IdAuto: number,
-    Model_IdModel: number,
+    IdModel: number,
     Marka: string,
     Model: string,
-    Klient_IdKlient: number,
+    IdKlient: number,
     Klient_nazwa: string,
     Rejestracja: string,
     Czas_rozpoczecia: string,
