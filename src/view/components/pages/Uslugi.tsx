@@ -35,8 +35,8 @@ const Uslugi: React.FC<Props> = () => {
                         return { IdUsluga, ...rest };
                     }}
                     schema={[
-                        { field: "Nazwa", flex: 1 },
-                        { field: "Opis", flex: 3 },
+                        { field: "Nazwa", flex: 1, minWidth: 200 },
+                        { field: "Opis", flex: 3, minWidth: 300 },
                         {
                             field: "opcje",
                             width: 50,

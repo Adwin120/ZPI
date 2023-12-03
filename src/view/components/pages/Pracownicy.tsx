@@ -25,10 +25,10 @@ const Pracownicy: React.FC = () => {
                     getRowId={(row) => row.IdPracownik}
                     onRowDoubleClick={({row}) => navigate(`/panel/pracownicy/${row.IdPracownik}`)}
                     schema={[
-                        { field: "Email", flex: 1 },
-                        { field: "Imie", flex: 1 },
-                        { field: "Nazwisko", flex: 1 },
-                        { field: "Telefon", flex: 1 },
+                        { field: "Email", flex: 1, minWidth: 200 },
+                        { field: "Imie", flex: 1, minWidth: 100 },
+                        { field: "Nazwisko", flex: 1, minWidth: 150 },
+                        { field: "Telefon", flex: 1, minWidth: 100 },
                     ]}
                 />
             </Stack>
