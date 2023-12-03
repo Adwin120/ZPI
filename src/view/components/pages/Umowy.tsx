@@ -23,7 +23,7 @@ const Umowy: React.FC<Props> = () => {
                         title="Dodaj umowę"
                         schema={umowaSchema}
                     >
-                        {UmowaFields}
+                        {UmowaFormFields}
                     </FormButton>
                 </div>
                 <DataTable<Umowa>
@@ -56,7 +56,7 @@ const Umowy: React.FC<Props> = () => {
     );
 };
 
-export const UmowaFields = (
+export const UmowaFormFields = (
     <>
         <FormAutocompleteFromEndpoint<Klient>
             endpoint="/Klient"

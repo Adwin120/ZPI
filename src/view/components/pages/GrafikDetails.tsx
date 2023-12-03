@@ -3,16 +3,18 @@ import { Grafik, grafikSchema } from "../../../common/grafikSchema";
 import {
     deleteFromEndpoint,
     patchEndpoint,
+    putToEndpoint,
     showDateTime,
     useGetEndpoint,
 } from "../../backendAccess";
 import CommonLayout from "../layout/CommonLayout";
-import { Stack } from "@mui/material";
+import { Stack, Typography } from "@mui/material";
 import ActionRow from "../layout/ActionRow";
 import FormButton from "../layout/FormButton";
 import { GrafikFormFields } from "./Grafik";
 import DeleteButton from "../layout/DeleteButton";
 import DetailsCard from "../layout/DetailsCard";
+import { AcceptanceActions, statusStyles } from "../layout/AcceptanceActions";
 
 interface Props {
     params: {
@@ -46,7 +48,16 @@ const GrafikDetails: React.FC<Props> = ({ params: { id } }) => {
                     />
                 </ActionRow>
                 <DetailsCard title="Status">
-                    {data?.Status}
+                    <Stack direction="row" justifyContent="space-between">
+                        <Typography variant="h6" component="div" sx={statusStyles(data?.Status)}>
+                            {data?.Status}
+                        </Typography>
+                        <AcceptanceActions
+                            minimalRole="kierownik"
+                            onAccept={putToEndpoint(`/Grafik/${id}/acceptance`)}
+                            onReject={deleteFromEndpoint(`/Grafik/${id}/acceptance`)}
+                        />
+                    </Stack>
                 </DetailsCard>
                 <DetailsCard title="Pracownik odpowiedzialny">
                     {data?.Pracownik_IdPracownik}

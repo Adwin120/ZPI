@@ -22,6 +22,7 @@ import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import FormTextField from "../forms/FormTextField";
 import FormAutocompleteFromEndpoint from "../forms/FormAutocompleteFromEndpoint";
 import { Usluga } from "../../../common/uslugaSchema";
+import { UmowaFormFields } from "./Umowy";
 
 interface Props {
     params: {
@@ -51,7 +52,7 @@ const UmowaDetails: React.FC<Props> = ({ params: { id } }) => {
                             Data_rozpoczecia: formDateTime(data?.Data_rozpoczecia),
                             Data_zakonczenia: formDateTime(data?.Data_zakonczenia),
                         }}
-                    ></FormButton>
+                    >{UmowaFormFields}</FormButton>
                     <DeleteButton
                         onClick={() => {
                             deleteFromEndpoint(endpoint)().then(() => {

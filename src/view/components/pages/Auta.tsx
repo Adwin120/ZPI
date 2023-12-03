@@ -12,34 +12,6 @@ import DataTable, { DateTimeFormatToView } from "../DataTable";
 import dayjs from "dayjs";
 import { useLocation } from "wouter";
 
-export const AutaFormFields = (
-    <>
-        <FormTextField name="Rejestracja" label="Rejestracja" required />
-        <FormAutocompleteFromEndpoint<Model>
-            endpoint="/Model"
-            name="Model_IdModel"
-            label="Model"
-            getOptionId={(model) => model?.IdModel ?? 0}
-            getOptionLabel={(model) => `${model?.Marka} ${model?.Model}`}
-        />
-        <FormAutocompleteFromEndpoint<Klient>
-            endpoint="/Klient"
-            label="Klient"
-            name="Klient_IdKlient"
-            getOptionId={(option) => option?.IdKlient ?? 0}
-            getOptionLabel={(option) => `${option.Nazwa}\n${option.NIP} ${option.IdKlient}`}
-        />
-        <FormDateTimePicker name="Czas_rozpoczecia" label="Czas rozpoczęcia" />
-        <FormDateTimePicker name="Czas_zakonczenia" label="Czas zakończenia" />
-        <FormTextField
-            name="Dodatkowe_informacje"
-            label="Dodatkowe informacje"
-            multiline
-            minRows={3}
-        />
-    </>
-);
-
 const Auta: React.FC = () => {
     const [_, navigate] = useLocation();
     return (
@@ -97,5 +69,33 @@ const Auta: React.FC = () => {
         </CommonLayout>
     );
 };
+
+export const AutaFormFields = (
+    <>
+        <FormTextField name="Rejestracja" label="Rejestracja" required />
+        <FormAutocompleteFromEndpoint<Model>
+            endpoint="/Model"
+            name="Model_IdModel"
+            label="Model"
+            getOptionId={(model) => model?.IdModel ?? 0}
+            getOptionLabel={(model) => `${model?.Marka} ${model?.Model}`}
+        />
+        <FormAutocompleteFromEndpoint<Klient>
+            endpoint="/Klient"
+            label="Klient"
+            name="Klient_IdKlient"
+            getOptionId={(option) => option?.IdKlient ?? 0}
+            getOptionLabel={(option) => `${option.Nazwa}\n${option.NIP} ${option.IdKlient}`}
+        />
+        <FormDateTimePicker name="Czas_rozpoczecia" label="Czas rozpoczęcia" />
+        <FormDateTimePicker name="Czas_zakonczenia" label="Czas zakończenia" />
+        <FormTextField
+            name="Dodatkowe_informacje"
+            label="Dodatkowe informacje"
+            multiline
+            minRows={3}
+        />
+    </>
+);
 
 export default Auta;

@@ -1,13 +1,19 @@
-import { Stack } from "@mui/material";
+import { Stack, Typography } from "@mui/material";
 import CommonLayout from "../layout/CommonLayout";
 import { Zgloszenie, zgloszenieSchema } from "../../../common/zgloszenieSchema";
-import { deleteFromEndpoint, patchEndpoint, useGetEndpoint } from "../../backendAccess";
+import {
+    deleteFromEndpoint,
+    patchEndpoint,
+    putToEndpoint,
+    useGetEndpoint,
+} from "../../backendAccess";
 import { useLocation } from "wouter";
 import ActionRow from "../layout/ActionRow";
 import FormButton from "../layout/FormButton";
 import { ZgloszeniaFormFields } from "./Zgloszenia";
 import DeleteButton from "../layout/DeleteButton";
 import DetailsCard from "../layout/DetailsCard";
+import { AcceptanceActions, statusStyles } from "../layout/AcceptanceActions";
 
 interface Props {
     params: {
@@ -41,17 +47,22 @@ const ZgloszenieDetails: React.FC<Props> = ({ params: { id } }) => {
                     />
                 </ActionRow>
                 <DetailsCard title="Status">
-                    {data?.Status}
+                    <Stack direction="row" justifyContent="space-between">
+                        <Typography variant="h6" component="div" sx={statusStyles(data?.Status)}>
+                            {data?.Status}
+                        </Typography>
+                        <AcceptanceActions
+                            minimalRole="kierownik"
+                            onAccept={putToEndpoint(`/Zgloszenie/${id}/acceptance`)}
+                            onReject={deleteFromEndpoint(`/Zgloszenie/${id}/acceptance`)}
+                        />
+                    </Stack>
                 </DetailsCard>
-                <DetailsCard title="Dane klienta">
-                        {data?.Klient_IdKlient}
-                </DetailsCard>
+                <DetailsCard title="Dane klienta">{data?.Klient_IdKlient}</DetailsCard>
                 <DetailsCard title="Pracownik odpowiedzialny">
-                        {data?.Practownik_IdPracownik}
+                    {data?.Practownik_IdPracownik}
                 </DetailsCard>
-                <DetailsCard title="Opis">
-                    {data?.Opis}
-                </DetailsCard>
+                <DetailsCard title="Opis">{data?.Opis}</DetailsCard>
             </Stack>
         </CommonLayout>
     );

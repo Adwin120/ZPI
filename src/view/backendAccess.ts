@@ -30,52 +30,34 @@ const guardResponseOk = (res: Response) => {
 
 export type Endpoint = `/${string}`;
 
-export const postToEndpoint = (endpoint: Endpoint) => async (payload: object) => {
-    console.log(payload);
-    const headers = await makeDefaultHeaders();
+export const sendToEndpoint =
+    (method: string) => (endpoint: Endpoint) => async (payload?: object) => {
+        console.log(payload);
+        const headers = await makeDefaultHeaders();
 
-    const responsePromise = fetch(endpoint, {
-        headers,
-        body: JSON.stringify(payload),
-        method: "POST",
-    })
-        .then(guardResponseOk)
-        .then((res) => res.text());
+        const responsePromise = fetch(endpoint, {
+            headers,
+            body: JSON.stringify(payload),
+            method: method,
+        })
+            .then(guardResponseOk)
+            .then((res) => res.text());
 
-    toast.promise(responsePromise, {
-        loading: "Dodawanie...",
-        success: (d) => d,
-        error: (e) => e,
-    });
+        toast.promise(responsePromise, {
+            loading: "Dodawanie...",
+            success: (d) => d,
+            error: (e) => e,
+        });
 
-    const response = await responsePromise;
-    mutate((key) => typeof key === "string" && endpoint.startsWith(key));
-    console.log("posted to", endpoint, "got response", response);
-    return response;
-};
+        const response = await responsePromise;
+        mutate((key) => typeof key === "string" && endpoint.startsWith(key));
+        console.log(method, "to", endpoint, "got response", response);
+        return response;
+    };
 
-export const patchEndpoint = (endpoint: Endpoint) => async (payload: object) => {
-    console.log(payload);
-    const headers = await makeDefaultHeaders();
-
-    const responsePromise = fetch(endpoint, {
-        headers,
-        body: JSON.stringify(payload),
-        method: "PATCH",
-    })
-        .then(guardResponseOk)
-        .then((res) => res.text());
-
-    toast.promise(responsePromise, {
-        loading: "Edytowanie...",
-        error: (e) => e,
-        success: (d) => d,
-    });
-
-    const response = await responsePromise;
-    mutate((key) => typeof key === "string" && endpoint.startsWith(key));
-    return response;
-};
+export const postToEndpoint = sendToEndpoint("POST");
+export const putToEndpoint = sendToEndpoint("PUT");
+export const patchEndpoint = sendToEndpoint("PATCH");
 
 export const deleteFromEndpoint = (endpoint: Endpoint) => async () => {
     const headers = await makeDefaultHeaders();
