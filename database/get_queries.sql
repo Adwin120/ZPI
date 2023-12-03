@@ -175,7 +175,8 @@ WITH A AS (
         A.Czas_rozpoczecia AS Czas_rozpoczecia,
         IFNULL(A.Czas_zakonczenia, 'W trakcie') AS Czas_zakonczenia,
         K.Nazwa AS Klient_nazwa,
-
+        GROUP_CONCAT(P.Imie, ' ', P.Nazwisko SEPARATOR ', ') AS Pracownicy,
+        A.Dodatkowe_informacje AS Dodatkowe_informacje
     FROM db_main.Auto A LEFT JOIN db_main.Klient K ON A.Klient_IdKlient = K.IdKlient
         LEFT JOIN db_main.Model M ON A.Model_IdModel = M.IdModel
         LEFT JOIN db_main.Auto_Pracownik AP ON A.IdAuto = AP.Auto_IdAuto

@@ -140,7 +140,9 @@ app.get('/Klient/:email/auto', authenticate, async (req: Request, res: Response)
                 M.Model AS Model,
                 A.Czas_rozpoczecia AS Czas_rozpoczecia,
                 IFNULL(A.Czas_zakonczenia, 'W trakcie') AS Czas_zakonczenia,
-                K.Nazwa AS Klient_nazwa
+                K.Nazwa AS Klient_nazwa,
+                GROUP_CONCAT(P.Imie, ' ', P.Nazwisko SEPARATOR ', ') AS Pracownicy,
+                A.Dodatkowe_informacje AS Dodatkowe_informacje
             FROM db_main.Auto A
             LEFT JOIN db_main.Klient K ON A.Klient_IdKlient = K.IdKlient
             LEFT JOIN db_main.Model M ON A.Model_IdModel = M.IdModel
@@ -158,6 +160,8 @@ app.get('/Klient/:email/auto', authenticate, async (req: Request, res: Response)
             A.Czas_rozpoczecia,
             A.Czas_zakonczenia,
             A.Klient_nazwa,
+            A.Pracownicy,
+            A.Dodatkowe_informacje,
             GROUP_CONCAT(U.Nazwa SEPARATOR ', ') AS Uslugi,
             IFNULL(SUM(WU.Cena), 0) AS Cena
         FROM A
