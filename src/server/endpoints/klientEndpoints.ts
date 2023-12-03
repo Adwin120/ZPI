@@ -128,7 +128,7 @@ app.get('/Klient/:email/auto', authenticate, async (req: Request, res: Response)
             return res.status(404).send('Klient o podanym emailu nie został znaleziony');
         }
 
-        const klienID = klientResults[0]['IdKlient'];
+        const klientID = klientResults[0]['IdKlient'];
 
         const [autoResults] = await connection.query<RowDataPacket[]>(
            `WITH A AS (
@@ -162,17 +162,12 @@ app.get('/Klient/:email/auto', authenticate, async (req: Request, res: Response)
             A.Klient_nazwa,
             A.Pracownicy,
             A.Dodatkowe_informacje,
-            GROUP_CONCAT(U.Nazwa SEPARATOR ', ') AS Uslugi,
-            IFNULL(SUM(WU.Cena), 0) AS Cena
+            GROUP_CONCAT(U.Nazwa SEPARATOR ', ') AS Uslugi
         FROM A
         LEFT JOIN db_main.Auto_Usluga AU ON A.IdAuto = AU.Auto_IdAuto
         LEFT JOIN db_main.Usluga U ON AU.Usluga_IdUsluga = U.IdUsluga
-        LEFT JOIN db_main.Wersja_umowy WU ON U.IdUsluga = WU.Usluga_IdUsluga
-        LEFT JOIN db_main.Umowa UM ON WU.Umowa_IdUmowa = UM.IdUmowa
-        WHERE ((UM.Klient_IdKlient = A.IdKlient AND A.Czas_zakonczenia BETWEEN UM.Data_rozpoczecia AND UM.Data_zakonczenia)
-            OR A.Czas_zakonczenia IS NULL AND A.Czas_rozpoczecia BETWEEN UM.Data_rozpoczecia AND UM.Data_zakonczenia AND UM.Klient_IdKlient = A.IdKlient)
-            AND A.IdKlient = ?
-        GROUP BY A.IdAuto, A.IdKlient;`, [klienID, klienID]
+        WHERE A.IdKlient = ?
+        GROUP BY A.IdAuto, A.IdKlient;`, [klientID, klientID]
         );
 
         return res.json(autoResults);
