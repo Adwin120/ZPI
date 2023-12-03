@@ -10,6 +10,7 @@ import FormButton from "../layout/FormButton";
 import CommonLayout from "../layout/CommonLayout";
 import { grafikSchema } from "../../../common/grafikSchema";
 import { useLocation } from "wouter";
+import { acceptanceOptions } from "../../../common/AcceptanceStatus";
 
 interface Props {}
 const Zgloszenia: React.FC<Props> = () => {
@@ -34,12 +35,13 @@ const Zgloszenia: React.FC<Props> = () => {
                         navigate(`/panel/zgloszenia/${row.IdZgloszenie}`)
                     }
                     schema={[
+                        {field: "IdZgloszenie", flex: 1},
                         { field: "Opis", flex: 1 },
                         {
                             field: "Status",
                             flex: 1,
                             type: "singleSelect",
-                            valueOptions: grafikSchema.shape.Status.removeDefault().options,
+                            valueOptions: acceptanceOptions,
                         },
                         // TODO: add missing fields
                     ]}
@@ -55,7 +57,7 @@ export const ZgloszeniaFormFields = (
             endpoint="/Pracownik"
             label="Pracownik"
             name="Pracownik_IdPracownik"
-            getOptionId={(option) => option?.IdPracownik ?? 0}
+            getOptionId={(option) => option?.IdPracownik ?? null}
             getOptionLabel={(option) =>
                 `${option.Imie} ${option.Nazwisko}\n${option.Email} ${option.IdPracownik}`
             }
@@ -64,7 +66,7 @@ export const ZgloszeniaFormFields = (
             endpoint="/Klient"
             label="Klient"
             name="Klient_IdKlient"
-            getOptionId={(option) => option?.IdKlient ?? 0}
+            getOptionId={(option) => option?.IdKlient ?? null}
             getOptionLabel={(option) => `${option.Nazwa}\n${option.NIP} ${option.IdKlient}`}
         />
         <FormTextField name="Opis" label="Opis" multiline minRows={3} />

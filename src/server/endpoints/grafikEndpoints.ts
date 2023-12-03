@@ -19,7 +19,7 @@ app.post(
         try {
             const dbConnection = await connection;
             await dbConnection.query("INSERT INTO Grafik ( Pracownik_IdPracownik, Klient_IdKlient, Czas_rozpoczecia, Czas_zakonczenia, Status) VALUES ( ?, ?, ?, ?, ?)",
-             [ grafikData.Pracownik_IdPracownik, grafikData.Klient_IdKlient, grafikData.Czas_rozpoczecia , grafikData.Czas_zakonczenia, grafikData.Status]);
+             [ grafikData.Pracownik_IdPracownik, grafikData.Klient_IdKlient, grafikData.Czas_rozpoczecia , grafikData.Czas_zakonczenia, "przesłane"]);
 
             res.status(200).send("Grafik został dodany pomyślnie");
         } catch (error) {

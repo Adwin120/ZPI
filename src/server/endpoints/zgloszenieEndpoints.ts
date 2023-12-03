@@ -19,7 +19,7 @@ app.post(
         try {
             const dbConnection = await connection;
             await dbConnection.query("INSERT INTO Zgloszenie ( Pracownik_IdPracownik, Klient_IdKlient, Opis, Status) VALUES ( ?, ?, ?, ?)",
-             [ zgloszenieData.Pracownik_IdPracownik, zgloszenieData.Klient_IdKlient, zgloszenieData.Opis, zgloszenieData.Status]);
+             [ zgloszenieData.Pracownik_IdPracownik, zgloszenieData.Klient_IdKlient, zgloszenieData.Opis, "przesłane"]);
 
             res.status(200).send("Zgłoszenie zostało pomyślnie dodane");
         } catch (error) {

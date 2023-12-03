@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { defaultMessage } from "./zodHelpers";
+import { AcceptanceStatus } from "./AcceptanceStatus";
 
 const datetimeRegex = /^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/;
 
@@ -15,7 +16,7 @@ export const grafikSchema = z.object(
         Klient_IdKlient: z.number().min(1,"ID klienta musi być większe od 0."),
         Czas_rozpoczecia: datetimeSchema,
         Czas_zakonczenia: datetimeSchema,
-        Status: z.enum(["przesłane", "zaakceptowane", "odrzucone"]).default("przesłane"),
+        // Status: z.enum(["przesłane", "zaakceptowane", "odrzucone"]).default("przesłane"),
     },
     defaultMessage("Niepoprawny format")
 );
@@ -27,5 +28,5 @@ export type Grafik = {
     Klient_IdKlient: number,
     Czas_rozpoczecia: string,
     Czas_zakonczenia: string,
-    Status: GrafikPayload["Status"]
+    Status: AcceptanceStatus
 }

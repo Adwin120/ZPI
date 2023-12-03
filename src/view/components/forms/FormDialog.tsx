@@ -31,6 +31,8 @@ const FormDialog = <T extends FieldValues>({
         onClose();
     });
 
+    console.log(formState)
+
     return (
         <Dialog
             open={open}
@@ -48,7 +50,7 @@ const FormDialog = <T extends FieldValues>({
                             {children}
                         </formContext.Provider>
                     </Stack>
-                    <Button type="submit" variant="contained" fullWidth>
+                    <Button disabled={!formState.isValid} type="submit" variant="contained" fullWidth>
                         Zapisz
                     </Button>
                 </form>

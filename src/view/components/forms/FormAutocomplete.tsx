@@ -22,7 +22,7 @@ const FormAutocomplete = <T,>({
         <Autocomplete<T>
             {...autocompleteProps}
             {...field}
-            value={options.find(option => optionToValue(option) === field.value) ?? field.value}
+            value={options.find(option => optionToValue(option) === field.value) ?? field.value ?? null}
             onChange={(_, v) => field.onChange(optionToValue(v))}
             renderInput={(props) => (
                 <TextField

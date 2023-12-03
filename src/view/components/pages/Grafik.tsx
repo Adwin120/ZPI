@@ -10,6 +10,7 @@ import FormDateTimePicker from "../forms/FormDateTimeField";
 import DataTable, { DateTimeFormatToView } from "../DataTable";
 import dayjs from "dayjs";
 import { useLocation } from "wouter";
+import { acceptanceOptions } from "../../../common/AcceptanceStatus";
 
 interface Props {}
 const Grafik: React.FC<Props> = () => {
@@ -55,7 +56,7 @@ const Grafik: React.FC<Props> = () => {
                             flex: 0.5,
                             minWidth: 100,
                             type: "singleSelect",
-                            valueOptions: grafikSchema.shape.Status.removeDefault().options,
+                            valueOptions: acceptanceOptions,
                         },
                     ]}
                 />
