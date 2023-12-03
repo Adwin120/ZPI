@@ -11,6 +11,9 @@ import CommonLayout from "../layout/CommonLayout";
 import { grafikSchema } from "../../../common/grafikSchema";
 import { useLocation } from "wouter";
 import { acceptanceOptions } from "../../../common/AcceptanceStatus";
+import { GridActionsCellItem } from "@mui/x-data-grid";
+
+import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 
 interface Props {}
 const Zgloszenia: React.FC<Props> = () => {
@@ -44,6 +47,21 @@ const Zgloszenia: React.FC<Props> = () => {
                             valueOptions: acceptanceOptions,
                         },
                         // TODO: add missing fields
+                        {
+                            field: "opcje",
+                            width: 50,
+                            type: "actions",
+                            getActions({ id }) {
+                                return [
+                                          <GridActionsCellItem
+                                              label="wyświetl"
+                                              icon={<MoreHorizIcon />}
+                                              onClick={() => navigate(`/panel/zgloszenia/${id}`)}
+                                              key="display"
+                                          ></GridActionsCellItem>,
+                                      ];
+                            },
+                        }
                     ]}
                 />
             </Stack>

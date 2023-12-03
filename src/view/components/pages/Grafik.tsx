@@ -11,6 +11,9 @@ import DataTable, { DateTimeFormatToView } from "../DataTable";
 import dayjs from "dayjs";
 import { useLocation } from "wouter";
 import { acceptanceOptions } from "../../../common/AcceptanceStatus";
+import { GridActionsCellItem } from "@mui/x-data-grid";
+
+import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 
 interface Props {}
 const Grafik: React.FC<Props> = () => {
@@ -58,6 +61,21 @@ const Grafik: React.FC<Props> = () => {
                             type: "singleSelect",
                             valueOptions: acceptanceOptions,
                         },
+                        {
+                            field: "opcje",
+                            width: 50,
+                            type: "actions",
+                            getActions({ id }) {
+                                return [
+                                          <GridActionsCellItem
+                                              label="wyświetl"
+                                              icon={<MoreHorizIcon />}
+                                              onClick={() => navigate(`/panel/grafik/${id}`)}
+                                              key="display"
+                                          ></GridActionsCellItem>,
+                                      ];
+                            },
+                        }
                     ]}
                 />
             </Stack>

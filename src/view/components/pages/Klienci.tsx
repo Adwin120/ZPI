@@ -7,6 +7,9 @@ import CommonLayout from "../layout/CommonLayout";
 import DataTable from "../DataTable";
 import { Stack } from "@mui/material";
 import { useLocation } from "wouter";
+import { GridActionsCellItem } from "@mui/x-data-grid";
+
+import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 
 const Klienci: React.FC = () => {
     const [_, navigate] = useLocation();
@@ -31,6 +34,21 @@ const Klienci: React.FC = () => {
                     { field: "Adres", flex: 1, minWidth: 250 },
                     { field: "NIP", flex: 0.5, minWidth: 110 },
                     { field: "Telefon", flex: 1, minWidth: 140 },
+                    {
+                        field: "opcje",
+                        width: 50,
+                        type: "actions",
+                        getActions({ id }) {
+                            return [
+                                      <GridActionsCellItem
+                                          label="wyświetl"
+                                          icon={<MoreHorizIcon />}
+                                          onClick={() => navigate(`/panel/klienci/${id}`)}
+                                          key="display"
+                                      ></GridActionsCellItem>,
+                                  ];
+                        },
+                    },
                 ]}
             />
         </Stack>

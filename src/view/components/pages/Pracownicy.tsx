@@ -6,6 +6,9 @@ import { Pracownik, pracownikSchema } from "../../../common/pracownikSchema";
 import FormTextField from "../forms/FormTextField";
 import DataTable from "../DataTable";
 import { useLocation } from "wouter";
+import { GridActionsCellItem } from "@mui/x-data-grid";
+
+import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 
 const Pracownicy: React.FC = () => {
     const [_, navigate] = useLocation();
@@ -29,6 +32,21 @@ const Pracownicy: React.FC = () => {
                         { field: "Imie", flex: 1, minWidth: 100 },
                         { field: "Nazwisko", flex: 1, minWidth: 150 },
                         { field: "Telefon", flex: 1, minWidth: 100 },
+                        {
+                            field: "opcje",
+                            width: 50,
+                            type: "actions",
+                            getActions({ id }) {
+                                return [
+                                          <GridActionsCellItem
+                                              label="wyświetl"
+                                              icon={<MoreHorizIcon />}
+                                              onClick={() => navigate(`/panel/pracownicy/${id}`)}
+                                              key="display"
+                                          ></GridActionsCellItem>,
+                                      ];
+                            },
+                        }
                     ]}
                 />
             </Stack>

@@ -11,6 +11,9 @@ import { Model } from "../../../common/modelSchema";
 import DataTable, { DateTimeFormatToView } from "../DataTable";
 import dayjs from "dayjs";
 import { useLocation } from "wouter";
+import { GridActionsCellItem } from "@mui/x-data-grid";
+
+import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 
 const Auta: React.FC = () => {
     const [_, navigate] = useLocation();
@@ -65,6 +68,21 @@ const Auta: React.FC = () => {
                             flex: 1,
                             headerName: "Dodatkowe informacje",
                             minWidth: 300,
+                        },
+                        {
+                            field: "opcje",
+                            width: 50,
+                            type: "actions",
+                            getActions({ id }) {
+                                return [
+                                          <GridActionsCellItem
+                                              label="wyświetl"
+                                              icon={<MoreHorizIcon />}
+                                              onClick={() => navigate(`/panel/auta/${id}`)}
+                                              key="display"
+                                          ></GridActionsCellItem>,
+                                      ];
+                            },
                         },
                     ]}
                 />

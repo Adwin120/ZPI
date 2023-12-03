@@ -9,6 +9,9 @@ import FormDateField from "../forms/FormDateField";
 import DataTable, { DateFormatToView } from "../DataTable";
 import dayjs from "dayjs";
 import { useLocation } from "wouter";
+import { GridActionsCellItem } from "@mui/x-data-grid";
+
+import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 
 interface Props {}
 const Umowy: React.FC<Props> = () => {
@@ -49,6 +52,21 @@ const Umowy: React.FC<Props> = () => {
                                 dayjs(row.value, DateTimeFormatFromServer).toDate(),
                             valueFormatter: (row) => dayjs(row.value).format(DateFormatToView),
                         },
+                        {
+                            field: "opcje",
+                            width: 50,
+                            type: "actions",
+                            getActions({ id }) {
+                                return [
+                                          <GridActionsCellItem
+                                              label="wyświetl"
+                                              icon={<MoreHorizIcon />}
+                                              onClick={() => navigate(`/panel/umowy/${id}`)}
+                                              key="display"
+                                          ></GridActionsCellItem>,
+                                      ];
+                            },
+                        }
                     ]}
                 />
             </Stack>
