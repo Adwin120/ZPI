@@ -129,7 +129,7 @@ app.patch(
 
         if(user &&user['role'] === "pracownik")
         {
-            const [zgloszenieResult] = await connection.query<RowDataPacket[]>("SELECT Status FROM Klient WHERE IdZgloszenie = ? AND Status <> 'zaakceptowane'", [zgloszenieId]);
+            const [zgloszenieResult] = await connection.query<RowDataPacket[]>("SELECT Status FROM Zgloszenie WHERE IdZgloszenie = ? AND Status <> 'zaakceptowane'", [zgloszenieId]);
 
             if (zgloszenieResult.length === 0 || !zgloszenieResult[0]) {
                 return res.status(404).send('Pracownik nie może modyfikować zaakceptowanych zgłoszeń');
