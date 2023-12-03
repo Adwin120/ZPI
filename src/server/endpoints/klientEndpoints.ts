@@ -139,15 +139,15 @@ app.get('/Klient/:email/auto', authenticate, async (req: Request, res: Response)
                 M.Marka AS Marka, 
                 M.Model AS Model,
                 A.Czas_rozpoczecia AS Czas_rozpoczecia,
-                IFNULL(A.Czas_zakonczenia, 'W trakcie') AS Czas_zakonczenia,
+                A.Czas_zakonczenia AS Czas_zakonczenia,
                 K.Nazwa AS Klient_nazwa,
                 GROUP_CONCAT(P.Imie, ' ', P.Nazwisko SEPARATOR ', ') AS Pracownicy,
                 A.Dodatkowe_informacje AS Dodatkowe_informacje
             FROM db_main.Auto A
-            LEFT JOIN db_main.Klient K ON A.Klient_IdKlient = K.IdKlient
-            LEFT JOIN db_main.Model M ON A.Model_IdModel = M.IdModel
-            LEFT JOIN db_main.Auto_Pracownik AP ON A.IdAuto = AP.Auto_IdAuto
-            LEFT JOIN db_main.Pracownik P ON AP.Pracownik_IdPracownik = P.IdPracownik
+                LEFT JOIN db_main.Klient K ON A.Klient_IdKlient = K.IdKlient
+                LEFT JOIN db_main.Model M ON A.Model_IdModel = M.IdModel
+                LEFT JOIN db_main.Auto_Pracownik AP ON A.IdAuto = AP.Auto_IdAuto
+                LEFT JOIN db_main.Pracownik P ON AP.Pracownik_IdPracownik = P.IdPracownik
             WHERE A.Klient_IdKlient = ?
             GROUP BY A.IdAuto, A.Klient_IdKlient
         )
@@ -164,8 +164,8 @@ app.get('/Klient/:email/auto', authenticate, async (req: Request, res: Response)
             A.Dodatkowe_informacje,
             GROUP_CONCAT(U.Nazwa SEPARATOR ', ') AS Uslugi
         FROM A
-        LEFT JOIN db_main.Auto_Usluga AU ON A.IdAuto = AU.Auto_IdAuto
-        LEFT JOIN db_main.Usluga U ON AU.Usluga_IdUsluga = U.IdUsluga
+            LEFT JOIN db_main.Auto_Usluga AU ON A.IdAuto = AU.Auto_IdAuto
+            LEFT JOIN db_main.Usluga U ON AU.Usluga_IdUsluga = U.IdUsluga
         WHERE A.IdKlient = ?
         GROUP BY A.IdAuto, A.IdKlient;`, [klientID, klientID]
         );
