@@ -12,3 +12,9 @@ export const uprawnienieSchema = z.object(
 );
 
 export type UprawnieniePayload = z.infer<typeof uprawnienieSchema>;
+export type Uprawnienie = {
+    email: string;
+    nazwa: string;
+    rola: string;
+    id: number;
+};

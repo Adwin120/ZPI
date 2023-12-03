@@ -27,8 +27,8 @@ const Uslugi: React.FC<Props> = () => {
                     dataEndpoint="/Usluga"
                     getRowId={row => row.IdUsluga}
                     schema={[
-                        { field: "Nazwa", flex: 1 },
-                        { field: "Opis", flex: 3 },
+                        { field: "Nazwa", flex: 1, minWidth: 200 },
+                        { field: "Opis", flex: 3, minWidth: 300 },
                     ]}
                 />
             </Stack>

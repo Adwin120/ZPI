@@ -39,11 +39,11 @@ const Klienci: React.FC = () => (
                 dataEndpoint="/Klient"
                 getRowId={(row) => row.IdKlient}
                 schema={[
-                    { field: "Nazwa", flex: 1 },
-                    { field: "Email", flex: 1 },
-                    { field: "Adres", flex: 1 },
-                    { field: "NIP", flex: 0.5 },
-                    { field: "Telefon", flex: 1 },
+                    { field: "Nazwa", flex: 1, minWidth: 200 },
+                    { field: "Email", flex: 1, minWidth: 250 },
+                    { field: "Adres", flex: 1, minWidth: 250 },
+                    { field: "NIP", flex: 0.5, minWidth: 110 },
+                    { field: "Telefon", flex: 1, minWidth: 140 },
                 ]}
             />
         </Stack>

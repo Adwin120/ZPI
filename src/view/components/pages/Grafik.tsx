@@ -51,6 +51,7 @@ const Grafik: React.FC<Props> = () => {
                         {
                             field: "Czas_rozpoczecia",
                             flex: 1,
+                            minWidth: 140,
                             headerName: "Czas rozpoczęcia",
                             type: "dateTime",
                             valueGetter: (row) => dayjs(row.value, DateTimeFormatFromServer).toDate(),
@@ -59,6 +60,7 @@ const Grafik: React.FC<Props> = () => {
                         {
                             field: "Czas_zakonczenia",
                             flex: 1,
+                            minWidth: 140,
                             headerName: "Czas zakończenia",
                             type: "dateTime",
                             valueGetter: (row) => dayjs(row.value, DateTimeFormatFromServer).toDate(),
@@ -67,6 +69,7 @@ const Grafik: React.FC<Props> = () => {
                         {
                             field: "Status",
                             flex: 0.5,
+                            minWidth: 100,
                             type: "singleSelect",
                             valueOptions: grafikSchema.shape.Status.removeDefault().options,
                         },
