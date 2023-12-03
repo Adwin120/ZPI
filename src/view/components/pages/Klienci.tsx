@@ -6,8 +6,11 @@ import CommonLayout from "../layout/CommonLayout";
 
 import DataTable from "../DataTable";
 import { Stack } from "@mui/material";
+import { useLocation } from "wouter";
 
-const Klienci: React.FC = () => (
+const Klienci: React.FC = () => {
+    const [_, navigate] = useLocation();
+    return(
     <CommonLayout pageTitle="MOXLY" subpageTitle="Klienci">
         <Stack alignItems={"normal"} gap={2}>
             <div>
@@ -21,6 +24,7 @@ const Klienci: React.FC = () => (
             <DataTable<Klient>
                 dataEndpoint="/Klient"
                 getRowId={(row) => row.IdKlient}
+                onRowDoubleClick={({row}) => navigate(`/panel/klienci/${row.IdKlient}`)}
                 schema={[
                     { field: "Nazwa", flex: 1, minWidth: 200 },
                     { field: "Email", flex: 1, minWidth: 250 },
@@ -31,7 +35,7 @@ const Klienci: React.FC = () => (
             />
         </Stack>
     </CommonLayout>
-);
+)};
 
 export const KlienciFormFields = (
     <>

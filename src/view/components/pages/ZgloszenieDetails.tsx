@@ -53,14 +53,14 @@ const ZgloszenieDetails: React.FC<Props> = ({ params: { id } }) => {
                         </Typography>
                         <AcceptanceActions
                             minimalRole="kierownik"
-                            onAccept={putToEndpoint(`/Zgloszenie/${id}/acceptance`)}
-                            onReject={deleteFromEndpoint(`/Zgloszenie/${id}/acceptance`)}
+                            onAccept={() =>putToEndpoint(`/Zgloszenie/${id}/acceptance`)()}
+                            onReject={() =>deleteFromEndpoint(`/Zgloszenie/${id}/acceptance`)()}
                         />
                     </Stack>
                 </DetailsCard>
                 <DetailsCard title="Dane klienta">{data?.Klient_IdKlient}</DetailsCard>
                 <DetailsCard title="Pracownik odpowiedzialny">
-                    {data?.Practownik_IdPracownik}
+                    {data?.Pracownik_IdPracownik}
                 </DetailsCard>
                 <DetailsCard title="Opis">{data?.Opis}</DetailsCard>
             </Stack>

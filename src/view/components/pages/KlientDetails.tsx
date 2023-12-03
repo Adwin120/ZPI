@@ -23,6 +23,7 @@ const KlientDetails: React.FC<Props> = ({ params: { id } }) => {
             <Stack alignItems={"center"} gap={3}>
                 <ActionRow>
                     <FormButton
+                        variant="edit"
                         onSubmit={patchEndpoint(endpoint)}
                         schema={klientSchema}
                         title="Edytuj dane klienta"

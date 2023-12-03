@@ -146,7 +146,7 @@ app.put(
 
         try {
             const dbConnection = await connection;
-            await dbConnection.query("UPDATE Grafik SET Status = 'Zaakceptowany' WHERE IdGrafik = ?", [grafikId]);
+            await dbConnection.query("UPDATE Grafik SET Status = 'zaakceptowane' WHERE IdGrafik = ?", [grafikId]);
 
             res.status(200).send("Grafik został zaakceptowany");
         } catch (error) {
@@ -165,7 +165,7 @@ app.delete(
 
         try {
             const dbConnection = await connection;
-            await dbConnection.query("UPDATE Grafik SET Status = 'Odrzucony' WHERE IdGrafik = ?", [grafikId]);
+            await dbConnection.query("UPDATE Grafik SET Status = 'odrzucone' WHERE IdGrafik = ?", [grafikId]);
 
             res.status(200).send("Grafik został odrzucony");
         } catch (error) {

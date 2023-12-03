@@ -2,6 +2,7 @@ import { useLocation } from "wouter";
 import { Grafik, grafikSchema } from "../../../common/grafikSchema";
 import {
     deleteFromEndpoint,
+    formDateTime,
     patchEndpoint,
     putToEndpoint,
     showDateTime,
@@ -35,7 +36,11 @@ const GrafikDetails: React.FC<Props> = ({ params: { id } }) => {
                         schema={grafikSchema}
                         title="Edytuj wpis w grafiku"
                         isLoading={isLoading}
-                        defaultValues={data}
+                        defaultValues={{
+                            ...data,
+                            Czas_rozpoczecia: formDateTime(data?.Czas_rozpoczecia),
+                            Czas_zakonczenia: formDateTime(data?.Czas_zakonczenia),
+                        }}
                     >
                         {GrafikFormFields}
                     </FormButton>
@@ -54,8 +59,8 @@ const GrafikDetails: React.FC<Props> = ({ params: { id } }) => {
                         </Typography>
                         <AcceptanceActions
                             minimalRole="kierownik"
-                            onAccept={putToEndpoint(`/Grafik/${id}/acceptance`)}
-                            onReject={deleteFromEndpoint(`/Grafik/${id}/acceptance`)}
+                            onAccept={() => putToEndpoint(`/Grafik/${id}/acceptance`)()}
+                            onReject={() => deleteFromEndpoint(`/Grafik/${id}/acceptance`)()}
                         />
                     </Stack>
                 </DetailsCard>

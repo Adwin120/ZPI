@@ -16,7 +16,7 @@ interface Props {
 }
 const PracownikDetails: React.FC<Props> = ({ params: { id } }) => {
     const endpoint = `/Pracownik/${id}` as const;
-    const { data, isLoading } = useGetEndpoint<Pracownik>(`/Auto/${id}`);
+    const { data, isLoading } = useGetEndpoint<Pracownik>(endpoint);
     const [_, navigate] = useLocation();
     return (
         <CommonLayout subpageTitle={`Pracownik ${data?.Imie} ${data?.Nazwisko}`}>

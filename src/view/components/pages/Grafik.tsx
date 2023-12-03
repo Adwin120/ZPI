@@ -28,7 +28,7 @@ const Grafik: React.FC<Props> = () => {
                 <DataTable<Grafik>
                     dataEndpoint="/Grafik"
                     getRowId={(row) => row.IdGrafik}
-                    onRowDoubleClick={({row}) => navigate(`/panel/auta/${row.IdGrafik}`)}
+                    onRowDoubleClick={({row}) => navigate(`/panel/grafik/${row.IdGrafik}`)}
                     schema={[
                         {
                             field: "Czas_rozpoczecia",

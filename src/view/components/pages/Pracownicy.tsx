@@ -38,10 +38,10 @@ const Pracownicy: React.FC = () => {
 
 export const PracownicyFormFields = (
     <>
-        <FormTextField name="email" label="E-mail" type="email" required />
-        <FormTextField name="imie" label="Imię" />
-        <FormTextField name="nazwisko" label="Nazwisko" />
-        <FormTextField name="telefon" label="Telefon" type="tel" />
+        <FormTextField name="Email" label="E-mail" type="email" required />
+        <FormTextField name="Imie" label="Imię" />
+        <FormTextField name="Nazwisko" label="Nazwisko" />
+        <FormTextField name="Telefon" label="Telefon" type="tel" />
     </>
 );
 
