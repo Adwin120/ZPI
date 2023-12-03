@@ -205,15 +205,15 @@ app.get('/Klient/:email/umowa', authenticate, async (req: Request, res: Response
 
         const klientID = klientResults[0]['IdKlient'];
 
-        const [autoResults] = await connection.query<RowDataPacket[]>(
-        `SELECT 
+        const [autoResults] = await connection.query<RowDataPacket[]>(`
+        SELECT 
             U.IdUmowa,
             U.Klient_IdKlient, 
             K.Nazwa,
             U.Data_rozpoczecia,
             U.Data_zakonczenia
         FROM db_main.Umowa U LEFT JOIN db_main.Klient K ON U.Klient_IdKlient = K.IdKlient
-        WHERE U.Klient_IdKlient;`, [klientID]
+        WHERE U.Klient_IdKlient = ?;`, [klientID]
         );
 
         return res.json(autoResults);
@@ -272,7 +272,7 @@ app.get('/Klient/:email/usluga', authenticate, async (req: Request, res: Respons
     }
 });
 
-app.get('/Klient/:email/wersje_umowy', authenticate, async (req: Request, res: Response) => {
+app.get('/Klient/:email/wersja_umowy', authenticate, async (req: Request, res: Response) => {
     const emailParam = req.params["email"];
 
     if (!emailParam) {

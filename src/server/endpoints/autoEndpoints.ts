@@ -121,8 +121,8 @@ app.get('/Auto/:id',authenticate, authorize((user) => roleGreaterOrEqual(user["r
         LEFT JOIN db_main.Usluga U ON AU.Usluga_IdUsluga = U.IdUsluga
         LEFT JOIN db_main.Wersja_umowy WU ON U.IdUsluga = WU.Usluga_IdUsluga
         LEFT JOIN db_main.Umowa UM ON WU.Umowa_IdUmowa = UM.IdUmowa
-    WHERE (UM.Klient_IdKlient = A.IdKlient AND A.Czas_zakonczenia BETWEEN UM.Data_rozpoczecia AND UM.Data_zakonczenia)
-        OR (A.Czas_zakonczenia IS NULL AND A.Czas_rozpoczecia BETWEEN UM.Data_rozpoczecia AND UM.Data_zakonczenia AND UM.Klient_IdKlient = A.IdKlient)
+    WHERE ((UM.Klient_IdKlient = A.IdKlient AND A.Czas_zakonczenia BETWEEN UM.Data_rozpoczecia AND UM.Data_zakonczenia)
+        OR (A.Czas_zakonczenia IS NULL AND A.Czas_rozpoczecia BETWEEN UM.Data_rozpoczecia AND UM.Data_zakonczenia AND UM.Klient_IdKlient = A.IdKlient))
         AND A.IdAuto = ?
     GROUP BY A.IdAuto, A.IdKlient;`, [autoId]);
    try {
