@@ -5,7 +5,7 @@ export const wersja_umowySchema = z.object(
     {
         Usluga_IdUsluga: z.number().min(1,"Usługa jest wymagana"),
         Umowa_IdUmowa: z.number().min(1,"Umowa jest wymagana"),
-        Cena: z.number().min(0.01,"Cena musi być większa od 0."),
+        Cena: z.coerce.number().min(0.01,"Cena musi być większa od 0."),
     },
     defaultMessage("Niepoprawny format")
 );
