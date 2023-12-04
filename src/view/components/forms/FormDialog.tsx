@@ -3,7 +3,6 @@ import { Dialog, DialogTitle, DialogContent, Stack, Button } from "@mui/material
 import { ZodType } from "zod";
 import { Control, DefaultValues, FieldValues, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import FormErrors from "./FormErrors";
 
 type Consumer<T> = (arg: T) => void;
 export const formContext = createContext<Control<FieldValues> | null>(null);
@@ -26,7 +25,7 @@ const FormDialog = <T extends FieldValues>({
     defaultValues,
 }: Props<T>) => {
     const titleId = useId();
-    const { handleSubmit, control, formState } = useForm<T>({
+    const { handleSubmit, control } = useForm<T>({
         resolver: zodResolver(schema),
         mode: "onChange",
         defaultValues,

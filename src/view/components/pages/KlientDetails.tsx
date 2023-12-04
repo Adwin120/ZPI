@@ -44,11 +44,11 @@ const KlientDetails: React.FC<Props> = ({ params: { id } }) => {
                 <DetailsCard title="Dane Kontaktowe">
                     <dl>
                         <dt>Email</dt>
-                        <dd>{data?.Email}</dd>
+                        <dd><a href={`mailto:${data?.Email}`}>{data?.Email}</a></dd>
                         <dt>Adres</dt>
                         <dd>{data?.Adres}</dd>
                         <dt>Telefon</dt>
-                        <dd>{data?.Telefon}</dd>
+                        <dd><a href={`tel:${data?.Telefon}`}>{data?.Telefon}</a></dd>
                     </dl>
                 </DetailsCard>
             </Stack>

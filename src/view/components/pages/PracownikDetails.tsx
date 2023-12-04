@@ -43,9 +43,9 @@ const PracownikDetails: React.FC<Props> = ({ params: { id } }) => {
                 <DetailsCard title="Dane kontaktowe">
                     <dl>
                         <dt>E-mail</dt>
-                        <dd>{data?.Email}</dd>
+                        <dd><a href={`mailto:${data?.Email}`}>{data?.Email}</a></dd>
                         <dt>Telefon</dt>
-                        <dd>{data?.Telefon}</dd>
+                        <dd><a href={`tel:${data?.Telefon}`}>{data?.Telefon}</a></dd>
                     </dl>
                 </DetailsCard>
             </Stack>
