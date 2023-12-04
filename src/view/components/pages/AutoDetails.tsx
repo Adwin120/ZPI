@@ -9,13 +9,15 @@ import {
 } from "../../backendAccess";
 import CommonLayout from "../layout/CommonLayout";
 import DetailsCard from "../layout/DetailsCard";
-import DataTable from "../DataTable";
+import DataTable, { DateTimeFormatToView } from "../DataTable";
 import ActionRow from "../layout/ActionRow";
 import FormButton from "../layout/FormButton";
-import { AutaFormFields } from "./Auta";
+import { AutaFormFields, adHockDateFormat } from "./Auta";
 
 import { useLocation } from "wouter";
 import DeleteButton from "../layout/DeleteButton";
+import dayjs from "dayjs";
+import { Usluga } from "../../../common/uslugaSchema";
 
 interface Props {
     params: {
@@ -54,9 +56,9 @@ const AutoDetails: React.FC<Props> = ({ params: { id } }) => {
                 <DetailsCard title="Specyfikacja">
                     <dl>
                         <dt>Marka</dt>
-                        <dd>TODO {data?.Model_IdModel}</dd>
+                        <dd>{data?.Marka}</dd>
                         <dt>Model</dt>
-                        <dd>TODO</dd>
+                        <dd>{data?.Model}</dd>
                     </dl>
                 </DetailsCard>
                 <DetailsCard title="Przedział pracy">
@@ -64,14 +66,18 @@ const AutoDetails: React.FC<Props> = ({ params: { id } }) => {
                         <dt>Czas rozpoczęcia</dt>
                         <dd>{showDateTime(data?.Czas_rozpoczecia)}</dd>
                         <dt>Czas zakończenia</dt>
-                        <dd>{showDateTime(data?.Czas_zakonczenia)}</dd>
+                        <dd>{dayjs(data?.Czas_zakonczenia, adHockDateFormat).format(DateTimeFormatToView)}</dd>
                     </dl>
                 </DetailsCard>
-                <DetailsCard title="Klient">{data?.Klient_IdKlient}</DetailsCard>
+                <DetailsCard title="Klient">{data?.Klient_nazwa}</DetailsCard>
                 <DetailsCard title="Dodatkowe informacje">{data?.Dodatkowe_informacje}</DetailsCard>
                 <DetailsCard title="Wykonywane usługi">
-                    <DataTable
+                    <DataTable<Usluga>
+                        getRowId={(row) => row.IdUsluga}
                         dataEndpoint={null}
+                        rows={[
+                            {IdUsluga: 1, Nazwa: "mycie", Opis: "opis opis"}
+                        ]}
                         schema={[
                             { field: "Nazwa", flex: 1 },
                             { field: "Opis", flex: 3 },
