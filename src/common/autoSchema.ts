@@ -24,16 +24,16 @@ export const autoSchema = z.object(
 
 export type AutoPayload = z.infer<typeof autoSchema>;
 export type Auto = {
-    IdAuto: number,
-    IdModel: number,
-    Marka: string,
-    Model: string,
-    IdKlient: number,
-    Klient_nazwa: string,
-    Rejestracja: string,
-    Czas_rozpoczecia: string,
-    Czas_zakonczenia: string,
-    Dodatkowe_informacje: string,
-    Pracownicy: string,
-    Uslugi: string
+    IdAuto: number;
+    IdModel: number;
+    Marka: string;
+    Model: string;
+    IdKlient: number;
+    Klient_nazwa: string;
+    Rejestracja: string;
+    Czas_rozpoczecia: string;
+    Czas_zakonczenia: string;
+    Dodatkowe_informacje: string;
+    Pracownicy: string;
+    Uslugi: string;
 }

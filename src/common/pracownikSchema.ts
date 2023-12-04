@@ -17,5 +17,5 @@ export type Pracownik = {
     Nazwisko: string;
     Telefon: string;
     Email: string;
-    IdPracownik: number
+    IdPracownik: number;
 }

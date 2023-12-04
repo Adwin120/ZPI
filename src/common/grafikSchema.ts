@@ -27,5 +27,8 @@ export type Grafik = {
     Klient_IdKlient: number,
     Czas_rozpoczecia: string,
     Czas_zakonczenia: string,
+    Imie: string,
+    Nazwisko: string,
+    Nazwa: string,
     Status: GrafikPayload["Status"]
 }
