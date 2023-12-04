@@ -92,7 +92,7 @@ const UmowaDetails: React.FC<Props> = ({ params: { id } }) => {
                         />
                     </FormButton>
                     <DataTable<Wersja_umowy>
-                        dataEndpoint="/Wersja_umowy"
+                        dataEndpoint={`/umowa/${id}/wersja_umowy`}
                         getRowId={(row) => `${row.Umowa_IdUmowa} ${row.Usluga_IdUsluga}`}
                         // processRowUpdate={({Id_Um, ...rest}) => {
                         //     patchEndpoint(`/Wersja_umowy/${id}`)(rest)
@@ -100,7 +100,7 @@ const UmowaDetails: React.FC<Props> = ({ params: { id } }) => {
                         // }}
                         onProcessRowUpdateError={console.error}
                         schema={[
-                            { field: "Usluga_IdUsluga", flex: 1, headerName: "Usługa" },
+                            { field: "NazwaUslugi", flex: 1, headerName: "Usługa" },
                             {
                                 field: "Cena",
                                 flex: 0.2,

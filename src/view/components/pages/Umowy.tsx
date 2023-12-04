@@ -1,7 +1,7 @@
 import { Stack } from "@mui/material";
 import CommonLayout from "../layout/CommonLayout";
 import FormButton from "../layout/FormButton";
-import { DateTimeFormatFromServer, postToEndpoint } from "../../backendAccess";
+import { postToEndpoint } from "../../backendAccess";
 import { Umowa, umowaSchema } from "../../../common/umowaSchema";
 import FormAutocompleteFromEndpoint from "../forms/FormAutocompleteFromEndpoint";
 import { Klient } from "../../../common/klientSchema";
@@ -12,6 +12,7 @@ import { useLocation } from "wouter";
 import { GridActionsCellItem } from "@mui/x-data-grid";
 
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
+import { DateTimeFormatFromServer } from "../../../common/DateTime";
 
 interface Props {}
 const Umowy: React.FC<Props> = () => {
