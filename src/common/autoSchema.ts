@@ -4,16 +4,16 @@ import { defaultMessage } from "./zodHelpers";
 
 const datetimeRegex = /^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/;
 
-const datetimeSchema = z.string().refine((value) => {
+const datetimeSchema = z.string(defaultMessage("Podanie czasu jest wymagane.")).refine((value) => {
     return datetimeRegex.test(value);
 }, {
-    message: "Nieprawidłowy format daty i czasu (oczekiwano 'RRRR-MM-DD GG:MM:SS')",
+    message: "Nieprawidłowy format daty i czasu (oczekiwano 'DD-MM-RRRR GG:MM:SS')",
 });
 
 export const autoSchema = z.object(
     {
-        Model_IdModel: z.number().min(1,"ID modelu musi być większe od 0."),
-        Klient_IdKlient: z.number().min(1,"ID klienta musi być większe od 0."),
+        Model_IdModel: z.number(defaultMessage("Model jest wymagany.")).min(1,"ID modelu musi być większe od 0."),
+        Klient_IdKlient: z.number(defaultMessage("Klient jest wymagany.")).min(1,"ID klienta musi być większe od 0."),
         Rejestracja: z.string().min(1, "Rejestracja jest wymagana.").default(""),
         Czas_rozpoczecia: datetimeSchema,
         Czas_zakonczenia: datetimeSchema.optional(),
