@@ -94,7 +94,7 @@ app.patch(
     "/Umowa/:id",
     authenticate,
     authorize((user) => roleGreaterOrEqual(user["role"], "admin")),
-    validateBody(umowaSchema.partial()), 
+    validateBody(umowaSchema.innerType().partial()), 
     async (req: Request, res: Response) => {
         const umowaId = req.params["id"];
         const umowaData = req.body as Partial<UmowaPayload>; 

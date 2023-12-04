@@ -4,7 +4,7 @@ import useSWR from "swr";
 import { mutate } from "swr";
 import { DateTimeFormatToView } from "./components/DataTable";
 import dayjs from "dayjs";
-import { DateTimeFormFormat } from "./components/forms/FormDateTimeField";
+import { DateTimeFormFormat, DateTimeFormatFromServer } from "../common/DateTime";
 
 const makeDefaultHeaders = async () => {
     const user = auth.currentUser;
@@ -98,8 +98,6 @@ export const useGetEndpoint = <Data>(endpoint: Endpoint | null) => {
     const [user] = useUser();
     return useSWR<Data, Error, string | null>(user ? endpoint : null, fetchJSON);
 };
-
-export const DateTimeFormatFromServer = "YYYY-MM-DDTHH-mm-ss.SSS";
 
 export const showDateTime = (date: string | null | undefined) =>
     dayjs(date, DateTimeFormatFromServer).format(DateTimeFormatToView);

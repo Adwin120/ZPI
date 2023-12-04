@@ -101,7 +101,7 @@ app.patch(
     "/Grafik/:id",
     authenticate,
     authorize((user) => roleGreaterOrEqual(user["role"], "kierownik")),
-    validateBody(grafikSchema.partial()), 
+    validateBody(grafikSchema.innerType().partial()), 
     async (req: Request, res: Response) => {
         const grafikId = req.params["id"];
         const grafikData = req.body as Partial<GrafikPayload>; 

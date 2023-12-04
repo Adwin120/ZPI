@@ -1,7 +1,7 @@
 import { Stack } from "@mui/material";
 import CommonLayout from "../layout/CommonLayout";
 import FormButton from "../layout/FormButton";
-import { DateTimeFormatFromServer, postToEndpoint } from "../../backendAccess";
+import { postToEndpoint } from "../../backendAccess";
 import { Auto, autoSchema } from "../../../common/autoSchema";
 import FormTextField from "../forms/FormTextField";
 import FormAutocompleteFromEndpoint from "../forms/FormAutocompleteFromEndpoint";
@@ -14,6 +14,7 @@ import { useLocation } from "wouter";
 import { GridActionsCellItem } from "@mui/x-data-grid";
 
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
+import { DateTimeFormatFromServer } from "../../../common/DateTime";
 
 const Auta: React.FC = () => {
     const [_, navigate] = useLocation();

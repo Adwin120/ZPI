@@ -3,8 +3,7 @@ import { useContext } from "react";
 import { ControllerRenderProps, FieldValues, Path, useController } from "react-hook-form";
 import { formContext } from "./FormDialog";
 import dayjs from "dayjs";
-
-export const DateTimeFormFormat = "YYYY-MM-DD HH:mm:ss"
+import { DateTimeFormFormat } from "../../../common/DateTime";
 
 type Props<T extends FieldValues> = { name: Path<T>; label: string } & Partial<
     Omit<DateTimePickerProps<unknown>, keyof ControllerRenderProps<T>>
