@@ -49,7 +49,7 @@ app.get(
         FROM db_main.Zgloszenie Z 
         LEFT JOIN db_main.Klient K ON Z.Klient_IdKlient = K.IdKlient
         LEFT JOIN db_main.Pracownik P ON Z.Pracownik_IdPracownik = P.IdPracownik
-        WHERE Z.Pracownik_IdPracownik = ?`, [zgloszenieID]
+        WHERE Z.IdZgloszenie = ?`, [zgloszenieID]
     );
         try {
             console.log(results);
@@ -126,6 +126,7 @@ app.patch(
         const user = getUserData(res);
         const zgloszenieId = req.params["id"];
         const zgloszenieData = req.body as Partial<ZgloszeniePayload>; 
+        zgloszenieData.Status = "przesłane";
 
         if(user &&user['role'] === "pracownik")
         {
