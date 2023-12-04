@@ -8,7 +8,6 @@ import FormAutocompleteFromEndpoint from "../forms/FormAutocompleteFromEndpoint"
 import FormTextField from "../forms/FormTextField";
 import FormButton from "../layout/FormButton";
 import CommonLayout from "../layout/CommonLayout";
-import { grafikSchema } from "../../../common/grafikSchema";
 import { useLocation } from "wouter";
 import { acceptanceOptions } from "../../../common/AcceptanceStatus";
 import { GridActionsCellItem } from "@mui/x-data-grid";
@@ -38,7 +37,6 @@ const Zgloszenia: React.FC<Props> = () => {
                         navigate(`/panel/zgloszenia/${row.IdZgloszenie}`)
                     }
                     schema={[
-                        {field: "IdZgloszenie", flex: 1},
                         { field: "Opis", flex: 1 },
                         {
                             field: "Status",
