@@ -15,9 +15,12 @@ export const zgloszenieSchema = z.object(
 export type ZgloszeniePayload = z.infer<typeof zgloszenieSchema>;
 
 export type Zgloszenie = {
-    IdZgloszenie: number,
-    Opis: string,
-    Status: AcceptanceStatus
-    Pracownik_IdPracownik: number,
-    Klient_IdKlient: number,
+    IdZgloszenie: number;
+    Opis: string;
+    Status: AcceptanceStatus;
+    Pracownik_IdPracownik: number;
+    Imie: string;
+    Nazwisko: string;
+    Klient_IdKlient: number;
+    NazwaKlienta: string;
 }
