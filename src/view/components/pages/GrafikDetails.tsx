@@ -9,7 +9,7 @@ import {
     useGetEndpoint,
 } from "../../backendAccess";
 import CommonLayout from "../layout/CommonLayout";
-import { Stack, Typography } from "@mui/material";
+import { Link, Stack, Typography } from "@mui/material";
 import ActionRow from "../layout/ActionRow";
 import FormButton from "../layout/FormButton";
 import { GrafikFormFields } from "./Grafik";
@@ -27,7 +27,7 @@ const GrafikDetails: React.FC<Props> = ({ params: { id } }) => {
     const { data, isLoading } = useGetEndpoint<Grafik>(endpoint);
     const [_, navigate] = useLocation();
     return (
-        <CommonLayout subpageTitle={`Wpis w grafiku ${data?.Pracownik_IdPracownik}`}>
+        <CommonLayout subpageTitle={`Wpis w grafiku ${data?.Imie} ${data?.Nazwisko}`}>
             <Stack alignItems={"center"} gap={3}>
                 <ActionRow>
                     <FormButton
@@ -65,9 +65,17 @@ const GrafikDetails: React.FC<Props> = ({ params: { id } }) => {
                     </Stack>
                 </DetailsCard>
                 <DetailsCard title="Pracownik odpowiedzialny">
-                    {data?.Pracownik_IdPracownik}
+                    <Link
+                        onClick={() => navigate(`/panel/pracownicy/${data?.Pracownik_IdPracownik}`)}
+                    >
+                        {data?.Imie} {data?.Nazwisko}
+                    </Link>
                 </DetailsCard>
-                <DetailsCard title="Dla klienta">{data?.Klient_IdKlient}</DetailsCard>
+                <DetailsCard title="Dla klienta">
+                    <Link onClick={() => navigate(`/panel/klienci/${data?.Klient_IdKlient}`)}>
+                        {data?.Nazwa}
+                    </Link>
+                </DetailsCard>
                 <DetailsCard title="Przedział czasowy">
                     <dl>
                         <dt>Od</dt>
