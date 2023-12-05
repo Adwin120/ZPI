@@ -1,4 +1,4 @@
-import { InputAdornment, Stack } from "@mui/material";
+import { InputAdornment, Link, Stack } from "@mui/material";
 import { Umowa, umowaSchema } from "../../../common/umowaSchema";
 import {
     deleteFromEndpoint,
@@ -52,7 +52,9 @@ const UmowaDetails: React.FC<Props> = ({ params: { id } }) => {
                             Data_rozpoczecia: formDateTime(data?.Data_rozpoczecia),
                             Data_zakonczenia: formDateTime(data?.Data_zakonczenia),
                         }}
-                    >{UmowaFormFields}</FormButton>
+                    >
+                        {UmowaFormFields}
+                    </FormButton>
                     <DeleteButton
                         onClick={() => {
                             deleteFromEndpoint(endpoint)().then(() => {
@@ -61,7 +63,11 @@ const UmowaDetails: React.FC<Props> = ({ params: { id } }) => {
                         }}
                     />
                 </ActionRow>
-                <DetailsCard title="Klient">{data?.Klient_IdKlient}</DetailsCard>
+                <DetailsCard title="Klient">
+                    <Link onClick={() => navigate(`/panel/klienci/${data?.Klient_IdKlient}`)}>
+                        {data?.Nazwa}
+                    </Link>
+                </DetailsCard>
                 <DetailsCard title="Przedział czasowy">
                     <dl>
                         <dt>Data rozpoczęcia</dt>

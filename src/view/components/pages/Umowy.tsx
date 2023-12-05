@@ -1,4 +1,4 @@
-import { Stack } from "@mui/material";
+import { Link, Stack } from "@mui/material";
 import CommonLayout from "../layout/CommonLayout";
 import FormButton from "../layout/FormButton";
 import { postToEndpoint } from "../../backendAccess";
@@ -11,7 +11,7 @@ import dayjs from "dayjs";
 import { useLocation } from "wouter";
 import { GridActionsCellItem } from "@mui/x-data-grid";
 
-import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
+import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import { DateTimeFormatFromServer } from "../../../common/DateTime";
 
 interface Props {}
@@ -36,6 +36,19 @@ const Umowy: React.FC<Props> = () => {
                     onRowDoubleClick={({ row }) => navigate(`/panel/umowy/${row.IdUmowa}`)}
                     schema={[
                         {
+                            field: "Klient",
+                            flex: 1,
+                            renderCell: ({ row }) => (
+                                <Link
+                                    onClick={() =>
+                                        navigate(`/panel/klienci/${row.Klient_IdKlient}`)
+                                    }
+                                >
+                                    {row.Nazwa}
+                                </Link>
+                            ),
+                        },
+                        {
                             field: "Data_rozpoczecia",
                             flex: 1,
                             headerName: "Data rozpoczęcia",
@@ -59,15 +72,15 @@ const Umowy: React.FC<Props> = () => {
                             type: "actions",
                             getActions({ id }) {
                                 return [
-                                          <GridActionsCellItem
-                                              label="wyświetl"
-                                              icon={<MoreHorizIcon />}
-                                              onClick={() => navigate(`/panel/umowy/${id}`)}
-                                              key="display"
-                                          ></GridActionsCellItem>,
-                                      ];
+                                    <GridActionsCellItem
+                                        label="wyświetl"
+                                        icon={<MoreHorizIcon />}
+                                        onClick={() => navigate(`/panel/umowy/${id}`)}
+                                        key="display"
+                                    ></GridActionsCellItem>,
+                                ];
                             },
-                        }
+                        },
                     ]}
                 />
             </Stack>

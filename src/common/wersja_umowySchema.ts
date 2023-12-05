@@ -11,7 +11,7 @@ export const wersja_umowySchema = z.object(
 );
 
 export type Wersja_umowyPayload = z.infer<typeof wersja_umowySchema>;
-export type wersja_umowy= {
+export type Wersja_umowy= {
     Usluga_IdUsluga: number;
     Umowa_IdUmowa: number;
     Cena: number;

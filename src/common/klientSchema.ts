@@ -7,7 +7,7 @@ export const klientSchema = z.object(
         Email: z.string().email("Niepoprawny format adresu e-mail").default(""),
         Adres: z.string().min(1, "Adres jest wymagany").default(""),
         NIP: z.string().regex(numeric).length(10, "NIP musi mieć 10 cyfr").default(""),
-        Telefon: z.string().regex(numeric).length(9, "Telefon musi mieć 9 cyfr").default(""),
+        Telefon: z.string().regex(numeric, "Telefon musi się składać z samych cyfr").length(9, "Telefon musi mieć 9 cyfr").default(""),
     },
     defaultMessage("Niepoprawny format")
 );

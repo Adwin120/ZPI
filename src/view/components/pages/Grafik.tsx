@@ -59,7 +59,7 @@ const Grafik: React.FC<Props> = () => {
                                     onClick={() =>
                                         navigate(`/panel/pracownicy/${row.Pracownik_IdPracownik}`)
                                     }
-                                >
+                                    >
                                     {row.Imie} {row.Nazwisko}
                                 </Link>
                             ),
