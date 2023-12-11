@@ -1,11 +1,14 @@
 import React, { PropsWithChildren, createContext, useId } from "react";
 import { Dialog, DialogTitle, DialogContent, Stack, Button } from "@mui/material";
 import { ZodType } from "zod";
-import { Control, DefaultValues, FieldValues, useForm } from "react-hook-form";
+import { Control, DefaultValues, FieldValues, UseFormRegister, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 type Consumer<T> = (arg: T) => void;
-export const formContext = createContext<Control<FieldValues> | null>(null);
+export const formContext = createContext<{
+    control: Control<FieldValues>;
+    register: UseFormRegister<FieldValues>;
+} | null>(null);
 
 interface Props<T> extends PropsWithChildren {
     open: boolean;
@@ -25,7 +28,7 @@ const FormDialog = <T extends FieldValues>({
     defaultValues,
 }: Props<T>) => {
     const titleId = useId();
-    const { handleSubmit, control } = useForm<T>({
+    const { handleSubmit, control, register } = useForm<T>({
         resolver: zodResolver(schema),
         mode: "onChange",
         defaultValues,
@@ -48,7 +51,7 @@ const FormDialog = <T extends FieldValues>({
                 <form onSubmit={formSubmit} aria-labelledby={titleId}>
                     <Stack direction="column" gap={1} py={2}>
                         {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
-                        <formContext.Provider value={control as any}>
+                        <formContext.Provider value={{control: control as any, register: register as any}}>
                             {children}
                             {/* <FormErrors /> */}
                         </formContext.Provider>

@@ -35,7 +35,7 @@ const UmowaDetails: React.FC<Props> = ({ params: { id } }) => {
     const [_, navigate] = useLocation();
     return (
         <CommonLayout
-            subpageTitle={`Umowa z ${data?.Klient_IdKlient} ${showDateTime(
+            subpageTitle={`Umowa z ${data?.Nazwa} ${showDateTime(
                 data?.Data_rozpoczecia
             )}`}
             center

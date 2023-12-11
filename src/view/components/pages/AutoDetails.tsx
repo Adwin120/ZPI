@@ -26,6 +26,9 @@ import dayjs from "dayjs";
 import FormAutocompleteFromEndpoint from "../forms/FormAutocompleteFromEndpoint";
 import { Pracownik } from "../../../common/pracownikSchema";
 import { Usluga } from "../../../common/uslugaSchema";
+import { DateTimeFormFormat } from "../../../common/DateTime";
+import HiddenInput from "../forms/HiddenInput";
+import FormTextField from "../forms/FormTextField";
 
 interface Props {
     params: {
@@ -47,8 +50,10 @@ const AutoDetails: React.FC<Props> = ({ params: { id } }) => {
                         isLoading={isLoading}
                         defaultValues={{
                             ...data,
+                            Klient_IdKlient: data?.IdKlient,
+                            Model_IdModel: data?.IdModel,
                             Czas_rozpoczecia: formDateTime(data?.Czas_rozpoczecia),
-                            Czas_zakonczenia: formDateTime(data?.Czas_zakonczenia),
+                            Czas_zakonczenia: dayjs(data?.Czas_zakonczenia, adHockDateFormat).format(DateTimeFormFormat),
                         }}
                     >
                         {AutaFormFields}
@@ -88,8 +93,13 @@ const AutoDetails: React.FC<Props> = ({ params: { id } }) => {
                         onSubmit={postToEndpoint("/Auto_usluga")}
                         schema={auto_uslugaSchema}
                         title="Dodaj wykonywaną usługę"
+                        defaultValues={{
+                            Auto_IdAuto: Number(id)
+                        }}
                     >
-                        <input type="hidden" name="Auto_IdAuto" value={id} />
+                        {/* <input type="hidden" name="Auto_IdAuto" value={id} /> */}
+                        {/* <HiddenInput name="Auto_IdAuto" value={id}/> */}
+                        <FormTextField type="hidden" name="Auto_IdAuto" sx={{opacity: 0}} hidden/>
                         <FormAutocompleteFromEndpoint<Usluga>
                             name="Usluga_IdUsluga"
                             endpoint="/Usluga"
@@ -112,8 +122,13 @@ const AutoDetails: React.FC<Props> = ({ params: { id } }) => {
                         onSubmit={postToEndpoint("/Auto_pracownik")}
                         schema={auto_pracownikSchema}
                         title="Przydziel pracownika"
+                        defaultValues={{
+                            Auto_IdAuto: Number(id)
+                        }}
                     >
-                        <input type="hidden" name="Auto_IdAuto" value={id} />
+                        {/* <input type="hidden" name="Auto_IdAuto" value={id} /> */}
+                        {/* <HiddenInput name="Auto_IdAuto" value={id} /> */}
+                        <FormTextField type="hidden" name="Auto_IdAuto" sx={{opacity: 0}} hidden />
                         <FormAutocompleteFromEndpoint<Pracownik>
                             endpoint="/Pracownik"
                             label="Pracownik"

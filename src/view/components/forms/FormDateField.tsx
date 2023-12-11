@@ -13,8 +13,8 @@ export default function FormDateField<T extends FieldValues>({
     label,
     ...dateProps
 }: Props<T>) {
-    const formControl = useContext(formContext);
-    const { field, fieldState } = useController({ name, control: formControl! });
+    const {control} = useContext(formContext)!;
+    const { field, fieldState } = useController({ name, control: control! });
     return (
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         <DatePicker<any>
