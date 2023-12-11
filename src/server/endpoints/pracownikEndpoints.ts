@@ -195,7 +195,7 @@ app.patch(
 app.patch(
     "/Pracownik/:email/Grafik/:id",                                                                //tylko swoj grafik
     authenticate,
-    validateBody(grafikSchema.partial()), 
+    validateBody(grafikSchema.innerType().partial()), 
     async (req: Request, res: Response) => {
         const grafikId = req.params["id"];
         const emailParam = req.params["email"];
