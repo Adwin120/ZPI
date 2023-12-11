@@ -1,4 +1,4 @@
-import { Stack } from "@mui/material";
+import { Link, Stack } from "@mui/material";
 import { Klient } from "../../../common/klientSchema";
 import { Pracownik } from "../../../common/pracownikSchema";
 import { Zgloszenie, zgloszenieSchema } from "../../../common/zgloszenieSchema";
@@ -37,6 +37,33 @@ const Zgloszenia: React.FC<Props> = () => {
                         navigate(`/panel/zgloszenia/${row.IdZgloszenie}`)
                     }
                     schema={[
+                        {
+                            field: "Klient",
+                            headerName: "Klient",
+                            flex: 1,
+                            renderCell: ({ row }) => (
+                                <Link
+                                    onClick={() =>
+                                        navigate(`/panel/klienci/${row.Klient_IdKlient}`)
+                                    }
+                                >
+                                    {row.NazwaKlienta}
+                                </Link>
+                            ),
+                        },
+                        {
+                            field: "Pracownik",
+                            flex: 1,
+                            renderCell: ({ row }) => (
+                                <Link
+                                    onClick={() =>
+                                        navigate(`/panel/pracownicy/${row.Pracownik_IdPracownik}`)
+                                    }
+                                    >
+                                    {row.Imie} {row.Nazwisko}
+                                </Link>
+                            ),
+                        },
                         { field: "Opis", flex: 1 },
                         {
                             field: "Status",

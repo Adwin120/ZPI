@@ -1,4 +1,4 @@
-import { Stack, Typography } from "@mui/material";
+import { Link, Stack, Typography } from "@mui/material";
 import CommonLayout from "../layout/CommonLayout";
 import { Zgloszenie, zgloszenieSchema } from "../../../common/zgloszenieSchema";
 import {
@@ -53,14 +53,22 @@ const ZgloszenieDetails: React.FC<Props> = ({ params: { id } }) => {
                         </Typography>
                         <AcceptanceActions
                             minimalRole="kierownik"
-                            onAccept={() =>putToEndpoint(`/Zgloszenie/${id}/acceptance`)()}
-                            onReject={() =>deleteFromEndpoint(`/Zgloszenie/${id}/acceptance`)()}
+                            onAccept={() => putToEndpoint(`/Zgloszenie/${id}/acceptance`)()}
+                            onReject={() => deleteFromEndpoint(`/Zgloszenie/${id}/acceptance`)()}
                         />
                     </Stack>
                 </DetailsCard>
-                <DetailsCard title="Dane klienta">{data?.Klient_IdKlient}</DetailsCard>
+                <DetailsCard title="Dane klienta">
+                    <Link onClick={() => navigate(`/panel/klienci/${data?.Klient_IdKlient}`)}>
+                        {data?.NazwaKlienta}
+                    </Link>
+                </DetailsCard>
                 <DetailsCard title="Pracownik odpowiedzialny">
-                    {data?.Pracownik_IdPracownik}
+                    <Link
+                        onClick={() => navigate(`/panel/pracownicy/${data?.Pracownik_IdPracownik}`)}
+                    >
+                        {data?.Imie} {data?.Nazwisko}
+                    </Link>
                 </DetailsCard>
                 <DetailsCard title="Opis">{data?.Opis}</DetailsCard>
             </Stack>

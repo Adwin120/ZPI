@@ -16,8 +16,12 @@ import { AutaFormFields, adHockDateFormat } from "./Auta";
 
 import { useLocation } from "wouter";
 import DeleteButton from "../layout/DeleteButton";
+import { GridActionsCellItem } from "@mui/x-data-grid";
+
+import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
+import { Auto_pracownik } from "../../../common/auto_pracownikSchema";
+import { Auto_usluga } from "../../../common/auto_uslugaSchema";
 import dayjs from "dayjs";
-import { Usluga } from "../../../common/uslugaSchema";
 
 interface Props {
     params: {
@@ -72,15 +76,41 @@ const AutoDetails: React.FC<Props> = ({ params: { id } }) => {
                 <DetailsCard title="Klient">{data?.Klient_nazwa}</DetailsCard>
                 <DetailsCard title="Dodatkowe informacje">{data?.Dodatkowe_informacje}</DetailsCard>
                 <DetailsCard title="Wykonywane usługi">
-                    <DataTable<Usluga>
-                        getRowId={(row) => row.IdUsluga}
-                        dataEndpoint={null}
-                        rows={[
-                            {IdUsluga: 1, Nazwa: "mycie", Opis: "opis opis"}
-                        ]}
+                    <DataTable<Auto_usluga>
+                        dataEndpoint={`/Auto_usluga/auto/${id}`}
+                        getRowId={(row) => row.Usluga_IdUsluga}
                         schema={[
                             { field: "Nazwa", flex: 1 },
                             { field: "Opis", flex: 3 },
+                        ]}
+                    />
+                </DetailsCard>
+                <DetailsCard title="Pracownicy odpowiedzialni">
+                    <DataTable<Auto_pracownik>
+                        dataEndpoint={`/Auto_pracownik/auto/:id`}
+                        getRowId={(row) => row.Pracownik_IdPracownik}
+                        onRowDoubleClick={({ row }) =>
+                            navigate(`/panel/pracownicy/${row.Pracownik_IdPracownik}`)
+                        }
+                        schema={[
+                            {field: "Email", flex: 1},
+                            {field: "Imie", flex: 1},
+                            {field: "Nazwisko", flex: 1},
+                            {
+                                field: "opcje",
+                                width: 50,
+                                type: "actions",
+                                getActions({ id }) {
+                                    return [
+                                        <GridActionsCellItem
+                                            label="wyświetl"
+                                            icon={<MoreHorizIcon />}
+                                            onClick={() => navigate(`/panel/pracownicy/${id}`)}
+                                            key="display"
+                                        ></GridActionsCellItem>,
+                                    ];
+                                },
+                            },
                         ]}
                     />
                 </DetailsCard>
