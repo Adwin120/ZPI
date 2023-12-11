@@ -9,7 +9,7 @@ import FormDateField from "../forms/FormDateField";
 import DataTable, { DateFormatToView } from "../DataTable";
 import dayjs from "dayjs";
 import { useLocation } from "wouter";
-import { GridActionsCellItem } from "@mui/x-data-grid";
+import { GridActionsCellItem, GridColDef } from "@mui/x-data-grid";
 
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import { DateTimeFormatFromServer } from "../../../common/DateTime";
@@ -34,54 +34,7 @@ const Umowy: React.FC<Props> = () => {
                     dataEndpoint="/Umowa"
                     getRowId={(row) => row.IdUmowa}
                     onRowDoubleClick={({ row }) => navigate(`/panel/umowy/${row.IdUmowa}`)}
-                    schema={[
-                        {
-                            field: "Klient",
-                            flex: 1,
-                            renderCell: ({ row }) => (
-                                <Link
-                                    onClick={() =>
-                                        navigate(`/panel/klienci/${row.Klient_IdKlient}`)
-                                    }
-                                >
-                                    {row.Nazwa}
-                                </Link>
-                            ),
-                        },
-                        {
-                            field: "Data_rozpoczecia",
-                            flex: 1,
-                            headerName: "Data rozpoczęcia",
-                            type: "date",
-                            valueGetter: (row) =>
-                                dayjs(row.value, DateTimeFormatFromServer).toDate(),
-                            valueFormatter: (row) => dayjs(row.value).format(DateFormatToView),
-                        },
-                        {
-                            field: "Data_zakonczenia",
-                            flex: 1,
-                            headerName: "Data zakończenia",
-                            type: "date",
-                            valueGetter: (row) =>
-                                dayjs(row.value, DateTimeFormatFromServer).toDate(),
-                            valueFormatter: (row) => dayjs(row.value).format(DateFormatToView),
-                        },
-                        {
-                            field: "opcje",
-                            width: 50,
-                            type: "actions",
-                            getActions({ id }) {
-                                return [
-                                    <GridActionsCellItem
-                                        label="wyświetl"
-                                        icon={<MoreHorizIcon />}
-                                        onClick={() => navigate(`/panel/umowy/${id}`)}
-                                        key="display"
-                                    ></GridActionsCellItem>,
-                                ];
-                            },
-                        },
-                    ]}
+                    schema={umowyTableSchema(navigate)}
                 />
             </Stack>
         </CommonLayout>
@@ -101,5 +54,49 @@ export const UmowaFormFields = (
         <FormDateField name="Data_zakonczenia" label="Data zakończenia" />
     </>
 );
+
+export const umowyTableSchema: (navigator: (to: string) => void) => GridColDef<Umowa>[] = (
+    navigate
+) => [
+    {
+        field: "Klient",
+        flex: 1,
+        valueGetter: ({ row }) => row.Nazwa,
+        renderCell: ({ row, value }) => (
+            <Link onClick={() => navigate(`/panel/klienci/${row.Klient_IdKlient}`)}>{value}</Link>
+        ),
+    },
+    {
+        field: "Data_rozpoczecia",
+        flex: 1,
+        headerName: "Data rozpoczęcia",
+        type: "date",
+        valueGetter: (row) => dayjs(row.value, DateTimeFormatFromServer).toDate(),
+        valueFormatter: (row) => dayjs(row.value).format(DateFormatToView),
+    },
+    {
+        field: "Data_zakonczenia",
+        flex: 1,
+        headerName: "Data zakończenia",
+        type: "date",
+        valueGetter: (row) => dayjs(row.value, DateTimeFormatFromServer).toDate(),
+        valueFormatter: (row) => dayjs(row.value).format(DateFormatToView),
+    },
+    {
+        field: "opcje",
+        width: 50,
+        type: "actions",
+        getActions({ id }) {
+            return [
+                <GridActionsCellItem
+                    label="wyświetl"
+                    icon={<MoreHorizIcon />}
+                    onClick={() => navigate(`/panel/umowy/${id}`)}
+                    key="display"
+                ></GridActionsCellItem>,
+            ];
+        },
+    },
+];
 
 export default Umowy;

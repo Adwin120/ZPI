@@ -41,26 +41,28 @@ const Zgloszenia: React.FC<Props> = () => {
                             field: "Klient",
                             headerName: "Klient",
                             flex: 1,
-                            renderCell: ({ row }) => (
+                            valueGetter: ({row}) => row.NazwaKlienta,
+                            renderCell: ({ row, value }) => (
                                 <Link
                                     onClick={() =>
                                         navigate(`/panel/klienci/${row.Klient_IdKlient}`)
                                     }
                                 >
-                                    {row.NazwaKlienta}
+                                    {value}
                                 </Link>
                             ),
                         },
                         {
                             field: "Pracownik",
                             flex: 1,
-                            renderCell: ({ row }) => (
+                            valueGetter: ({row}) => `${row.Imie} ${row.Nazwisko}`,
+                            renderCell: ({ row, value }) => (
                                 <Link
                                     onClick={() =>
                                         navigate(`/panel/pracownicy/${row.Pracownik_IdPracownik}`)
                                     }
                                     >
-                                    {row.Imie} {row.Nazwisko}
+                                    {value}
                                 </Link>
                             ),
                         },

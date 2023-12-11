@@ -38,6 +38,7 @@ const UmowaDetails: React.FC<Props> = ({ params: { id } }) => {
             subpageTitle={`Umowa z ${data?.Klient_IdKlient} ${showDateTime(
                 data?.Data_rozpoczecia
             )}`}
+            center
         >
             <Stack alignItems={"center"} gap={3}>
                 <ActionRow>
