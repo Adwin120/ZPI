@@ -6,9 +6,19 @@ import { DateTimeFormFormat } from "./DateTime";
 
 const datetimeRegex = /^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/;
 
-const datetimeSchema = z.string().refine(
-    (value) => {
-        return datetimeRegex.test(value);
+const datetimeSchema = z.string(defaultMessage("Podanie czasu jest wymagane.")).refine((value) => {
+    return datetimeRegex.test(value);
+}, {
+    message: "Nieprawidłowy format daty i czasu (oczekiwano 'DD-MM-RRRR GG:MM:SS')",
+});
+
+export const grafikSchema = z.object(
+    {
+        Pracownik_IdPracownik: z.number(defaultMessage("Pracownink jest wymagany.")).min(1,"ID pracownika musi być większe od 0."),
+        Klient_IdKlient: z.number(defaultMessage("Podany klient jest wymagany.")).min(1,"ID klienta musi być większe od 0."),
+        Czas_rozpoczecia: datetimeSchema,
+        Czas_zakonczenia: datetimeSchema,
+        Status: z.enum(["przesłane", "zaakceptowane", "odrzucone"]).default("przesłane"),
     },
     {
         message: "Nieprawidłowy format daty i czasu (oczekiwano 'RRRR-MM-DD GG:MM:SS')",
