@@ -104,7 +104,7 @@ export const ZgloszeniaFormFields = (
             name="Pracownik_IdPracownik"
             getOptionId={(option) => option?.IdPracownik ?? null}
             getOptionLabel={(option) =>
-                `${option.Imie} ${option.Nazwisko}\n${option.Email} ${option.IdPracownik}`
+                `${option.Imie} ${option.Nazwisko}`
             }
         />
         <FormAutocompleteFromEndpoint<Klient>
@@ -112,7 +112,7 @@ export const ZgloszeniaFormFields = (
             label="Klient"
             name="Klient_IdKlient"
             getOptionId={(option) => option?.IdKlient ?? null}
-            getOptionLabel={(option) => `${option.Nazwa}\n${option.NIP} ${option.IdKlient}`}
+            getOptionLabel={(option) => `${option.Nazwa}`}
         />
         <FormTextField name="Opis" label="Opis" multiline minRows={3} />
     </>

@@ -20,8 +20,8 @@ export default function FormDateField<T extends FieldValues>({
         <DatePicker<any>
             {...field}
             label={label}
-            value={dayjs(field.value ?? null, "YYYY-MM-DD")}
-            onChange={(v) => field.onChange(v?.format("YYYY-MM-DD"))}
+            value={dayjs(field.value ?? null, "DD-MM-YYYY")}
+            onChange={(v) => field.onChange(v?.format("DD-MM-YYYY"))}
             slotProps={{
                 textField: {
                     helperText: fieldState.error?.message,

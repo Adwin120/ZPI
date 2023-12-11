@@ -125,7 +125,7 @@ export const GrafikFormFields = (
             name="Pracownik_IdPracownik"
             getOptionId={(option) => option?.IdPracownik ?? 0}
             getOptionLabel={(option) =>
-                `${option.Imie} ${option.Nazwisko}\n${option.Email} ${option.IdPracownik}`
+                `${option.Imie} ${option.Nazwisko}`
             }
         />
         <FormAutocompleteFromEndpoint<Klient>
@@ -133,7 +133,7 @@ export const GrafikFormFields = (
             label="Klient"
             name="Klient_IdKlient"
             getOptionId={(option) => option?.IdKlient ?? 0}
-            getOptionLabel={(option) => `${option.Nazwa}\n${option.NIP} ${option.IdKlient}`}
+            getOptionLabel={(option) => `${option.Nazwa}`}
         />
         <FormDateTimePicker name="Czas_rozpoczecia" label="Czas rozpoczęcia" />
         <FormDateTimePicker name="Czas_zakonczenia" label="Czas zakończenia" />

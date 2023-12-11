@@ -48,7 +48,7 @@ export const UmowaFormFields = (
             label="Klient"
             name="Klient_IdKlient"
             getOptionId={(option) => option?.IdKlient ?? 0}
-            getOptionLabel={(option) => `${option.Nazwa}\n${option.NIP} ${option.IdKlient}`}
+            getOptionLabel={(option) => `${option.Nazwa}`}
         />
         <FormDateField name="Data_rozpoczecia" label="Data rozpoczęcia" />
         <FormDateField name="Data_zakonczenia" label="Data zakończenia" />
