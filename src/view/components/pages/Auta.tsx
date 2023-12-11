@@ -16,6 +16,8 @@ import { GridActionsCellItem } from "@mui/x-data-grid";
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import { DateTimeFormatFromServer } from "../../../common/DateTime";
 
+export const adHockDateFormat = "YYYY-MM-DD HH-mm-ss"
+
 const Auta: React.FC = () => {
     const [_, navigate] = useLocation();
     return (
@@ -58,10 +60,10 @@ const Auta: React.FC = () => {
                             type: "dateTime",
 
                             valueGetter: (row) =>
-                                dayjs(row.value, DateTimeFormatFromServer).toDate(),
+                                dayjs(row.value, adHockDateFormat).toDate(),
                             valueFormatter: (row) =>
                                 isNaN(row.value)
-                                    ? "-"
+                                    ? "w trakcie"
                                     : dayjs(row.value).format(DateTimeFormatToView),
                         },
                         {

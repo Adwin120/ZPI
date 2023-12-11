@@ -42,10 +42,13 @@ export const grafikSchema = z
 
 export type GrafikPayload = z.infer<typeof grafikSchema>;
 export type Grafik = {
-    IdGrafik: number;
-    Pracownik_IdPracownik: number;
-    Klient_IdKlient: number;
-    Czas_rozpoczecia: string;
-    Czas_zakonczenia: string;
-    Status: AcceptanceStatus;
-};
+    IdGrafik: number,
+    Pracownik_IdPracownik: number,
+    Klient_IdKlient: number,
+    Czas_rozpoczecia: string,
+    Czas_zakonczenia: string,
+    Imie: string,
+    Nazwisko: string,
+    Nazwa: string,
+    Status: AcceptanceStatus
+}

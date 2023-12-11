@@ -1,4 +1,4 @@
-import { Stack } from "@mui/material";
+import { Link, Stack } from "@mui/material";
 import CommonLayout from "../layout/CommonLayout";
 import FormButton from "../layout/FormButton";
 import { postToEndpoint } from "../../backendAccess";
@@ -13,12 +13,12 @@ import { useLocation } from "wouter";
 import { acceptanceOptions } from "../../../common/AcceptanceStatus";
 import { GridActionsCellItem } from "@mui/x-data-grid";
 
-import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
+import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import { DateTimeFormatFromServer } from "../../../common/DateTime";
 
 interface Props {}
 const Grafik: React.FC<Props> = () => {
-    const [_, navigate] = useLocation()
+    const [_, navigate] = useLocation();
     return (
         <CommonLayout subpageTitle="Grafik">
             <Stack alignItems={"normal"} gap={2}>
@@ -28,13 +28,42 @@ const Grafik: React.FC<Props> = () => {
                         onSubmit={postToEndpoint("/Grafik")}
                         schema={grafikSchema}
                         title="Dodaj wpis w grafiku"
-                    >{GrafikFormFields}</FormButton>
+                    >
+                        {GrafikFormFields}
+                    </FormButton>
                 </div>
                 <DataTable<Grafik>
                     dataEndpoint="/Grafik"
                     getRowId={(row) => row.IdGrafik}
-                    onRowDoubleClick={({row}) => navigate(`/panel/grafik/${row.IdGrafik}`)}
+                    onRowDoubleClick={({ row }) => navigate(`/panel/grafik/${row.IdGrafik}`)}
                     schema={[
+                        {
+                            field: "Klient",
+                            headerName: "Klient",
+                            flex: 1,
+                            renderCell: ({ row }) => (
+                                <Link
+                                    onClick={() =>
+                                        navigate(`/panel/klienci/${row.Klient_IdKlient}`)
+                                    }
+                                >
+                                    {row.Nazwa}
+                                </Link>
+                            ),
+                        },
+                        {
+                            field: "Pracownik",
+                            flex: 1,
+                            renderCell: ({ row }) => (
+                                <Link
+                                    onClick={() =>
+                                        navigate(`/panel/pracownicy/${row.Pracownik_IdPracownik}`)
+                                    }
+                                    >
+                                    {row.Imie} {row.Nazwisko}
+                                </Link>
+                            ),
+                        },
                         {
                             field: "Czas_rozpoczecia",
                             flex: 1,
@@ -68,15 +97,15 @@ const Grafik: React.FC<Props> = () => {
                             type: "actions",
                             getActions({ id }) {
                                 return [
-                                          <GridActionsCellItem
-                                              label="wyświetl"
-                                              icon={<MoreHorizIcon />}
-                                              onClick={() => navigate(`/panel/grafik/${id}`)}
-                                              key="display"
-                                          ></GridActionsCellItem>,
-                                      ];
+                                    <GridActionsCellItem
+                                        label="wyświetl"
+                                        icon={<MoreHorizIcon />}
+                                        onClick={() => navigate(`/panel/grafik/${id}`)}
+                                        key="display"
+                                    ></GridActionsCellItem>,
+                                ];
                             },
-                        }
+                        },
                     ]}
                 />
             </Stack>

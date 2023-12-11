@@ -79,7 +79,7 @@ export const deleteFromEndpoint = (endpoint: Endpoint) => async () => {
     return response;
 };
 
-const fetchJSON = async (endpoint: RequestInfo) => {
+export const fetchJSON = async (endpoint: RequestInfo) => {
     const user = auth.currentUser;
     const headers = new Headers();
     if (user) {

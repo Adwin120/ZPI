@@ -1,4 +1,4 @@
-import { InputAdornment, Stack } from "@mui/material";
+import { InputAdornment, Link, Stack } from "@mui/material";
 import { Umowa, umowaSchema } from "../../../common/umowaSchema";
 import {
     deleteFromEndpoint,
@@ -52,7 +52,9 @@ const UmowaDetails: React.FC<Props> = ({ params: { id } }) => {
                             Data_rozpoczecia: formDateTime(data?.Data_rozpoczecia),
                             Data_zakonczenia: formDateTime(data?.Data_zakonczenia),
                         }}
-                    >{UmowaFormFields}</FormButton>
+                    >
+                        {UmowaFormFields}
+                    </FormButton>
                     <DeleteButton
                         onClick={() => {
                             deleteFromEndpoint(endpoint)().then(() => {
@@ -61,7 +63,11 @@ const UmowaDetails: React.FC<Props> = ({ params: { id } }) => {
                         }}
                     />
                 </ActionRow>
-                <DetailsCard title="Klient">{data?.Klient_IdKlient}</DetailsCard>
+                <DetailsCard title="Klient">
+                    <Link onClick={() => navigate(`/panel/klienci/${data?.Klient_IdKlient}`)}>
+                        {data?.Nazwa}
+                    </Link>
+                </DetailsCard>
                 <DetailsCard title="Przedział czasowy">
                     <dl>
                         <dt>Data rozpoczęcia</dt>
@@ -92,7 +98,7 @@ const UmowaDetails: React.FC<Props> = ({ params: { id } }) => {
                         />
                     </FormButton>
                     <DataTable<Wersja_umowy>
-                        dataEndpoint="/Wersja_umowy"
+                        dataEndpoint={`/umowa/${id}/wersja_umowy`}
                         getRowId={(row) => `${row.Umowa_IdUmowa} ${row.Usluga_IdUsluga}`}
                         // processRowUpdate={({Id_Um, ...rest}) => {
                         //     patchEndpoint(`/Wersja_umowy/${id}`)(rest)
@@ -100,7 +106,7 @@ const UmowaDetails: React.FC<Props> = ({ params: { id } }) => {
                         // }}
                         onProcessRowUpdateError={console.error}
                         schema={[
-                            { field: "Usluga_IdUsluga", flex: 1, headerName: "Usługa" },
+                            { field: "NazwaUslugi", flex: 1, headerName: "Usługa" },
                             {
                                 field: "Cena",
                                 flex: 0.2,

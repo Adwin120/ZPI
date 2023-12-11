@@ -1,4 +1,4 @@
-import { Stack } from "@mui/material";
+import { Link, Stack } from "@mui/material";
 import { Klient } from "../../../common/klientSchema";
 import { Pracownik } from "../../../common/pracownikSchema";
 import { Zgloszenie, zgloszenieSchema } from "../../../common/zgloszenieSchema";
@@ -8,7 +8,6 @@ import FormAutocompleteFromEndpoint from "../forms/FormAutocompleteFromEndpoint"
 import FormTextField from "../forms/FormTextField";
 import FormButton from "../layout/FormButton";
 import CommonLayout from "../layout/CommonLayout";
-import { grafikSchema } from "../../../common/grafikSchema";
 import { useLocation } from "wouter";
 import { acceptanceOptions } from "../../../common/AcceptanceStatus";
 import { GridActionsCellItem } from "@mui/x-data-grid";
@@ -38,7 +37,33 @@ const Zgloszenia: React.FC<Props> = () => {
                         navigate(`/panel/zgloszenia/${row.IdZgloszenie}`)
                     }
                     schema={[
-                        {field: "IdZgloszenie", flex: 1},
+                        {
+                            field: "Klient",
+                            headerName: "Klient",
+                            flex: 1,
+                            renderCell: ({ row }) => (
+                                <Link
+                                    onClick={() =>
+                                        navigate(`/panel/klienci/${row.Klient_IdKlient}`)
+                                    }
+                                >
+                                    {row.NazwaKlienta}
+                                </Link>
+                            ),
+                        },
+                        {
+                            field: "Pracownik",
+                            flex: 1,
+                            renderCell: ({ row }) => (
+                                <Link
+                                    onClick={() =>
+                                        navigate(`/panel/pracownicy/${row.Pracownik_IdPracownik}`)
+                                    }
+                                    >
+                                    {row.Imie} {row.Nazwisko}
+                                </Link>
+                            ),
+                        },
                         { field: "Opis", flex: 1 },
                         {
                             field: "Status",

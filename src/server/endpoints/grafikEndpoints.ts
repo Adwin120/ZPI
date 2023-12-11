@@ -6,6 +6,7 @@ import { GrafikPayload, grafikSchema } from "../../common/grafikSchema";
 import { authenticate, authorize, getUserData } from "../middleware/firebaseAuth";
 import {ResultSetHeader, RowDataPacket } from "mysql2/promise";
 import { roleGreaterOrEqual } from "../../common/userRoles";
+import { AcceptanceStatus } from "../../common/AcceptanceStatus";
 
 app.post(
     "/Grafik",
@@ -104,7 +105,8 @@ app.patch(
     validateBody(grafikSchema.innerType().partial()), 
     async (req: Request, res: Response) => {
         const grafikId = req.params["id"];
-        const grafikData = req.body as Partial<GrafikPayload>; 
+        const grafikData = req.body as Partial<GrafikPayload> & {Status: AcceptanceStatus}; 
+        grafikData.Status = "przesłane";
 
         const updates = [];
         const values = [];

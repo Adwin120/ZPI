@@ -34,8 +34,9 @@ export const umowaSchema = z.object(
 
 export type UmowaPayload = z.infer<typeof umowaSchema>;
 export type Umowa = {
-    IdUmowa: number,
-    Klient_IdKlient: number,
-    Data_rozpoczecia: string,
-    Data_zakonczenia: string,
+    IdUmowa: number;
+    Klient_IdKlient: number;
+    Data_rozpoczecia: string;
+    Data_zakonczenia: string;
+    Nazwa: string;
 }
