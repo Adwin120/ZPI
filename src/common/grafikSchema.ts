@@ -6,39 +6,33 @@ import { DateTimeFormFormat } from "./DateTime";
 
 const datetimeRegex = /^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/;
 
-const datetimeSchema = z.string().refine(
-    (value) => {
-        return datetimeRegex.test(value);
+const datetimeSchema = z.string(defaultMessage("Podanie czasu jest wymagane.")).refine((value) => {
+    return datetimeRegex.test(value);
+}, {
+    message: "Nieprawidłowy format daty i czasu (oczekiwano 'DD-MM-RRRR GG:MM:SS')",
+});
+
+export const grafikSchema = z.object(
+    {
+        Pracownik_IdPracownik: z.number(defaultMessage("Pracownink jest wymagany.")).min(1,"ID pracownika musi być większe od 0."),
+        Klient_IdKlient: z.number(defaultMessage("Podany klient jest wymagany.")).min(1,"ID klienta musi być większe od 0."),
+        Czas_rozpoczecia: datetimeSchema,
+        Czas_zakonczenia: datetimeSchema,
+        Status: z.enum(["przesłane", "zaakceptowane", "odrzucone"]).default("przesłane"),
+    }
+).refine(
+    (obj) => {
+        const pred = dayjs(obj.Czas_rozpoczecia, DateTimeFormFormat).isBefore(
+            dayjs(obj.Czas_zakonczenia, DateTimeFormFormat)
+        );
+        console.log("refinement", pred)
+        return pred;
     },
     {
-        message: "Nieprawidłowy format daty i czasu (oczekiwano 'RRRR-MM-DD GG:MM:SS')",
+        message: "Czas zakończenia nie może być przed czasem rozpoczęcia",
+        path: ["Czas_zakonczenia"],
     }
-);
-
-export const grafikSchema = z
-    .object(
-        {
-            Pracownik_IdPracownik: z.number().min(1, "Model jest wymagany"),
-            Klient_IdKlient: z.number().min(1, "klient jest wymagany"),
-            Czas_rozpoczecia: datetimeSchema,
-            Czas_zakonczenia: datetimeSchema,
-            // Status: z.enum(["przesłane", "zaakceptowane", "odrzucone"]).default("przesłane"),
-        },
-        defaultMessage("Niepoprawny format")
-    )
-    .refine(
-        (obj) => {
-            const pred = dayjs(obj.Czas_rozpoczecia, DateTimeFormFormat).isBefore(
-                dayjs(obj.Czas_zakonczenia, DateTimeFormFormat)
-            );
-            console.log("refinement", pred)
-            return pred;
-        },
-        {
-            message: "Czas zakończenia nie może być przed czasem rozpoczęcia",
-            path: ["Czas_zakonczenia"],
-        }
-    );
+)
 
 export type GrafikPayload = z.infer<typeof grafikSchema>;
 export type Grafik = {
