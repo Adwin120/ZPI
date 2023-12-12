@@ -2,9 +2,9 @@ INSERT INTO `db_main`.`Klient` (`Adres`, `Email`, `Nazwa`, `NIP`, `Telefon`)
 VALUES 
 ('ul. Auto-Moto 1, 00-001 Warszawa', 'warszawa.auto@example.com', 'Auto-Moto Warszawa', '1234567890', '+48 123 456 789'),
 ('ul. CarWorld 2, 11-002 Kraków', 'carworld.krakow@example.com', 'CarWorld Kraków', '0987654321', '+48 987 654 321'),
-('ul. Motoplaza 3, 22-003 Wrocław', 'motoplaza.wroclaw@example.com', 'Motoplaza Wroclaw', '3456789012', '+48 345 678 901'),
+('ul. Motoplaza 3, 22-003 Wrocław', 'motoplaza.wroclaw@example.com', 'Motoplaza Wrocław', '3456789012', '+48 345 678 901'),
 ('ul. AutoExpress 4, 33-004 Gdańsk', 'autoexpress.gdansk@example.com', 'AutoExpress Gdańsk', '2345678901', '+48 234 567 890'),
-('ul. SpeedCars 5, 44-005 Łódź', 'speedcars.lodz@example.com', 'SpeedCars lódź', '5678901234', '+48 567 890 123'),
+('ul. SpeedCars 5, 44-005 Łódź', 'speedcars.lodz@example.com', 'SpeedCars Łódź', '5678901234', '+48 567 890 123'),
 ('ul. MotorLine 6, 55-006 Poznań', 'motorline.poznan@example.com', 'MotorLine Poznań', '4567890123', '+48 456 789 012'),
 ('ul. AutoDream 7, 66-007 Katowice', 'autodream.katowice@example.com', 'AutoDream Katowice', '7890123456', '+48 789 012 345'),
 ('ul. CarZone 8, 77-008 Lublin', 'carzone.lublin@example.com', 'CarZone Lublin', '6789012345', '+48 678 901 234'),
@@ -190,7 +190,7 @@ VALUES
 
 INSERT INTO `db_main`.`Usluga` (`Opis`, `Nazwa`)
 VALUES
-('Pelne mycie zewnętrzne i wewnętrzne pojazdu, woskowanie i polerowanie lakieru.', 'Pelne Detailing'),
+('pełne mycie zewnętrzne i wewnętrzne pojazdu, woskowanie i polerowanie lakieru.', 'pełne Detailing'),
 ('Skupienie się na dokładnym czyszczeniu wnętrza samochodu, w tym tapicerki, deski rozdzielczej i szyb.', 'Detailing Wnętrza'),
 ('Usuwanie rys i wgnieceń z lakieru oraz odnawianie wyglądu karoserii.', 'Detailing Karoserii'),
 ('Woskowanie i polerowanie lakieru, aby nadać samochodowi lśniący wygląd.', 'Woskowanie i Polerowanie'),
