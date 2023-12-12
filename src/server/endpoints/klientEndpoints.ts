@@ -244,7 +244,7 @@ app.get('/profil/Klient/:email/umowa', authenticate, async (req: Request, res: R
     }
 });
 
-app.get('/Klient/:email/usluga', authenticate, async (req: Request, res: Response) => {
+app.get('/profil/Klient/:email/usluga', authenticate, async (req: Request, res: Response) => {
     const emailParam = req.params["email"];
 
     if (!emailParam) {
@@ -293,7 +293,7 @@ app.get('/Klient/:email/usluga', authenticate, async (req: Request, res: Respons
     }
 });
 
-app.get('/Klient/:email/wersja_umowy', authenticate, async (req: Request, res: Response) => {
+app.get('/profil//Klient/:email/wersja_umowy', authenticate, async (req: Request, res: Response) => {
     const emailParam = req.params["email"];
 
     if (!emailParam) {
@@ -336,6 +336,41 @@ app.get('/Klient/:email/wersja_umowy', authenticate, async (req: Request, res: R
         );
 
         return res.json(autoResults);
+    } catch (error) {
+        console.error(error);
+        return res.status(500).send('Wystąpił błąd podczas pobierania wersji umowy danego klienta');
+    }
+});
+
+app.get('/profil//Klient/:email/umowa/:id/wersja_umowy', authenticate, async (req: Request, res: Response) => {
+    const emailParam = req.params["email"];
+    const idumowy = req.params["idumowy"];
+
+    if (!emailParam) {
+        return res.status(400).send("Email jest wymagany");
+    }
+
+    const email = decodeURIComponent(emailParam);
+    const user = getUserData(res);
+
+    if (!user || !user.email) {
+        return res.status(403).send("Brak uprawnień lub błąd autentykacji");
+    }
+
+    if (user.email !== email) {
+        return res.status(403).send("Brak uprawnień do przeglądania wersji umowy danego klienta");
+    }
+
+    try {
+        const [klientResults] = await connection.query<RowDataPacket[]>("SELECT IdKlient FROM Klient WHERE Email = ?", [email]);
+
+        if (klientResults.length === 0 || !klientResults[0]) {
+            return res.status(404).send('Klient o podanym emailu nie został znaleziony');
+        }
+
+        const [results] = await connection.query<RowDataPacket[]>("SELECT * FROM Wersja_umowy WHERE Umowa_IdUmowa = ?", [idumowy]);
+
+        return res.json(results);
     } catch (error) {
         console.error(error);
         return res.status(500).send('Wystąpił błąd podczas pobierania wersji umowy danego klienta');

@@ -61,7 +61,7 @@ app.get('/Auto_pracownik',authenticate, authorize((user) => roleGreaterOrEqual(u
     }
 });
 
-app.get('/Auto_pracownik/auto/:id', authenticate, authorize((user) => roleGreaterOrEqual(user["role"], "pracownik")), async (req: Request, res: Response) => {
+app.get('/Auto/:id/Auto_pracownik', authenticate, authorize((user) => roleGreaterOrEqual(user["role"], "pracownik")), async (req: Request, res: Response) => {
     const idAuto = req.params["id"];
 
     try {
@@ -78,7 +78,7 @@ app.get('/Auto_pracownik/auto/:id', authenticate, authorize((user) => roleGreate
 });
 
 
-app.get('/Auto_pracownik/pracownik/:id', authenticate, authorize((user) => roleGreaterOrEqual(user["role"], "pracownik")), async (req: Request, res: Response) => {
+app.get('/Pracownik/:id/auto_pracownik', authenticate, authorize((user) => roleGreaterOrEqual(user["role"], "pracownik")), async (req: Request, res: Response) => {
     const idPracownik = req.params["id"];
 
     try {

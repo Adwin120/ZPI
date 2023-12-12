@@ -2,6 +2,7 @@ import request from "supertest";
 
 import app from "../app";
 import { PracownikPayload } from "../../common/pracownikSchema";
+import { GrafikPayload } from "../../common/grafikSchema";
 import { FieldValidationError, ValidationErrorBody } from "../middleware/zodValidation";
 import "../endpoints/pracownikEndpoints"
 import { getMockBearerTokenWithRole, setupAuthenticationService } from "../testSetup";

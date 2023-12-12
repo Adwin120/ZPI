@@ -65,7 +65,7 @@ app.get(
     }
 );
 
-app.get('/Wersja_umowy/usluga/:idUslugi', authenticate, authorize((user) => roleGreaterOrEqual(user["role"], "pracownik")), async (req: Request, res: Response) => {
+app.get('/Usluga/:idUslugi/Wersja_umowy', authenticate, authorize((user) => roleGreaterOrEqual(user["role"], "pracownik")), async (req: Request, res: Response) => {
     const idUslugi = req.params["idUslugi"];
 
     try {
@@ -84,27 +84,6 @@ app.get('/Wersja_umowy/usluga/:idUslugi', authenticate, authorize((user) => role
         return res.status(500).send(`Wystąpił błąd podczas pobierania wersji umów dla usługi o ID: ${idUslugi}`);
     }
 });
-
-app.get('/Wersja_umowy/umowa/:idUmowy', authenticate, authorize((user) => roleGreaterOrEqual(user["role"], "pracownik")), async (req: Request, res: Response) => {
-    const idUmowy = req.params["idUmowy"];
-
-    try {
-        const [results] = await connection.query<RowDataPacket[]>(
-            "SELECT WU.Usluga_IdUsluga, WU.Umowa_IdUmowa, WU.Cena, UM.Data_rozpoczecia, UM.Data_zakonczenia FROM Wersja_umowy WU LEFT JOIN Umowa UM ON WU.Umowa_IdUmowa = UM.IdUmowa WHERE WU.Umowa_IdUmowa = ?",
-            [idUmowy]
-        );
-
-        if (results.length === 0) {
-            return res.status(200).send(`Nie znaleziono wersji umów dla umowy o ID: ${idUmowy}`);
-        }
-
-        return res.json(results);
-    } catch (error) {
-        console.error(error);
-        return res.status(500).send(`Wystąpił błąd podczas pobierania wersji umów dla umowy o ID: ${idUmowy}`);
-    }
-});
-
 
 
 app.delete('/Wersja_umowy/:idUslugi/:idUmowy', 

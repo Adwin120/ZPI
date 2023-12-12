@@ -62,8 +62,7 @@ app.get('/Auto_usluga',authenticate, authorize((user) => roleGreaterOrEqual(user
     }
 });
 
-//FIXME: endpoint path completely breaking restful
-app.get('/Auto_usluga/auto/:id', authenticate, authorize((user) => roleGreaterOrEqual(user["role"], "pracownik")), async (req: Request, res: Response) => {
+app.get('/Auto/:id/auto_usluga', authenticate, authorize((user) => roleGreaterOrEqual(user["role"], "pracownik")), async (req: Request, res: Response) => {
     const idAuto = req.params["id"];
 
     try {
@@ -79,7 +78,7 @@ app.get('/Auto_usluga/auto/:id', authenticate, authorize((user) => roleGreaterOr
     }
 });
 
-app.get('/Auto_usluga/usluga/:id', authenticate, authorize((user) => roleGreaterOrEqual(user["role"], "pracownik")), async (req: Request, res: Response) => {
+app.get('/Usluga/:id/auto_usluga', authenticate, authorize((user) => roleGreaterOrEqual(user["role"], "pracownik")), async (req: Request, res: Response) => {
     const idUslugi = req.params["id"];
 
     try {

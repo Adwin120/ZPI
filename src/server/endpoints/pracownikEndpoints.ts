@@ -29,6 +29,40 @@ app.post(
     }
 );
 
+app.post(
+    "/profil/Pracownik/:email/grafik",
+    authenticate,
+    authorize((user) => roleGreaterOrEqual(user["role"], "kierownik")),
+    validateBody(pracownikSchema),
+    async (req: Request, res: Response) => {
+        const emailParam = req.params["email"];
+        const grafikData = req.body as GrafikPayload;
+
+        if (!emailParam) {
+            return res.status(400).send("Email jest wymagany");
+        }
+
+        const email = decodeURIComponent(emailParam);
+        const user = getUserData(res);
+
+        if (!user || user.email !== email) {
+            return res.status(403).send("Brak uprawnień do edycji tego grafiku");
+        }
+
+        try {
+            const dbConnection = await connection;
+            await dbConnection.query("INSERT INTO Grafik ( Pracownik_IdPracownik, Klient_IdKlient, Czas_rozpoczecia, Czas_zakonczenia, Status) VALUES ((SELECT IdPracownik FROM Pracownik WHERE Email = ?), ?, ?, ?, ?)",
+             [ email, grafikData.Klient_IdKlient, grafikData.Czas_rozpoczecia , grafikData.Czas_zakonczenia, "przesłane"]);
+
+            return res.status(200).send("Grafik został pomyślnie dodany");
+        } catch (error) {
+            console.error(error);
+            return res.status(500).send("Wystąpił błąd podczas zapisywania grafiku");
+        }
+    }
+);
+
+
 app.get('/Pracownik/:id', authenticate, authorize((user) => roleGreaterOrEqual(user["role"], "kierownik")), async (req: Request, res: Response) => {
     const pracownikID = req.params["id"];
 
@@ -45,7 +79,7 @@ app.get('/Pracownik/:id', authenticate, authorize((user) => roleGreaterOrEqual(u
    }
 });
 
-app.get('/Pracownik/:email', authenticate, async (req: Request, res: Response) => {                                //tylko swoj grafik
+app.get('/profil/Pracownik/:email', authenticate, async (req: Request, res: Response) => {                                //tylko swoj grafik
     const emailParam = req.params["email"];
 
     if (!emailParam) {
@@ -204,7 +238,7 @@ app.patch(
 );
 
 app.patch(
-    "/Pracownik/:email/Grafik/:id",                                                                //tylko swoj grafik
+    "/profil/Pracownik/:email/grafik/:id",                                                                //tylko swoj grafik
     authenticate,
     validateBody(grafikSchema.innerType().partial()), 
     async (req: Request, res: Response) => {
@@ -262,7 +296,7 @@ app.patch(
 
 
 app.patch(                                                                                       //tylko swoje dane
-    "/Pracownik/:email",
+    "/profil/Pracownik/:email",
     authenticate,
     validateBody(pracownikSchema.partial()), 
     async (req: Request, res: Response) => {
