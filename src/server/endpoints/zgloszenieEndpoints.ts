@@ -126,7 +126,6 @@ app.patch(
         const user = getUserData(res);
         const zgloszenieId = req.params["id"];
         const zgloszenieData = req.body as Partial<ZgloszeniePayload>; 
-        zgloszenieData.Status = "przesłane";
 
         if(user &&user['role'] === "pracownik")
         {
@@ -136,7 +135,6 @@ app.patch(
                 return res.status(404).send('Pracownik nie może modyfikować zaakceptowanych zgłoszeń');
             }
         }
-
 
         const updates = [];
         const values = [];
@@ -150,6 +148,8 @@ app.patch(
         if (updates.length === 0) {
             return res.status(400).send("Brak danych do aktualizacji");
         }
+        updates.push(`Status = ?`);
+        values.push("przesłane");
 
         const query = `UPDATE Zgloszenie SET ${updates.join(", ")} WHERE IdZgloszenie = ?`;
         values.push(zgloszenieId);
