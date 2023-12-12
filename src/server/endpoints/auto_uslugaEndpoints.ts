@@ -18,13 +18,33 @@ app.post(
         console.log("user:", user);
         try {
             const dbConnection = await connection;
+            const [results] = await connection.query<RowDataPacket[]>("SELECT * FROM Auto_Usluga WHERE Auto_IdAuto = ? AND Usluga_IdUsluga = ?",
+             [ auto_uslugaData.Auto_IdAuto, auto_uslugaData.Usluga_IdUsluga ]);
+
+             const [resultsAuto_IdAuto] = await connection.query<RowDataPacket[]>("SELECT * FROM Auto_Usluga WHERE Auto_IdAuto = ?",
+             [ auto_uslugaData.Auto_IdAuto]);
+
+             const [resultsUsluga_IdUsluga] = await connection.query<RowDataPacket[]>("SELECT * FROM Auto_Usluga WHERE  Usluga_IdUsluga = ?",
+             [ auto_uslugaData.Usluga_IdUsluga ]);
+
+            if (resultsAuto_IdAuto.length > 0) {
+                return res.status(400).send("Auto o podanym ID nie istnieje w bazie danych.");
+            }
+
+            if (resultsUsluga_IdUsluga.length > 0) {
+                return res.status(400).send("Usluga o podanym ID nie istnieje w bazie danych.");
+            }
+
+            if (results.length > 0) {
+                return res.status(400).send("Padane ID Auta oraz ID Usługi już istnieją w bazie danych.");
+            }
             await dbConnection.query("INSERT INTO Auto_Usluga ( Auto_IdAuto, Usluga_IdUsluga) VALUES ( ?, ? )",
              [ auto_uslugaData.Auto_IdAuto, auto_uslugaData.Usluga_IdUsluga ]);
 
-            res.status(200).send("Dane dla Auto_usluga zostały dodane pomyślnie");
+            return res.status(200).send("Dane dla Auto_usluga zostały dodane pomyślnie");
         } catch (error) {
             console.error(error);
-            res.status(500).send("Wystąpił błąd podczas zapisywania danych dla Auto_usluga");
+            return res.status(500).send("Wystąpił błąd podczas zapisywania danych dla Auto_usluga");
         }
     }
 );
@@ -105,6 +125,26 @@ app.patch('/Auto_usluga/:idAuto/:idUslugi',
         values.push(idAuto, idUslugi);
 
         try {
+            const [selectResults] = await connection.query<RowDataPacket[]>("SELECT * FROM Auto_Usluga WHERE Auto_IdAuto = ? AND Usluga_IdUsluga = ?",
+            [ Auto_IdAuto, Usluga_IdUsluga ]);
+
+            const [resultsAuto_IdAuto] = await connection.query<RowDataPacket[]>("SELECT * FROM Auto_Usluga WHERE Auto_IdAuto = ?",
+            [ Auto_IdAuto ]);
+
+            const [resultsUsluga_IdUsluga] = await connection.query<RowDataPacket[]>("SELECT * FROM Auto_Usluga WHERE  Usluga_IdUsluga = ?",
+            [ Usluga_IdUsluga ]);
+
+            if (resultsAuto_IdAuto.length > 0) {
+                return res.status(400).send("Auto o podanym ID nie istnieje w bazie danych.");
+            }
+
+            if (resultsUsluga_IdUsluga.length > 0) {
+                return res.status(400).send("Usluga o podanym ID nie istnieje w bazie danych.");
+            }
+
+           if (selectResults.length > 0) {
+               return res.status(400).send("Padane ID Auta oraz ID Usługi już istnieją w bazie danych.");
+           }
             const [results] = await connection.query<ResultSetHeader>(query, values);
 
             if (results.affectedRows === 0) {

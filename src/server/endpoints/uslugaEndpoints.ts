@@ -21,10 +21,10 @@ app.post(
             await dbConnection.query("INSERT INTO Usluga ( Opis, Nazwa) VALUES ( ?, ?)",
              [ uslugaData.Opis, uslugaData.Nazwa ]);
 
-            res.status(200).send("Usługa została dodana pomyślnie");
+            return res.status(200).send("Usługa została dodana pomyślnie");
         } catch (error) {
             console.error(error);
-            res.status(500).send("Wystąpił błąd podczas zapisywania usługi");
+            return res.status(500).send("Wystąpił błąd podczas zapisywania usługi");
         }
     }
 );

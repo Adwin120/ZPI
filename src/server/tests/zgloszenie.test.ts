@@ -125,7 +125,7 @@ describe('Pobieranie danych Zgloszenia - Testy', () => {
       const IdPracownik = 1; 
       const IdKlient = 1; 
       const Opis = 'Klient zglosil rysy na boku auta.'; 
-      const Status = 'Przeslane'; 
+      const Status = 'przesłane'; 
 
       const response = await request(app)
           .get(`/Zgloszenie/${IdZgloszenie}`).set({ authorization: "Bearer " + mockToken });
@@ -153,7 +153,7 @@ describe('Pobieranie danych Zgloszenia - Testy', () => {
     const IdPracownik = 1; 
     const IdKlient = 1; 
     const Opis = 'Klient zglosil rysy na boku auta.'; 
-    const Status = 'Przeslane'; 
+    const Status = 'przesłane'; 
 
     const response = await request(app)
         .get(`/Zgloszenie`).set({ authorization: "Bearer " + mockToken });
@@ -170,7 +170,7 @@ describe('Pobieranie danych Zgloszenia - Testy', () => {
     const IdPracownik_10 = 10; 
     const IdKlient_10 = 10; 
     const Opis_10 = 'Klient zglosil problemy z wycieraczkami w samochodzie.'; 
-    const Status_10 = 'Przeslane'; 
+    const Status_10 = 'przesłane'; 
 
     expect(response.status).toBe(200);
     expect(response.body[9]).toHaveProperty('Pracownik_IdPracownik', IdPracownik_10);

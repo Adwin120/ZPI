@@ -28,10 +28,10 @@ app.post(
             await dbConnection.query("INSERT INTO Klient ( Adres, Email, Nazwa, NIP, Telefon) VALUES ( ?, ?, ?, ?, ?)", 
             [ klientData.Adres, klientData.Email, klientData.Nazwa, klientData.NIP , klientData.Telefon]);
 
-            res.status(200).send("Pomyślnie zapisano dane klienta");
+            return res.status(200).send("Pomyślnie zapisano dane klienta");
         } catch (error) {
             console.error(error);
-            res.status(500).send(
+            return res.status(500).send(
                 getErrorMessage(error, "Wystąpił błąd podczas zapisywania klienta")
             );
         }

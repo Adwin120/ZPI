@@ -21,10 +21,10 @@ app.post(
             await dbConnection.query("INSERT INTO Zgloszenie ( Pracownik_IdPracownik, Klient_IdKlient, Opis, Status) VALUES ( ?, ?, ?, ?)",
              [ zgloszenieData.Pracownik_IdPracownik, zgloszenieData.Klient_IdKlient, zgloszenieData.Opis, "przesłane"]);
 
-            res.status(200).send("Zgłoszenie zostało pomyślnie dodane");
+            return res.status(200).send("Zgłoszenie zostało pomyślnie dodane");
         } catch (error) {
             console.error(error);
-            res.status(500).send("Wystąpił błąd podczas zapisywania zgłoszenia");
+            return res.status(500).send("Wystąpił błąd podczas zapisywania zgłoszenia");
         }
     }
 );
@@ -180,10 +180,10 @@ app.put(
             const dbConnection = await connection;
             await dbConnection.query("UPDATE Zgloszenie SET Status = 'zaakceptowane' WHERE IdZgloszenie = ?", [zgloszeniekId]);
 
-            res.status(200).send("Zgłoszenie zostało zaakceptowane");
+            return res.status(200).send("Zgłoszenie zostało zaakceptowane");
         } catch (error) {
             console.error(error);
-            res.status(500).send("Wystąpił błąd podczas aktualizacji zgłoszenia");
+            return res.status(500).send("Wystąpił błąd podczas aktualizacji zgłoszenia");
         }
     }
 );
@@ -199,10 +199,10 @@ app.delete(
             const dbConnection = await connection;
             await dbConnection.query("UPDATE Zgloszenie SET Status = 'odrzucone' WHERE IdZgloszenie = ?", [zgloszenieId]);
 
-            res.status(200).send("Zgłoszenie zostało odrzucone");
+            return res.status(200).send("Zgłoszenie zostało odrzucone");
         } catch (error) {
             console.error(error);
-            res.status(500).send("Wystąpił błąd podczas aktualizacji zgłoszenia");
+            return res.status(500).send("Wystąpił błąd podczas aktualizacji zgłoszenia");
         }
     }
 );
