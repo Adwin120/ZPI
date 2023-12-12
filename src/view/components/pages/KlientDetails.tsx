@@ -8,6 +8,11 @@ import DetailsCard from "../layout/DetailsCard";
 import FormButton from "../layout/FormButton";
 import DeleteButton from "../layout/DeleteButton";
 import { KlienciFormFields } from "./Klienci";
+import DataTable from "../DataTable";
+import { Auto } from "../../../common/autoSchema";
+import { Umowa } from "../../../common/umowaSchema";
+import { autaTableSchema } from "./Auta";
+import { umowyTableSchema } from "./Umowy";
 
 interface Props {
     params: {
@@ -19,7 +24,7 @@ const KlientDetails: React.FC<Props> = ({ params: { id } }) => {
     const { data, isLoading } = useGetEndpoint<Klient>(endpoint);
     const [_, navigate] = useLocation();
     return (
-        <CommonLayout subpageTitle={data?.Nazwa ?? "Klient"}>
+        <CommonLayout subpageTitle={data?.Nazwa ?? "Klient"} center>
             <Stack alignItems={"center"} gap={3}>
                 <ActionRow>
                     <FormButton
@@ -50,6 +55,36 @@ const KlientDetails: React.FC<Props> = ({ params: { id } }) => {
                         <dt>Telefon</dt>
                         <dd><a href={`tel:${data?.Telefon}`}>{data?.Telefon}</a></dd>
                     </dl>
+                </DetailsCard>
+                <DetailsCard title="Auta">
+                    <DataTable<Auto>
+                        getRowId={(row) => row.IdAuto}
+                        dataEndpoint={`/Klient/${id}/auto`}
+                        schema={autaTableSchema(navigate)}
+                        onRowDoubleClick={({ row }) => navigate(`/panel/auta/${row.IdAuto}`)}
+                        initialState={{
+                            columns: {
+                                columnVisibilityModel: {
+                                    Klient_nazwa: false
+                                }
+                            }
+                        }}
+                    />
+                </DetailsCard>
+                <DetailsCard title="Umowy">
+                    <DataTable<Umowa>
+                        getRowId={(row) => row.IdUmowa}
+                        dataEndpoint={`/Klient/${id}/umowa`}
+                        schema={umowyTableSchema(navigate)}
+                        onRowDoubleClick={({ row }) => navigate(`/panel/umowy/${row.IdUmowa}`)}
+                        initialState={{
+                            columns: {
+                                columnVisibilityModel: {
+                                    Klient: false
+                                }
+                            }
+                        }}
+                    />
                 </DetailsCard>
             </Stack>
         </CommonLayout>

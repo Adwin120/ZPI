@@ -27,7 +27,7 @@ const GrafikDetails: React.FC<Props> = ({ params: { id } }) => {
     const { data, isLoading } = useGetEndpoint<Grafik>(endpoint);
     const [_, navigate] = useLocation();
     return (
-        <CommonLayout subpageTitle={`Wpis w grafiku ${data?.Imie} ${data?.Nazwisko}`}>
+        <CommonLayout subpageTitle={`Wpis w grafiku ${data?.Imie} ${data?.Nazwisko}`} center>
             <Stack alignItems={"center"} gap={3}>
                 <ActionRow>
                     <FormButton

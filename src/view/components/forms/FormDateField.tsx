@@ -13,15 +13,15 @@ export default function FormDateField<T extends FieldValues>({
     label,
     ...dateProps
 }: Props<T>) {
-    const formControl = useContext(formContext);
-    const { field, fieldState } = useController({ name, control: formControl! });
+    const {control} = useContext(formContext)!;
+    const { field, fieldState } = useController({ name, control: control! });
     return (
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         <DatePicker<any>
             {...field}
             label={label}
-            value={dayjs(field.value ?? null, "YYYY-MM-DD")}
-            onChange={(v) => field.onChange(v?.format("YYYY-MM-DD"))}
+            value={dayjs(field.value ?? null, "DD-MM-YYYY")}
+            onChange={(v) => field.onChange(v?.format("DD-MM-YYYY"))}
             slotProps={{
                 textField: {
                     helperText: fieldState.error?.message,

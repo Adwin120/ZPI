@@ -6,6 +6,7 @@ import {
     Drawer,
     IconButton,
     List,
+    Stack,
     Theme,
     Toolbar,
     Typography,
@@ -24,8 +25,9 @@ import { useSessionStorage } from "../../hooks/useSessionStorage";
 interface Props extends PropsWithChildren {
     pageTitle?: string;
     subpageTitle: string;
+    center?: boolean;
 }
-const CommonLayout: React.FC<Props> = ({ children, pageTitle = "MOXLY", subpageTitle }) => {
+const CommonLayout: React.FC<Props> = ({ children, pageTitle = "MOXLY", subpageTitle, center = false }) => {
     const isDesktop = useMediaQuery((t: Theme) => t.breakpoints.up("md"));
     const [_isDrawerOpen, setDrawerOpen] = useSessionStorage<"true" | "false">(
         "isDrawerOpen",
@@ -111,9 +113,13 @@ const CommonLayout: React.FC<Props> = ({ children, pageTitle = "MOXLY", subpageT
                 </List>
             </Drawer>
             <Box component="main" sx={[{ p: 2 }, contentMovedByDrawer(isDrawerOpen && isDesktop)]}>
-                <Typography variant="h5" component="h2" sx={{ pb: 2 }}>
-                    {subpageTitle}
-                </Typography>
+                <Stack alignItems={center ? "center" : "start"} gap={3}>
+                    <Stack direction="row" gap={2} sx={{ width: "100%", maxWidth: 800, pb: 2 }}>
+                        <Typography variant="h5" component="h2">
+                            {subpageTitle}
+                        </Typography>
+                    </Stack>
+                </Stack>
                 {children}
             </Box>
         </>

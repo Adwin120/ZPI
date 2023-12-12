@@ -41,26 +41,28 @@ const Zgloszenia: React.FC<Props> = () => {
                             field: "Klient",
                             headerName: "Klient",
                             flex: 1,
-                            renderCell: ({ row }) => (
+                            valueGetter: ({row}) => row.NazwaKlienta,
+                            renderCell: ({ row, value }) => (
                                 <Link
                                     onClick={() =>
                                         navigate(`/panel/klienci/${row.Klient_IdKlient}`)
                                     }
                                 >
-                                    {row.NazwaKlienta}
+                                    {value}
                                 </Link>
                             ),
                         },
                         {
                             field: "Pracownik",
                             flex: 1,
-                            renderCell: ({ row }) => (
+                            valueGetter: ({row}) => `${row.Imie} ${row.Nazwisko}`,
+                            renderCell: ({ row, value }) => (
                                 <Link
                                     onClick={() =>
                                         navigate(`/panel/pracownicy/${row.Pracownik_IdPracownik}`)
                                     }
                                     >
-                                    {row.Imie} {row.Nazwisko}
+                                    {value}
                                 </Link>
                             ),
                         },
@@ -102,7 +104,7 @@ export const ZgloszeniaFormFields = (
             name="Pracownik_IdPracownik"
             getOptionId={(option) => option?.IdPracownik ?? null}
             getOptionLabel={(option) =>
-                `${option.Imie} ${option.Nazwisko}\n${option.Email} ${option.IdPracownik}`
+                `${option.Imie} ${option.Nazwisko}`
             }
         />
         <FormAutocompleteFromEndpoint<Klient>
@@ -110,7 +112,7 @@ export const ZgloszeniaFormFields = (
             label="Klient"
             name="Klient_IdKlient"
             getOptionId={(option) => option?.IdKlient ?? null}
-            getOptionLabel={(option) => `${option.Nazwa}\n${option.NIP} ${option.IdKlient}`}
+            getOptionLabel={(option) => `${option.Nazwa}`}
         />
         <FormTextField name="Opis" label="Opis" multiline minRows={3} />
     </>

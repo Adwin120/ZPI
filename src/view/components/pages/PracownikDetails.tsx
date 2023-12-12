@@ -8,6 +8,9 @@ import FormButton from "../layout/FormButton";
 import { PracownicyFormFields } from "./Pracownicy";
 import DeleteButton from "../layout/DeleteButton";
 import DetailsCard from "../layout/DetailsCard";
+import DataTable from "../DataTable";
+import { grafikTableSchema } from "./Grafik";
+import { Grafik } from "../../../common/grafikSchema";
 
 interface Props {
     params: {
@@ -19,7 +22,7 @@ const PracownikDetails: React.FC<Props> = ({ params: { id } }) => {
     const { data, isLoading } = useGetEndpoint<Pracownik>(endpoint);
     const [_, navigate] = useLocation();
     return (
-        <CommonLayout subpageTitle={`Pracownik ${data?.Imie} ${data?.Nazwisko}`}>
+        <CommonLayout subpageTitle={`Pracownik ${data?.Imie} ${data?.Nazwisko}`} center>
             <Stack alignItems={"center"} gap={3}>
                 <ActionRow>
                     <FormButton
@@ -47,6 +50,21 @@ const PracownikDetails: React.FC<Props> = ({ params: { id } }) => {
                         <dt>Telefon</dt>
                         <dd><a href={`tel:${data?.Telefon}`}>{data?.Telefon}</a></dd>
                     </dl>
+                </DetailsCard>
+                <DetailsCard title="Grafik">
+                        <DataTable<Grafik>
+                            getRowId={(row) => row.IdGrafik}
+                            dataEndpoint={`/Pracownik/${id}/grafik`}
+                            schema={grafikTableSchema(navigate)}
+                            onRowDoubleClick={({ row }) => navigate(`/panel/grafik/${row.IdGrafik}`)}
+                            initialState={{
+                                columns: {
+                                    columnVisibilityModel: {
+                                        Pracownik: false
+                                    }
+                                }
+                            }}
+                        />
                 </DetailsCard>
             </Stack>
         </CommonLayout>

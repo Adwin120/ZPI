@@ -14,8 +14,8 @@ export default function FormDateTimePicker<T extends FieldValues>({
     name,
     ...dateTimeProps
 }: Props<T>) {
-    const formControl = useContext(formContext);
-    const { field, fieldState } = useController({ name, control: formControl! });
+    const {control} = useContext(formContext)!;
+    const { field, fieldState } = useController({ name, control: control! });
     console.log("field", field)
     return (
         // eslint-disable-next-line @typescript-eslint/no-explicit-any

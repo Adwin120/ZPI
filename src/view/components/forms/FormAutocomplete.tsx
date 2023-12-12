@@ -16,8 +16,8 @@ const FormAutocomplete = <T,>({
     optionToValue = (x) => x,
     ...autocompleteProps
 }: Props<T>) => {
-    const formControl = useContext(formContext);
-    const { field, fieldState } = useController({ name, control: formControl! });
+    const {control} = useContext(formContext)!;
+    const { field, fieldState } = useController({ name, control: control! });
     return (
         <Autocomplete<T>
             {...autocompleteProps}

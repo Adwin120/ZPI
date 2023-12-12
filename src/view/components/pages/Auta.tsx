@@ -1,4 +1,4 @@
-import { Stack } from "@mui/material";
+import { Link, Stack } from "@mui/material";
 import CommonLayout from "../layout/CommonLayout";
 import FormButton from "../layout/FormButton";
 import { postToEndpoint } from "../../backendAccess";
@@ -11,12 +11,12 @@ import { Model } from "../../../common/modelSchema";
 import DataTable, { DateTimeFormatToView } from "../DataTable";
 import dayjs from "dayjs";
 import { useLocation } from "wouter";
-import { GridActionsCellItem } from "@mui/x-data-grid";
+import { GridActionsCellItem, GridColDef } from "@mui/x-data-grid";
 
-import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
+import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import { DateTimeFormatFromServer } from "../../../common/DateTime";
 
-export const adHockDateFormat = "YYYY-MM-DD HH-mm-ss"
+export const adHockDateFormat = "YYYY-MM-DD HH-mm-ss";
 
 const Auta: React.FC = () => {
     const [_, navigate] = useLocation();
@@ -40,54 +40,7 @@ const Auta: React.FC = () => {
                     dataEndpoint={"/Auto"}
                     getRowId={(row) => row.IdAuto}
                     onRowDoubleClick={({ row }) => navigate(`/panel/auta/${row.IdAuto}`)}
-                    schema={[
-                        { field: "Rejestracja", flex: 1, minWidth: 100 },
-                        {
-                            field: "Czas_rozpoczecia",
-                            flex: 1,
-                            minWidth: 150,
-                            headerName: "Czas rozpoczęcia",
-                            type: "dateTime",
-                            valueGetter: (row) =>
-                                dayjs(row.value, DateTimeFormatFromServer).toDate(),
-                            valueFormatter: (row) => dayjs(row.value).format(DateTimeFormatToView),
-                        },
-                        {
-                            field: "Czas_zakonczenia",
-                            flex: 1,
-                            minWidth: 150,
-                            headerName: "Czas zakończenia",
-                            type: "dateTime",
-
-                            valueGetter: (row) =>
-                                dayjs(row.value, adHockDateFormat).toDate(),
-                            valueFormatter: (row) =>
-                                isNaN(row.value)
-                                    ? "w trakcie"
-                                    : dayjs(row.value).format(DateTimeFormatToView),
-                        },
-                        {
-                            field: "Dodatkowe_informacje",
-                            flex: 1,
-                            headerName: "Dodatkowe informacje",
-                            minWidth: 300,
-                        },
-                        {
-                            field: "opcje",
-                            width: 50,
-                            type: "actions",
-                            getActions({ id }) {
-                                return [
-                                          <GridActionsCellItem
-                                              label="wyświetl"
-                                              icon={<MoreHorizIcon />}
-                                              onClick={() => navigate(`/panel/auta/${id}`)}
-                                              key="display"
-                                          ></GridActionsCellItem>,
-                                      ];
-                            },
-                        },
-                    ]}
+                    schema={autaTableSchema(navigate)}
                 />
             </Stack>
         </CommonLayout>
@@ -109,7 +62,7 @@ export const AutaFormFields = (
             label="Klient"
             name="Klient_IdKlient"
             getOptionId={(option) => option?.IdKlient ?? 0}
-            getOptionLabel={(option) => `${option.Nazwa}\n${option.NIP} ${option.IdKlient}`}
+            getOptionLabel={(option) => `${option.Nazwa}`}
         />
         <FormDateTimePicker name="Czas_rozpoczecia" label="Czas rozpoczęcia" />
         <FormDateTimePicker name="Czas_zakonczenia" label="Czas zakończenia" />
@@ -121,5 +74,61 @@ export const AutaFormFields = (
         />
     </>
 );
+
+export const autaTableSchema: (navigator: (to: string) => void) => GridColDef<Auto>[] = (
+    navigate
+) => [
+    {
+        field: "Klient_nazwa",
+        flex: 1,
+        renderCell: ({ row }) => (
+            <Link onClick={() => navigate(`/panel/klienci/${row.IdKlient}`)}>
+                {row.Klient_nazwa}
+            </Link>
+        ),
+    },
+    { field: "Rejestracja", flex: 1, minWidth: 100 },
+    {
+        field: "Czas_rozpoczecia",
+        flex: 1,
+        minWidth: 150,
+        headerName: "Czas rozpoczęcia",
+        type: "dateTime",
+        valueGetter: (row) => dayjs(row.value, DateTimeFormatFromServer).toDate(),
+        valueFormatter: (row) => dayjs(row.value).format(DateTimeFormatToView),
+    },
+    {
+        field: "Czas_zakonczenia",
+        flex: 1,
+        minWidth: 150,
+        headerName: "Czas zakończenia",
+        type: "dateTime",
+
+        valueGetter: (row) => dayjs(row.value, adHockDateFormat).toDate(),
+        valueFormatter: (row) =>
+            isNaN(row.value) ? "w trakcie" : dayjs(row.value).format(DateTimeFormatToView),
+    },
+    {
+        field: "Dodatkowe_informacje",
+        flex: 1,
+        headerName: "Dodatkowe informacje",
+        minWidth: 300,
+    },
+    {
+        field: "opcje",
+        width: 50,
+        type: "actions",
+        getActions({ id }) {
+            return [
+                <GridActionsCellItem
+                    label="wyświetl"
+                    icon={<MoreHorizIcon />}
+                    onClick={() => navigate(`/panel/auta/${id}`)}
+                    key="display"
+                ></GridActionsCellItem>,
+            ];
+        },
+    },
+];
 
 export default Auta;

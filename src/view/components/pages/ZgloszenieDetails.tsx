@@ -25,7 +25,7 @@ const ZgloszenieDetails: React.FC<Props> = ({ params: { id } }) => {
     const { data, isLoading } = useGetEndpoint<Zgloszenie>(endpoint);
     const [_, navigate] = useLocation();
     return (
-        <CommonLayout subpageTitle={`Zgłoszenie do salonu ${data?.Klient_IdKlient}`}>
+        <CommonLayout subpageTitle={`Zgłoszenie do salonu ${data?.NazwaKlienta}`} center>
             <Stack alignItems={"center"} gap={3}>
                 <ActionRow>
                     <FormButton

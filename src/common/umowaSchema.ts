@@ -6,6 +6,7 @@ import dayjs from "dayjs";
 const dateRegex = /^\d{2}-\d{2}-\d{4}$/;
 
 const dateSchema = z.string(defaultMessage("Podanie daty jest wymagane.")).refine((value) => {
+    console.log("date", value)
     return dateRegex.test(value);
 }, {
     message: "Nieprawidłowy format daty (oczekiwano 'DD-MM-RRRR').",
@@ -20,8 +21,8 @@ export const umowaSchema = z.object(
     defaultMessage("Niepoprawny format")
 ).refine(
     (obj) => {
-        const pred = dayjs(obj.Data_rozpoczecia, DateTimeFormFormat).isBefore(
-            dayjs(obj.Data_zakonczenia, DateTimeFormFormat)
+        const pred = dayjs(obj.Data_rozpoczecia, "DD-MM-YYYY").isBefore(
+            dayjs(obj.Data_zakonczenia, "DD-MM-YYYY")
         );
         console.log("refinement", pred)
         return pred;
