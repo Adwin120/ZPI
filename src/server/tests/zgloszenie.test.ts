@@ -17,8 +17,7 @@ describe("Dodawanie Zgloszenia - Testy", () => {
       .send({ 
         Pracownik_IdPracownik: 1, 
         Klient_IdKlient: 1, 
-        Opis: 'Opis zlecenia', 
-        Status: "przesłane" 
+        Opis: 'Opis zlecenia'
       }satisfies ZgloszeniePayload); 
 
     expect(response.status).toBe(200);
@@ -47,8 +46,7 @@ describe("Dodawanie Zgloszenia - Testy", () => {
       .send({ 
         Pracownik_IdPracownik: 1, 
         Klient_IdKlient: 1, 
-        Opis: '', 
-        Status: "przesłane" 
+        Opis: ''
       });
       const body = response.body as ValidationErrorBody;
       
@@ -59,25 +57,6 @@ describe("Dodawanie Zgloszenia - Testy", () => {
       expect(descriptionError.length).toBeGreaterThan(0);
   });
 
-  it('nie powinno przetworzyć danych, gdy status nie jest wartoscia z enum', async () => {
-    const response = await request(app)
-    .post('/Zgloszenie')
-    .set({ authorization: "Bearer " + mockToken })
-    .send({ 
-      Pracownik_IdPracownik: 1, 
-      Klient_IdKlient: "1", 
-      Opis: 'Opis zlecenia', 
-      Status: '' 
-    });
-    const body = response.body as ValidationErrorBody;
-
-    expect(response.status).toBe(400);
-      const statusError = body.errors.filter(
-        (blad) => blad.path === "Status" && blad.type === "invalid_enum_value"
-    );
-      expect(statusError.length).toBeGreaterThan(0);
-  });
-
   it('nie powinno przetworzyć danych, gdy pracowniktID jest mniejsze od 1', async () => {
     const response = await request(app)
     .post('/Zgloszenie')
@@ -85,8 +64,7 @@ describe("Dodawanie Zgloszenia - Testy", () => {
     .send({ 
       Pracownik_IdPracownik: 0, 
       Klient_IdKlient: 1, 
-      Opis: 'Opis zlecenia', 
-      Status: "przesłane" 
+      Opis: 'Opis zlecenia'
     });
     const body = response.body as ValidationErrorBody;
 
@@ -104,8 +82,7 @@ describe("Dodawanie Zgloszenia - Testy", () => {
     .send({ 
       Pracownik_IdPracownik: 1, 
       Klient_IdKlient: 0, 
-      Opis: 'Opis zlecenia', 
-      Status: "przesłane" 
+      Opis: 'Opis zlecenia'
     });
     const body = response.body as ValidationErrorBody;
 
@@ -125,7 +102,7 @@ describe('Pobieranie danych Zgloszenia - Testy', () => {
       const IdPracownik = 1; 
       const IdKlient = 1; 
       const Opis = 'Klient zglosil rysy na boku auta.'; 
-      const Status = 'Przeslane'; 
+      const Status = 'przesłane'; 
 
       const response = await request(app)
           .get(`/Zgloszenie/${IdZgloszenie}`).set({ authorization: "Bearer " + mockToken });
@@ -153,7 +130,7 @@ describe('Pobieranie danych Zgloszenia - Testy', () => {
     const IdPracownik = 1; 
     const IdKlient = 1; 
     const Opis = 'Klient zglosil rysy na boku auta.'; 
-    const Status = 'Przeslane'; 
+    const Status = 'przesłane'; 
 
     const response = await request(app)
         .get(`/Zgloszenie`).set({ authorization: "Bearer " + mockToken });
@@ -170,7 +147,7 @@ describe('Pobieranie danych Zgloszenia - Testy', () => {
     const IdPracownik_10 = 10; 
     const IdKlient_10 = 10; 
     const Opis_10 = 'Klient zglosil problemy z wycieraczkami w samochodzie.'; 
-    const Status_10 = 'Przeslane'; 
+    const Status_10 = 'przesłane'; 
 
     expect(response.status).toBe(200);
     expect(response.body[9]).toHaveProperty('Pracownik_IdPracownik', IdPracownik_10);
@@ -209,8 +186,7 @@ describe('Modyfikowanie danych zgloszenia - Testy', () => {
       .send({ 
         Pracownik_IdPracownik: 1, 
         Klient_IdKlient: 1, 
-        Opis: 'Opis zlecenia', 
-        Status: "przesłane" 
+        Opis: 'Opis zlecenia'
       }satisfies Partial<ZgloszeniePayload>); 
 
     expect(response.status).toBe(200);
@@ -283,8 +259,7 @@ describe('Modyfikowanie danych zgloszenia - Testy', () => {
       .send({ 
         Pracownik_IdPracownik: 1, 
         Klient_IdKlient: 1, 
-        Opis: 'Opis zlecenia', 
-        Status: "przesłane" 
+        Opis: 'Opis zlecenia'
       });  
 
     expect(response.status).toBe(404);

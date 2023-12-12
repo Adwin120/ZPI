@@ -17,14 +17,20 @@ app.post(
         const user = getUserData(res);
         console.log("user:", user);
         try {
+            const partsData_rozpoczecia = umowaData.Data_rozpoczecia.split('-');
+            const convertedData_rozpoczecia = `${partsData_rozpoczecia[2]}-${partsData_rozpoczecia[1]}-${partsData_rozpoczecia[0]}`;
+
+            const partsData_zakonczenia = umowaData.Data_zakonczenia.split('-');
+            const convertedData_zakonczenia = `${partsData_zakonczenia[2]}-${partsData_zakonczenia[1]}-${partsData_zakonczenia[0]}`;
+
             const dbConnection = await connection;
             await dbConnection.query("INSERT INTO Umowa ( Klient_IdKlient, Data_rozpoczecia, Data_zakonczenia) VALUES ( ?, ?, ?)",
-             [ umowaData.Klient_IdKlient, umowaData.Data_rozpoczecia , umowaData.Data_zakonczenia ]);
+             [ umowaData.Klient_IdKlient, convertedData_rozpoczecia , convertedData_zakonczenia]);
 
-            res.status(200).send("Umowa została pomyślnie dodana");
+             return res.status(200).send("Umowa została pomyślnie dodana");
         } catch (error) {
             console.error(error);
-            res.status(500).send("Wystąpił błąd podczas zapisywania umowy");
+            return res.status(500).send("Wystąpił błąd podczas zapisywania umowy");
         }
     }
 );
