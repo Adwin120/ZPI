@@ -45,7 +45,7 @@ app.get('/Pracownik/:id', authenticate, authorize((user) => roleGreaterOrEqual(u
    }
 });
 
-app.get('/Pracownik/:email', authenticate, async (req: Request, res: Response) => {                                //tylko swoj grafik
+app.get('/profil/Pracownik/:email', authenticate, async (req: Request, res: Response) => {                                //tylko swoj grafik
     const emailParam = req.params["email"];
 
     if (!emailParam) {
@@ -204,7 +204,7 @@ app.patch(
 );
 
 app.patch(
-    "/Pracownik/:email/Grafik/:id",                                                                //tylko swoj grafik
+    "/profil/Pracownik/:email/Grafik/:id",                                                                //tylko swoj grafik
     authenticate,
     validateBody(grafikSchema.innerType().partial()), 
     async (req: Request, res: Response) => {
@@ -262,7 +262,7 @@ app.patch(
 
 
 app.patch(                                                                                       //tylko swoje dane
-    "/Pracownik/:email",
+    "/profil/Pracownik/:email",
     authenticate,
     validateBody(pracownikSchema.partial()), 
     async (req: Request, res: Response) => {

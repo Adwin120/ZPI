@@ -75,9 +75,7 @@ export const AutaFormFields = (
     </>
 );
 
-export const autaTableSchema: (navigator: (to: string) => void) => GridColDef<Auto>[] = (
-    navigate
-) => [
+export const limitedAutaTableSchema: (navigator: (to: string) => void) => GridColDef<Auto>[] = navigate => [
     {
         field: "Klient_nazwa",
         flex: 1,
@@ -114,6 +112,12 @@ export const autaTableSchema: (navigator: (to: string) => void) => GridColDef<Au
         headerName: "Dodatkowe informacje",
         minWidth: 300,
     },
+]
+
+export const autaTableSchema: (navigator: (to: string) => void) => GridColDef<Auto>[] = (
+    navigate
+) => [
+    ...limitedAutaTableSchema(navigate),
     {
         field: "opcje",
         width: 50,
