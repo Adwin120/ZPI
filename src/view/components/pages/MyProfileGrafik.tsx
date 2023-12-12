@@ -16,20 +16,21 @@ import { GridActionsCellItem, GridColDef } from "@mui/x-data-grid";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import { DateTimeFormatFromServer } from "../../../common/DateTime";
 import { useUser } from "../../firebaseAuth";
+import FormTextField from "../forms/FormTextField";
 
 interface Props {}
 const MyProfileGrafik: React.FC<Props> = () => {
     const [_, navigate] = useLocation();
     const [user] = useUser();
-    const endpoint = `/profil/Pracownik/${user?.email}/grafik`;
+    const endpoint = `/profil/Pracownik/${user?.email}/grafik` as const;
     
     return (
         <CommonLayout subpageTitle="Mój Grafik">
             <Stack alignItems={"normal"} gap={2}>
                 <div>
                     <FormButton
-                        minimalRole="kierownik"
-                        onSubmit={postToEndpoint("/Grafik")}
+                        minimalRole="pracownik"
+                        onSubmit={postToEndpoint(endpoint)}
                         schema={grafikSchema}
                         title="Dodaj wpis w grafiku"
                     >
@@ -37,7 +38,7 @@ const MyProfileGrafik: React.FC<Props> = () => {
                     </FormButton>
                 </div>
                 <DataTable<MyProfileGrafik>
-                    dataEndpoint="/Grafik"
+                    dataEndpoint={endpoint}
                     getRowId={(row) => row.IdGrafik}
                     onRowDoubleClick={({ row }) => navigate(`/panel/grafik/${row.IdGrafik}`)}
                     schema={grafikTableSchema(navigate)}
@@ -57,16 +58,6 @@ export const grafikTableSchema: (
         valueGetter: ({ row }) => row.Nazwa,
         renderCell: ({ row, value }) => (
             <Link onClick={() => navigate(`/panel/klienci/${row.Klient_IdKlient}`)}>{value}</Link>
-        ),
-    },
-    {
-        field: "Pracownik",
-        flex: 1,
-        valueGetter: ({ row }) => `${row.Imie} ${row.Nazwisko}`,
-        renderCell: ({ row, value }) => (
-            <Link onClick={() => navigate(`/panel/pracownicy/${row.Pracownik_IdPracownik}`)}>
-                {value}
-            </Link>
         ),
     },
     {
@@ -113,13 +104,7 @@ export const grafikTableSchema: (
 
 export const GrafikFormFields = (
     <>
-        <FormAutocompleteFromEndpoint<Pracownik>
-            endpoint="/Pracownik"
-            label="Pracownik"
-            name="Pracownik_IdPracownik"
-            getOptionId={(option) => option?.IdPracownik ?? 0}
-            getOptionLabel={(option) => `${option.Imie} ${option.Nazwisko}`}
-        />
+        <FormTextField type="hidden" name="Pracownik_IdPracownik" sx={{opacity: 0}} hidden/>
         <FormAutocompleteFromEndpoint<Klient>
             endpoint="/Klient"
             label="Klient"

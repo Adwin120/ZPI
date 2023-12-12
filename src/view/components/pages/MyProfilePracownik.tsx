@@ -12,7 +12,7 @@ import { useUser } from "../../firebaseAuth";
 interface Props {}
 const MyProfilePracownik: React.FC<Props> = () => {
     const [user] = useUser();
-    const endpoint = `/profil/Pracownik/${user?.email}` as const;
+    const endpoint = `/profil/Pracownik/${encodeURIComponent(user?.email ?? "")}` as const;
     const { data, isLoading } = useGetEndpoint<Pracownik>(endpoint);
     const [_, navigate] = useLocation();
     return (
@@ -30,6 +30,14 @@ const MyProfilePracownik: React.FC<Props> = () => {
                         {LimitedEditPracownicyFormFields}
                     </FormButton>
                 </ActionRow>
+                <DetailsCard title="Dane osobiste">
+                    <dl>
+                        <dt>Imię</dt>
+                        <dd>{data?.Imie}</dd>
+                        <dt>Nazwisko</dt>
+                        <dd>{data?.Nazwisko}</dd>
+                    </dl>
+                </DetailsCard>
                 <DetailsCard title="Dane kontaktowe">
                     <dl>
                         <dt>E-mail</dt>

@@ -25,6 +25,9 @@ import KlientDetails from "./components/pages/KlientDetails";
 import PracownikDetails from "./components/pages/PracownikDetails";
 import UmowaDetails from "./components/pages/UmowaDetails";
 import ZgloszenieDetails from "./components/pages/ZgloszenieDetails";
+import MyProfilePracownik from "./components/pages/MyProfilePracownik";
+import MyProfileKlient from "./components/pages/MyProfileKlient";
+import MyProfileGrafik from "./components/pages/MyProfileGrafik";
 
 const reactContainer = document.getElementById("react-app")!;
 
@@ -37,6 +40,9 @@ root.render(
             <Router>
                 <Switch>
                     <Route path="/login" component={Login}></Route>
+                    <Route path="/panel/klient/profil" component={MyProfileKlient}></Route>
+                    <Route path="/panel/pracownik/profil" component={MyProfilePracownik}></Route>
+                    <Route path="/panel/pracownik/grafik" component={MyProfileGrafik}></Route>
                     <Route path="/panel/auta" component={Auta}></Route>
                     <Route path="/panel/auta/:id" component={AutoDetails}></Route>
                     <Route path="/panel/grafik" component={Grafik}></Route>

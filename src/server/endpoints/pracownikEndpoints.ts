@@ -74,7 +74,7 @@ app.get('/profil/Pracownik/:email', authenticate, async (req: Request, res: Resp
 
         const [grafikResults] = await connection.query<RowDataPacket[]>("SELECT * FROM Pracownik WHERE IdPracownik = ?", [pracownikID]);
 
-        return res.json(grafikResults);
+        return res.json(grafikResults[0]);
     } catch (error) {
         console.error(error);
         return res.status(500).send('Wystąpił błąd podczas pobierania danych pracownika');
