@@ -21,10 +21,10 @@ app.post(
             await dbConnection.query("INSERT INTO Auto ( Model_IdModel, Klient_IdKlient, Rejestracja, Czas_rozpoczecia, Czas_zakonczenia, Dodatkowe_informacje) VALUES ( ?, ?, ?, ?, ?, ?)",
              [ autoData.Model_IdModel, autoData.Klient_IdKlient, autoData.Rejestracja, autoData.Czas_rozpoczecia , autoData.Czas_zakonczenia, autoData.Dodatkowe_informacje]);
 
-            res.status(200).send("Auto zostało dodane pomyślnie");
+            return res.status(200).send("Auto zostało dodane pomyślnie");
         } catch (error) {
             console.error(error);
-            res.status(500).send("Wystąpił błąd podczas zapisywania auta");
+            return res.status(500).send("Wystąpił błąd podczas zapisywania auta");
         }
     }
 );

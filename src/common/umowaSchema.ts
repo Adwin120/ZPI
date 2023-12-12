@@ -3,7 +3,7 @@ import { defaultMessage } from "./zodHelpers";
 import { DateTimeFormFormat } from "./DateTime";
 import dayjs from "dayjs";
 
-const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
+const dateRegex = /^\d{2}-\d{2}-\d{4}$/;
 
 const dateSchema = z.string(defaultMessage("Podanie daty jest wymagane.")).refine((value) => {
     return dateRegex.test(value);
