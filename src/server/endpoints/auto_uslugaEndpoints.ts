@@ -27,11 +27,11 @@ app.post(
              const [resultsUsluga_IdUsluga] = await connection.query<RowDataPacket[]>("SELECT * FROM Auto_Usluga WHERE  Usluga_IdUsluga = ?",
              [ auto_uslugaData.Usluga_IdUsluga ]);
 
-            if (resultsAuto_IdAuto.length > 0) {
+            if (resultsAuto_IdAuto.length === 0) {
                 return res.status(400).send("Auto o podanym ID nie istnieje w bazie danych.");
             }
 
-            if (resultsUsluga_IdUsluga.length > 0) {
+            if (resultsUsluga_IdUsluga.length === 0) {
                 return res.status(400).send("Usluga o podanym ID nie istnieje w bazie danych.");
             }
 
@@ -134,11 +134,11 @@ app.patch('/Auto_usluga/:idAuto/:idUslugi',
             const [resultsUsluga_IdUsluga] = await connection.query<RowDataPacket[]>("SELECT * FROM Auto_Usluga WHERE  Usluga_IdUsluga = ?",
             [ Usluga_IdUsluga ]);
 
-            if (resultsAuto_IdAuto.length > 0) {
+            if (resultsAuto_IdAuto.length === 0) {
                 return res.status(400).send("Auto o podanym ID nie istnieje w bazie danych.");
             }
 
-            if (resultsUsluga_IdUsluga.length > 0) {
+            if (resultsUsluga_IdUsluga.length === 0) {
                 return res.status(400).send("Usluga o podanym ID nie istnieje w bazie danych.");
             }
 
