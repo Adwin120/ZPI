@@ -22,10 +22,10 @@ app.post(
             await dbConnection.query("INSERT INTO Grafik ( Pracownik_IdPracownik, Klient_IdKlient, Czas_rozpoczecia, Czas_zakonczenia, Status) VALUES ( ?, ?, ?, ?, ?)",
              [ grafikData.Pracownik_IdPracownik, grafikData.Klient_IdKlient, grafikData.Czas_rozpoczecia , grafikData.Czas_zakonczenia, "przesłane"]);
 
-            res.status(200).send("Grafik został dodany pomyślnie");
+            return res.status(200).send("Grafik został dodany pomyślnie");
         } catch (error) {
             console.error(error);
-            res.status(500).send("Wystąpił błąd podczas zapisywania grafiku");
+            return res.status(500).send("Wystąpił błąd podczas zapisywania grafiku");
         }
     }
 );
@@ -150,10 +150,10 @@ app.put(
             const dbConnection = await connection;
             await dbConnection.query("UPDATE Grafik SET Status = 'zaakceptowane' WHERE IdGrafik = ?", [grafikId]);
 
-            res.status(200).send("Grafik został zaakceptowany");
+            return res.status(200).send("Grafik został zaakceptowany");
         } catch (error) {
             console.error(error);
-            res.status(500).send("Wystąpił błąd podczas aktualizacji grafiku");
+            return res.status(500).send("Wystąpił błąd podczas aktualizacji grafiku");
         }
     }
 );
@@ -169,10 +169,10 @@ app.delete(
             const dbConnection = await connection;
             await dbConnection.query("UPDATE Grafik SET Status = 'odrzucone' WHERE IdGrafik = ?", [grafikId]);
 
-            res.status(200).send("Grafik został odrzucony");
+            return res.status(200).send("Grafik został odrzucony");
         } catch (error) {
             console.error(error);
-            res.status(500).send("Wystąpił błąd podczas aktualizacji grafiku");
+            return res.status(500).send("Wystąpił błąd podczas aktualizacji grafiku");
         }
     }
 );

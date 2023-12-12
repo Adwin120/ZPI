@@ -21,10 +21,10 @@ app.post(
             await dbConnection.query("INSERT INTO Pracownik ( Email, Imie, Nazwisko, Telefon) VALUES ( ?, ?, ?, ?)", 
             [ pracownikData.Email, pracownikData.Imie, pracownikData.Nazwisko, pracownikData.Telefon]);
 
-            res.status(200).send("Pracownik został pomyślnie dodany");
+            return res.status(200).send("Pracownik został pomyślnie dodany");
         } catch (error) {
             console.error(error);
-            res.status(500).send("Wystąpił błąd podczas zapisywania pracownika");
+            return res.status(500).send("Wystąpił błąd podczas zapisywania pracownika");
         }
     }
 );

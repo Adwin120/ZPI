@@ -18,13 +18,31 @@ app.post(
         console.log("user:", user);
         try {
             const dbConnection = await connection;
+            const [results] = await connection.query<RowDataPacket[]>("SELECT * FROM Wersja_umowy WHERE Umowa_IdUmowa = ? AND Usluga_IdUsluga = ?",
+             [ wersja_umowyData.Umowa_IdUmowa, wersja_umowyData.Usluga_IdUsluga ]);
+
+             const [resultsUmowa_IdUmowa] = await connection.query<RowDataPacket[]>("SELECT * FROM Wersja_umowy WHERE Umowa_IdUmowa = ?",
+             [ wersja_umowyData.Umowa_IdUmowa ]);
+
+             const [resultsUsluga_IdUsluga] = await connection.query<RowDataPacket[]>("SELECT * FROM Wersja_umowy WHERE  Usluga_IdUsluga = ?",
+             [ wersja_umowyData.Usluga_IdUsluga ]);
+
+            if (resultsUmowa_IdUmowa.length === 0) {
+                return res.status(400).send("Umowa o podanym ID nie istnieje w bazie danych.");
+            }
+            if (resultsUsluga_IdUsluga.length === 0) {
+                return res.status(400).send("Usluga o podanym ID nie istnieje w bazie danych.");
+            }
+            if (results.length > 0) {
+                return res.status(400).send("Padane ID Umowy oraz ID Usługi już istnieją w bazie danych.");
+            }
             await dbConnection.query("INSERT INTO Wersja_umowy ( Usluga_IdUsluga, Umowa_IdUmowa, Cena) VALUES ( ?, ?, ?)",
              [ wersja_umowyData.Usluga_IdUsluga, wersja_umowyData.Umowa_IdUmowa , wersja_umowyData.Cena ]);
 
-            res.status(200).send("Wersja umowy została pomyślnie dodana");
+            return res.status(200).send("Wersja umowy została pomyślnie dodana");
         } catch (error) {
             console.error(error);
-            res.status(500).send("Wystąpił błąd podczas zapisywania wersji umowy");
+            return res.status(500).send("Wystąpił błąd podczas zapisywania wersji umowy");
         }
     }
 );
@@ -195,6 +213,25 @@ app.patch(
         const wersja_umowyData = req.body as Wersja_umowyPayload;
         try {
             const dbConnection = await connection;
+            const [selectResults] = await connection.query<RowDataPacket[]>("SELECT * FROM Wersja_umowy WHERE Umowa_IdUmowa = ? AND Usluga_IdUsluga = ?",
+             [ wersja_umowyData.Umowa_IdUmowa, wersja_umowyData.Usluga_IdUsluga ]);
+
+             const [resultsUmowa_IdUmowa] = await connection.query<RowDataPacket[]>("SELECT * FROM Wersja_umowy WHERE Umowa_IdUmowa = ?",
+             [ wersja_umowyData.Umowa_IdUmowa ]);
+
+             const [resultsUsluga_IdUsluga] = await connection.query<RowDataPacket[]>("SELECT * FROM Wersja_umowy WHERE  Usluga_IdUsluga = ?",
+             [ wersja_umowyData.Usluga_IdUsluga ]);
+
+            if (resultsUmowa_IdUmowa.length === 0) {
+                return res.status(400).send("Umowa o podanym ID nie istnieje w bazie danych.");
+            }
+            if (resultsUsluga_IdUsluga.length === 0) {
+                return res.status(400).send("Usluga o podanym ID nie istnieje w bazie danych.");
+            }
+
+            if (selectResults.length > 0) {
+                return res.status(400).send("Padane ID Umowy oraz ID Usługi już istnieją w bazie danych.");
+            }
             const [results] = await dbConnection.query<ResultSetHeader>("UPDATE Wersja_umowy SET ? WHERE Umowa_IdUmowa = ? AND Usluga_IdUsluga = ?", [wersja_umowyData, idumowy, iduslugi]);
             if (results.affectedRows === 0) {
                 return res.status(404).send("Nie znaleziono wersji umowy");
