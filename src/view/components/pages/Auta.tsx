@@ -80,6 +80,7 @@ export const autaTableSchema: (navigator: (to: string) => void) => GridColDef<Au
 ) => [
     {
         field: "Klient_nazwa",
+        headerName: "Klient",
         flex: 1,
         renderCell: ({ row }) => (
             <Link onClick={() => navigate(`/panel/klienci/${row.IdKlient}`)}>

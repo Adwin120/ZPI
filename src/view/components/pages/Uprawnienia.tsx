@@ -38,9 +38,10 @@ const Uprawnienia: React.FC = () => {
                     }}
                     onProcessRowUpdateError={console.error}
                     schema={[
-                        { field: "email", flex: 1, minWidth: 220 },
+                        { field: "email", flex: 1, minWidth: 220, headerName: "Email" },
                         {
                             field: "nazwa",
+                            headerName: "Nazwa",
                             flex: 1,
                             minWidth: 150,
                             editable: true,
@@ -48,6 +49,7 @@ const Uprawnienia: React.FC = () => {
                         },
                         {
                             field: "rola",
+                            headerName: "Rola",
                             flex: 1,
                             minWidth: 100,
                             editable: true,
