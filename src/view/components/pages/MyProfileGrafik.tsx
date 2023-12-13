@@ -40,6 +40,7 @@ const MyProfileGrafik: React.FC<Props> = () => {
                 <DataTable<MyProfileGrafik>
                     dataEndpoint={endpoint}
                     getRowId={(row) => row.IdGrafik}
+                    //TODO: zmienić
                     onRowDoubleClick={({ row }) => navigate(`/panel/grafik/${row.IdGrafik}`)}
                     schema={grafikTableSchema(navigate)}
                 />

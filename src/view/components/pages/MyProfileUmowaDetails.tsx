@@ -1,28 +1,15 @@
-import { InputAdornment, Link, Stack } from "@mui/material";
-import { Umowa, umowaSchema } from "../../../common/umowaSchema";
+import { Stack } from "@mui/material";
+import { Umowa } from "../../../common/umowaSchema";
 import {
-    deleteFromEndpoint,
-    formDateTime,
-    patchEndpoint,
-    postToEndpoint,
     showDateTime,
     useGetEndpoint,
 } from "../../backendAccess";
 import CommonLayout from "../layout/CommonLayout";
-import ActionRow from "../layout/ActionRow";
 import DetailsCard from "../layout/DetailsCard";
 import DataTable, { EditableColumnHeader, zlotyFormatter } from "../DataTable";
-import { Wersja_umowy, wersja_umowySchema } from "../../../common/wersja_umowySchema";
-import FormButton from "../layout/FormButton";
-import DeleteButton from "../layout/DeleteButton";
+import { Wersja_umowy } from "../../../common/wersja_umowySchema";
 import { useLocation } from "wouter";
-import { GridActionsCellItem } from "@mui/x-data-grid";
 
-import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
-import FormTextField from "../forms/FormTextField";
-import FormAutocompleteFromEndpoint from "../forms/FormAutocompleteFromEndpoint";
-import { Usluga } from "../../../common/uslugaSchema";
-import { UmowaFormFields } from "./Umowy";
 import { useUser } from "../../firebaseAuth";
 
 interface Props {
@@ -32,7 +19,7 @@ interface Props {
 }
 const UmowaDetails: React.FC<Props> = ({ params: { id } }) => {
     const [user] = useUser();
-    const endpoint = `/profil/Klient/${user?.email}/umowa` as const;
+    const endpoint = `/profil/Klient/${user?.email}/umowa/${id}` as const;
     const { data, isLoading } = useGetEndpoint<Umowa>(endpoint);
     const [_, navigate] = useLocation();
     return (
@@ -43,7 +30,7 @@ const UmowaDetails: React.FC<Props> = ({ params: { id } }) => {
             center
         >
             <Stack alignItems={"center"} gap={3}>
-                <ActionRow>
+                {/* <ActionRow>
                     <FormButton
                         variant="edit"
                         isLoading={isLoading}
@@ -65,12 +52,12 @@ const UmowaDetails: React.FC<Props> = ({ params: { id } }) => {
                             });
                         }}
                     />
-                </ActionRow>
-                <DetailsCard title="Klient">
+                </ActionRow> */}
+                {/* <DetailsCard title="Klient">
                     <Link onClick={() => navigate(`/panel/klienci/${data?.Klient_IdKlient}`)}>
                         {data?.Nazwa}
                     </Link>
-                </DetailsCard>
+                </DetailsCard> */}
                 <DetailsCard title="Przedział czasowy">
                     <dl>
                         <dt>Data rozpoczęcia</dt>
@@ -80,7 +67,7 @@ const UmowaDetails: React.FC<Props> = ({ params: { id } }) => {
                     </dl>
                 </DetailsCard>
                 <DetailsCard title="Wykonywane usługi">
-                    <FormButton
+                    {/* <FormButton
                         title="Dodaj wpis w umowie"
                         onSubmit={postToEndpoint("/Wersja_umowy")}
                         schema={wersja_umowySchema}
@@ -99,9 +86,9 @@ const UmowaDetails: React.FC<Props> = ({ params: { id } }) => {
                                 endAdornment: <InputAdornment position="end">zł</InputAdornment>,
                             }}
                         />
-                    </FormButton>
+                    </FormButton> */}
                     <DataTable<Wersja_umowy>
-                        dataEndpoint={`/umowa/${id}/wersja_umowy`}
+                        dataEndpoint={`${endpoint}/wersja_umowy`}
                         getRowId={(row) => `${row.Umowa_IdUmowa} ${row.Usluga_IdUsluga}`}
                         // processRowUpdate={({Id_Um, ...rest}) => {
                         //     patchEndpoint(`/Wersja_umowy/${id}`)(rest)
@@ -118,22 +105,22 @@ const UmowaDetails: React.FC<Props> = ({ params: { id } }) => {
                                 renderHeader: EditableColumnHeader,
                                 valueFormatter: ({ value }) => zlotyFormatter.format(value),
                             },
-                            {
-                                field: "opcje",
-                                width: 50,
-                                type: "actions",
-                                getActions({ id }) {
-                                    return [
-                                        <GridActionsCellItem
-                                            label="usuń"
-                                            icon={<DeleteForeverIcon />}
-                                            color="error"
-                                            onClick={deleteFromEndpoint(`/Wersja_umowy/${id}`)}
-                                            key="delete"
-                                        ></GridActionsCellItem>,
-                                    ];
-                                },
-                            },
+                            // {
+                            //     field: "opcje",
+                            //     width: 50,
+                            //     type: "actions",
+                            //     getActions({ id }) {
+                            //         return [
+                            //             <GridActionsCellItem
+                            //                 label="usuń"
+                            //                 icon={<DeleteForeverIcon />}
+                            //                 color="error"
+                            //                 onClick={deleteFromEndpoint(`/Wersja_umowy/${id}`)}
+                            //                 key="delete"
+                            //             ></GridActionsCellItem>,
+                            //         ];
+                            //     },
+                            // },
                         ]}
                     />
                 </DetailsCard>

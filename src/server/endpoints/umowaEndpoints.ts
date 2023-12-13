@@ -52,9 +52,7 @@ app.get('/Umowa', authenticate, authorize((user) => roleGreaterOrEqual(user["rol
     }
 });
 
-app.get('/Umowa/:id', authenticate, authorize((user) => roleGreaterOrEqual(user["role"], "kierownik")), async (req: Request, res: Response) => {
-    const umowaId = req.params["id"];
-
+export const getUmowaById = async (id: number | string, res: Response) => {
     const [results] = await connection.query<RowDataPacket[]>(`
     SELECT U.IdUmowa,
         U.Klient_IdKlient,
@@ -67,7 +65,7 @@ app.get('/Umowa/:id', authenticate, authorize((user) => roleGreaterOrEqual(user[
     FROM db_main.Umowa U LEFT JOIN db_main.Klient K ON U.Klient_IdKlient = K.IdKlient
     LEFT JOIN db_main.Wersja_umowy WU ON U.IdUmowa = WU.Umowa_IdUmowa
     LEFT JOIN db_main.Usluga UU ON WU.Usluga_IdUsluga = UU.IdUsluga 
-    WHERE U.IdUmowa = ?`, [umowaId]);
+    WHERE U.IdUmowa = ?`, [id]);
    try {
       console.log(results);
        if (results.length === 0) {
@@ -78,6 +76,12 @@ app.get('/Umowa/:id', authenticate, authorize((user) => roleGreaterOrEqual(user[
        console.error(error);
        return res.status(500).send('Wystąpił błąd podczas pobierania danych umowy');
    }
+}
+
+app.get('/Umowa/:id', authenticate, authorize((user) => roleGreaterOrEqual(user["role"], "kierownik")), async (req: Request, res: Response) => {
+    const umowaId = req.params["id"];
+    return await getUmowaById(umowaId!, res);
+    
 });
 
 app.get('/umowa/:id/wersja_umowy', authenticate, authorize((user) => roleGreaterOrEqual(user["role"], "pracownik")), async (req: Request, res: Response) => {
