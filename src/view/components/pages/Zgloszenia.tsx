@@ -2,7 +2,7 @@ import { Link, Stack } from "@mui/material";
 import { Klient } from "../../../common/klientSchema";
 import { Pracownik } from "../../../common/pracownikSchema";
 import { Zgloszenie, zgloszenieSchema } from "../../../common/zgloszenieSchema";
-import { postToEndpoint } from "../../backendAccess";
+import { postToEndpoint, useGetEndpoint } from "../../backendAccess";
 import DataTable from "../DataTable";
 import FormAutocompleteFromEndpoint from "../forms/FormAutocompleteFromEndpoint";
 import FormTextField from "../forms/FormTextField";
@@ -12,11 +12,16 @@ import { useLocation } from "wouter";
 import { acceptanceOptions } from "../../../common/AcceptanceStatus";
 import { GridActionsCellItem } from "@mui/x-data-grid";
 
-import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
+import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
+import { useRole, useUser } from "../../firebaseAuth";
 
 interface Props {}
 const Zgloszenia: React.FC<Props> = () => {
     const [_, navigate] = useLocation();
+    const [user] = useUser();
+    const [role] = useRole();
+    const {data, isLoading} = useGetEndpoint<Pracownik>(`/profil/Pracownik/${user?.email}`)
+
     return (
         <CommonLayout subpageTitle="Zgłoszenia">
             <Stack alignItems={"normal"} gap={2}>
@@ -26,8 +31,12 @@ const Zgloszenia: React.FC<Props> = () => {
                         schema={zgloszenieSchema}
                         title="Dodaj Zgłoszenie"
                         onSubmit={postToEndpoint("/Zgloszenie")}
+                        defaultValues={role === "pracownik" ? {
+                            Pracownik_IdPracownik: data?.IdPracownik
+                        }: {}}
+                        isLoading={isLoading}
                     >
-                        {ZgloszeniaFormFields}
+                        {role === "pracownik" ? ZgloszeniaformFieldsForPracownik : ZgloszeniaFormFields}
                     </FormButton>
                 </div>
                 <DataTable<Zgloszenie>
@@ -41,7 +50,7 @@ const Zgloszenia: React.FC<Props> = () => {
                             field: "Klient",
                             headerName: "Klient",
                             flex: 1,
-                            valueGetter: ({row}) => row.NazwaKlienta,
+                            valueGetter: ({ row }) => row.NazwaKlienta,
                             renderCell: ({ row, value }) => (
                                 <Link
                                     onClick={() =>
@@ -55,13 +64,13 @@ const Zgloszenia: React.FC<Props> = () => {
                         {
                             field: "Pracownik",
                             flex: 1,
-                            valueGetter: ({row}) => `${row.Imie} ${row.Nazwisko}`,
+                            valueGetter: ({ row }) => `${row.Imie} ${row.Nazwisko}`,
                             renderCell: ({ row, value }) => (
                                 <Link
                                     onClick={() =>
                                         navigate(`/panel/pracownicy/${row.Pracownik_IdPracownik}`)
                                     }
-                                    >
+                                >
                                     {value}
                                 </Link>
                             ),
@@ -80,15 +89,15 @@ const Zgloszenia: React.FC<Props> = () => {
                             type: "actions",
                             getActions({ id }) {
                                 return [
-                                          <GridActionsCellItem
-                                              label="wyświetl"
-                                              icon={<MoreHorizIcon />}
-                                              onClick={() => navigate(`/panel/zgloszenia/${id}`)}
-                                              key="display"
-                                          ></GridActionsCellItem>,
-                                      ];
+                                    <GridActionsCellItem
+                                        label="wyświetl"
+                                        icon={<MoreHorizIcon />}
+                                        onClick={() => navigate(`/panel/zgloszenia/${id}`)}
+                                        key="display"
+                                    ></GridActionsCellItem>,
+                                ];
                             },
-                        }
+                        },
                     ]}
                 />
             </Stack>
@@ -103,10 +112,22 @@ export const ZgloszeniaFormFields = (
             label="Pracownik"
             name="Pracownik_IdPracownik"
             getOptionId={(option) => option?.IdPracownik ?? null}
-            getOptionLabel={(option) =>
-                `${option.Imie} ${option.Nazwisko}`
-            }
+            getOptionLabel={(option) => `${option.Imie} ${option.Nazwisko}`}
         />
+        <FormAutocompleteFromEndpoint<Klient>
+            endpoint="/Klient"
+            label="Klient"
+            name="Klient_IdKlient"
+            getOptionId={(option) => option?.IdKlient ?? null}
+            getOptionLabel={(option) => `${option.Nazwa}`}
+        />
+        <FormTextField name="Opis" label="Opis" multiline minRows={3} />
+    </>
+);
+
+export const ZgloszeniaformFieldsForPracownik = (
+    <>
+        <FormTextField type="hidden" name="Pracownik_IdPracownik" sx={{opacity: 0}} hidden />
         <FormAutocompleteFromEndpoint<Klient>
             endpoint="/Klient"
             label="Klient"

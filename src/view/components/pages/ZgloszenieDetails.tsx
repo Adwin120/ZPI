@@ -10,10 +10,11 @@ import {
 import { useLocation } from "wouter";
 import ActionRow from "../layout/ActionRow";
 import FormButton from "../layout/FormButton";
-import { ZgloszeniaFormFields } from "./Zgloszenia";
+import { ZgloszeniaFormFields, ZgloszeniaformFieldsForPracownik } from "./Zgloszenia";
 import DeleteButton from "../layout/DeleteButton";
 import DetailsCard from "../layout/DetailsCard";
 import { AcceptanceActions, statusStyles } from "../layout/AcceptanceActions";
+import { useRole } from "../../firebaseAuth";
 
 interface Props {
     params: {
@@ -24,6 +25,7 @@ const ZgloszenieDetails: React.FC<Props> = ({ params: { id } }) => {
     const endpoint = `/Zgloszenie/${id}` as const;
     const { data, isLoading } = useGetEndpoint<Zgloszenie>(endpoint);
     const [_, navigate] = useLocation();
+    const [role] = useRole();
     return (
         <CommonLayout subpageTitle={`Zgłoszenie do salonu ${data?.NazwaKlienta}`} center>
             <Stack alignItems={"center"} gap={3}>
@@ -36,7 +38,7 @@ const ZgloszenieDetails: React.FC<Props> = ({ params: { id } }) => {
                         isLoading={isLoading}
                         defaultValues={data}
                     >
-                        {ZgloszeniaFormFields}
+                        {role === "pracownik" ? ZgloszeniaformFieldsForPracownik : ZgloszeniaFormFields}
                     </FormButton>
                     <DeleteButton
                         onClick={() => {
