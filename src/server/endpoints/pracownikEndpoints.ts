@@ -7,6 +7,7 @@ import { authenticate, authorize, getUserData } from "../middleware/firebaseAuth
 import {ResultSetHeader, RowDataPacket } from "mysql2/promise";
 import { roleGreaterOrEqual } from "../../common/userRoles";
 import { GrafikPayload, grafikSchema } from "../../common/grafikSchema";
+import { getScheduleById } from "./grafikEndpoints";
 
 app.post(
     "/Pracownik",
@@ -203,6 +204,10 @@ app.patch(
     }
 );
 
+app.get("/profil/Pracownik/:email/Grafik/:id", authenticate, async (req, res) => {
+    return await getScheduleById(req.params["id"]!, res);
+})
+
 app.patch(
     "/profil/Pracownik/:email/Grafik/:id",                                                                //tylko swoj grafik
     authenticate,
@@ -310,6 +315,8 @@ app.patch(                                                                      
         }
     }
 );
+
+
 
 app.post(
     "/profil/Pracownik/:email/grafik",

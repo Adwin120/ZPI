@@ -53,9 +53,7 @@ app.get('/Grafik',authenticate, authorize((user) => roleGreaterOrEqual(user["rol
     }
 });
 
-app.get('/Grafik/:id',authenticate, authorize((user) => roleGreaterOrEqual(user["role"], "kierownik")), async (req: Request, res: Response) => {
-    const grafikId = req.params["id"];
-
+export const getScheduleById = async(id: string | number, res: Response) => {
     const [results] = await connection.query<RowDataPacket[]>(`
     SELECT
         G.IdGrafik,
@@ -69,7 +67,7 @@ app.get('/Grafik/:id',authenticate, authorize((user) => roleGreaterOrEqual(user[
         G.Status
     FROM db_main.Grafik G LEFT JOIN db_main.Pracownik P ON G.Pracownik_IdPracownik = P.IdPracownik
     LEFT JOIN db_main.Klient K ON G.Klient_IdKlient = K.IdKlient
-    WHERE G.IdGrafik = ?;`,[grafikId]);
+    WHERE G.IdGrafik = ?;`,[id]);
    try {
       console.log(results);
        if (results.length === 0) {
@@ -80,6 +78,12 @@ app.get('/Grafik/:id',authenticate, authorize((user) => roleGreaterOrEqual(user[
        console.error(error);
        return res.status(500).send('Wystąpił błąd podczas pobierania danych grafiku');
    }
+}
+
+app.get('/Grafik/:id',authenticate, authorize((user) => roleGreaterOrEqual(user["role"], "kierownik")), async (req: Request, res: Response) => {
+    const grafikId = req.params["id"];
+    return await getScheduleById(grafikId!, res)
+    
 });
 
 app.delete('/Grafik/:id',authenticate, authorize((user) => roleGreaterOrEqual(user["role"], "admin")), async (req: Request, res: Response) => {
