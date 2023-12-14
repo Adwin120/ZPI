@@ -10,7 +10,7 @@ import { roleGreaterOrEqual } from "../../common/userRoles";
 app.post(
     "/Wersja_umowy",
     authenticate,
-    authorize((user) => roleGreaterOrEqual(user["role"], "admin")),
+    authorize((user) => roleGreaterOrEqual(user["role"], "kierownik")),
     validateBody(wersja_umowySchema),
     async (req: Request, res: Response) => {
         const wersja_umowyData = req.body as Wersja_umowyPayload;
@@ -27,12 +27,12 @@ app.post(
              const [resultsUsluga_IdUsluga] = await connection.query<RowDataPacket[]>("SELECT * FROM Wersja_umowy WHERE  Usluga_IdUsluga = ?",
              [ wersja_umowyData.Usluga_IdUsluga ]);
 
-            if (resultsUmowa_IdUmowa.length === 0) {
-                return res.status(400).send("Umowa o podanym ID nie istnieje w bazie danych.");
-            }
-            if (resultsUsluga_IdUsluga.length === 0) {
-                return res.status(400).send("Usluga o podanym ID nie istnieje w bazie danych.");
-            }
+            // if (resultsUmowa_IdUmowa.length === 0) {
+            //     return res.status(400).send("Umowa o podanym ID nie istnieje w bazie danych.");
+            // }
+            // if (resultsUsluga_IdUsluga.length === 0) {
+            //     return res.status(400).send("Usluga o podanym ID nie istnieje w bazie danych.");
+            // }
             if (results.length > 0) {
                 return res.status(400).send("Padane ID Umowy oraz ID Usługi już istnieją w bazie danych.");
             }

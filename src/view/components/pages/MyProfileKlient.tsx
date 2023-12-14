@@ -77,9 +77,9 @@ const MyProfileKlient: React.FC<Props> = ({ params: { id } }) => {
                 <DetailsCard title="Umowy">
                     <DataTable<Umowa>
                         getRowId={(row) => row.IdUmowa}
-                        dataEndpoint={`/Klient/${id}/umowa`}
+                        dataEndpoint={`${endpoint}/umowa`}
                         schema={umowyTableSchema(navigate)}
-                        onRowDoubleClick={({ row }) => navigate(`/panel/umowy/${row.IdUmowa}`)}
+                        onRowDoubleClick={({ row }) => navigate(`/panel/klient/umowa/${row.IdUmowa}`)}
                         initialState={{
                             columns: {
                                 columnVisibilityModel: {

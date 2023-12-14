@@ -23,6 +23,7 @@ import FormTextField from "../forms/FormTextField";
 import FormAutocompleteFromEndpoint from "../forms/FormAutocompleteFromEndpoint";
 import { Usluga } from "../../../common/uslugaSchema";
 import { UmowaFormFields } from "./Umowy";
+import { mutate } from "swr";
 
 interface Props {
     params: {
@@ -80,9 +81,13 @@ const UmowaDetails: React.FC<Props> = ({ params: { id } }) => {
                 <DetailsCard title="Wykonywane usługi">
                     <FormButton
                         title="Dodaj wpis w umowie"
-                        onSubmit={postToEndpoint("/Wersja_umowy")}
+                        onSubmit={(data) => postToEndpoint("/Wersja_umowy")(data).then(() => mutate(`/umowa/${id}/wersja_umowy`))}
                         schema={wersja_umowySchema}
+                        defaultValues={{
+                            Umowa_IdUmowa: Number(id)
+                        }}
                     >
+                        <FormTextField type="hidden" name="Umowa_IdUmowa" sx={{opacity: 0}} hidden/>
                         <FormAutocompleteFromEndpoint<Usluga>
                             name="Usluga_IdUsluga"
                             endpoint="/Usluga"

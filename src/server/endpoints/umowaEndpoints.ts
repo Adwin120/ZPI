@@ -56,15 +56,10 @@ export const getUmowaById = async (id: number | string, res: Response) => {
     const [results] = await connection.query<RowDataPacket[]>(`
     SELECT U.IdUmowa,
         U.Klient_IdKlient,
-        UU.IdUsluga,
         K.Nazwa,
-        UU.Nazwa,
-        WU.Cena,
         U.Data_rozpoczecia,
         U.Data_zakonczenia
     FROM db_main.Umowa U LEFT JOIN db_main.Klient K ON U.Klient_IdKlient = K.IdKlient
-    LEFT JOIN db_main.Wersja_umowy WU ON U.IdUmowa = WU.Umowa_IdUmowa
-    LEFT JOIN db_main.Usluga UU ON WU.Usluga_IdUsluga = UU.IdUsluga 
     WHERE U.IdUmowa = ?`, [id]);
    try {
       console.log(results);
@@ -84,9 +79,7 @@ app.get('/Umowa/:id', authenticate, authorize((user) => roleGreaterOrEqual(user[
     
 });
 
-app.get('/umowa/:id/wersja_umowy', authenticate, authorize((user) => roleGreaterOrEqual(user["role"], "pracownik")), async (req: Request, res: Response) => {
-    const idUmowy = req.params["id"];
-
+export const getContractDetails = async (id: string|number, res: Response) => {
     try {
         const [wersjeUmowyResults] = await connection.query<RowDataPacket[]>(
             `SELECT 
@@ -96,18 +89,20 @@ app.get('/umowa/:id/wersja_umowy', authenticate, authorize((user) => roleGreater
                 WU.Cena
             FROM db_main.Wersja_umowy WU
             LEFT JOIN db_main.Usluga U ON WU.Usluga_IdUsluga = U.IdUsluga
-            WHERE WU.Umowa_IdUmowa = 1;`, [idUmowy]
+            WHERE WU.Umowa_IdUmowa = ?;`, [id]
         );
-
-        if (wersjeUmowyResults.length === 0) {
-            return res.status(200).send(`Nie znaleziono wersji umowy dla umowy o ID: ${idUmowy}`);
-        }
 
         return res.json(wersjeUmowyResults);
     } catch (error) {
         console.error(error);
-        return res.status(500).send(`Wystąpił błąd podczas pobierania wersji umowy dla umowy o ID: ${idUmowy}`);
+        return res.status(500).send(`Wystąpił błąd podczas pobierania wersji umowy dla umowy o ID: ${id}`);
     }
+}
+
+app.get('/umowa/:id/wersja_umowy', authenticate, authorize((user) => roleGreaterOrEqual(user["role"], "pracownik")), async (req: Request, res: Response) => {
+    const idUmowy = req.params["id"];
+
+    return await getContractDetails(idUmowy!, res);
 });
 
 app.delete('/Umowa/:id', authenticate, authorize((user) => roleGreaterOrEqual(user["role"], "admin")), async (req: Request, res: Response) => {

@@ -24,7 +24,7 @@ export const umowaSchema = z.object(
         const pred = dayjs(obj.Data_rozpoczecia, "DD-MM-YYYY").isBefore(
             dayjs(obj.Data_zakonczenia, "DD-MM-YYYY")
         );
-        console.log("refinement", pred)
+        // console.log("refinement", obj.Data_rozpoczecia, obj.Data_zakonczenia, dayjs(obj.Data_rozpoczecia, "DD-MM-YYYY").format("DD-MM-YYYY"), dayjs(obj.Data_zakonczenia, "DD-MM-YYYY").format())
         return pred;
     },
     {

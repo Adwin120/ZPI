@@ -6,7 +6,7 @@ import { KlientPayload, klientSchema } from "../../common/klientSchema";
 import { authenticate, authorize, getUserData } from "../middleware/firebaseAuth";
 import { roleGreaterOrEqual } from "../../common/userRoles";
 import {ResultSetHeader, RowDataPacket } from "mysql2/promise";
-import { getUmowaById } from "./umowaEndpoints";
+import { getContractDetails, getUmowaById } from "./umowaEndpoints";
 
 const getErrorMessage = (error: unknown, defaultMessage: string) => {
     if (typeof error === "object" && error !== null && "message" in error) {
@@ -87,17 +87,12 @@ app.get('/profil/Klient/:email', authenticate, async (req: Request, res: Respons
     }
 
     try {
-        const [pracownikResults] = await connection.query<RowDataPacket[]>("SELECT IdKlient FROM Klient WHERE Email = ?", [email]);
+        const [pracownikResults] = await connection.query<RowDataPacket[]>("SELECT * FROM Klient WHERE Email = ?", [email]);
 
         if (pracownikResults.length === 0 || !pracownikResults[0]) {
             return res.status(404).send('Klient o podanym emailu nie został znaleziony');
         }
-
-        const klientId = pracownikResults[0]['IdPracownik'];
-
-        const [pracownikResult] = await connection.query<RowDataPacket[]>("SELECT * FROM Klient WHERE IdKlient = ?", [klientId]);
-
-        return res.json(pracownikResult);
+        return res.json(pracownikResults[0]);
     } catch (error) {
         console.error(error);
         return res.status(500).send('Wystąpił błąd podczas pobierania danych klienta');
@@ -282,7 +277,7 @@ app.get('/profil/Klient/:email/umowa/:id', authenticate, async (req: Request, re
 //FIXME: same
 app.get('/profil/Klient/:email/umowa/:id/wersja_umowy', authenticate, async (req: Request, res: Response) => {
     const emailParam = req.params["email"];
-    const idumowy = req.params["idumowy"];
+    const idumowy = req.params["id"];
 
     if (!emailParam) {
         return res.status(400).send("Email jest wymagany");
@@ -306,9 +301,10 @@ app.get('/profil/Klient/:email/umowa/:id/wersja_umowy', authenticate, async (req
             return res.status(404).send('Klient o podanym emailu nie został znaleziony');
         }
 
-        const [results] = await connection.query<RowDataPacket[]>("SELECT * FROM Wersja_umowy WHERE Umowa_IdUmowa = ?", [idumowy]);
+        // const [results] = await connection.query<RowDataPacket[]>("SELECT * FROM Wersja_umowy WHERE Umowa_IdUmowa = ?", [idumowy]);
 
-        return res.json(results);
+        // return res.json(results);
+        return await getContractDetails(idumowy!, res)
     } catch (error) {
         console.error(error);
         return res.status(500).send('Wystąpił błąd podczas pobierania wersji umowy danego klienta');

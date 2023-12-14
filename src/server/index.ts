@@ -11,6 +11,9 @@ import "./endpoints/uslugaEndpoints"
 import "./endpoints/wersja_umowyEndpoints"
 import "./endpoints/auto_uslugaEndpoints"
 import "./endpoints/auto_pracownikEndpoints"
+import dayjs from "dayjs";
+import customParseFormat from "dayjs/plugin/customParseFormat.js"
+dayjs.extend(customParseFormat)
 
 const port = 3000;
 
