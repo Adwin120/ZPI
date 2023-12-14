@@ -2,7 +2,7 @@ import { Link, Stack } from "@mui/material";
 import CommonLayout from "../layout/CommonLayout";
 import FormButton from "../layout/FormButton";
 import { postToEndpoint } from "../../backendAccess";
-import { Grafik as MyProfileGrafik, grafikSchema } from "../../../common/grafikSchema";
+import { Grafik, grafikSchema } from "../../../common/grafikSchema";
 import FormAutocompleteFromEndpoint from "../forms/FormAutocompleteFromEndpoint";
 import { Pracownik } from "../../../common/pracownikSchema";
 import { Klient } from "../../../common/klientSchema";
@@ -37,11 +37,10 @@ const MyProfileGrafik: React.FC<Props> = () => {
                         {GrafikFormFields}
                     </FormButton>
                 </div>
-                <DataTable<MyProfileGrafik>
+                <DataTable<Grafik>
                     dataEndpoint={endpoint}
                     getRowId={(row) => row.IdGrafik}
-                    //TODO: zmienić
-                    onRowDoubleClick={({ row }) => navigate(`/panel/grafik/${row.IdGrafik}`)}
+                    onRowDoubleClick={({ row }) => navigate(`/panel/pracownik/grafik/${row.IdGrafik}`)}
                     schema={grafikTableSchema(navigate)}
                 />
             </Stack>
@@ -51,7 +50,7 @@ const MyProfileGrafik: React.FC<Props> = () => {
 
 export const grafikTableSchema: (
     navigator: (to: string) => void
-) => GridColDef<MyProfileGrafik>[] = (navigate) => [
+) => GridColDef<Grafik>[] = (navigate) => [
     {
         field: "Klient",
         headerName: "Klient",
@@ -95,7 +94,7 @@ export const grafikTableSchema: (
                 <GridActionsCellItem
                     label="wyświetl"
                     icon={<MoreHorizIcon />}
-                    onClick={() => navigate(`/panel/grafik/${id}`)}
+                    onClick={() => navigate(`/panel/pracownik/grafik/${id}`)}
                     key="display"
                 ></GridActionsCellItem>,
             ];

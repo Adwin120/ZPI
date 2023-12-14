@@ -28,6 +28,8 @@ import ZgloszenieDetails from "./components/pages/ZgloszenieDetails";
 import MyProfilePracownik from "./components/pages/MyProfilePracownik";
 import MyProfileKlient from "./components/pages/MyProfileKlient";
 import MyProfileGrafik from "./components/pages/MyProfileGrafik";
+import MyProfileUmowaDetails from "./components/pages/MyProfileUmowaDetails";
+import MyProfileGrafikDetails from "./components/pages/MyProfileGrafikDetails";
 
 const reactContainer = document.getElementById("react-app")!;
 
@@ -41,8 +43,10 @@ root.render(
                 <Switch>
                     <Route path="/login" component={Login}></Route>
                     <Route path="/panel/klient/profil" component={MyProfileKlient}></Route>
+                    <Route path="/panel/klient/umowa/:id" component={MyProfileUmowaDetails}></Route>
                     <Route path="/panel/pracownik/profil" component={MyProfilePracownik}></Route>
                     <Route path="/panel/pracownik/grafik" component={MyProfileGrafik}></Route>
+                    <Route path="/panel/pracownik/grafik/:id" component={MyProfileGrafikDetails}></Route>
                     <Route path="/panel/auta" component={Auta}></Route>
                     <Route path="/panel/auta/:id" component={AutoDetails}></Route>
                     <Route path="/panel/grafik" component={Grafik}></Route>

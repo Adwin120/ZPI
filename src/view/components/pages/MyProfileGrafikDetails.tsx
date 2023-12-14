@@ -16,6 +16,7 @@ import { GrafikFormFields } from "./Grafik";
 import DeleteButton from "../layout/DeleteButton";
 import DetailsCard from "../layout/DetailsCard";
 import { AcceptanceActions, statusStyles } from "../layout/AcceptanceActions";
+import { useUser } from "../../firebaseAuth";
 
 interface Props {
     params: {
@@ -23,7 +24,8 @@ interface Props {
     };
 }
 const GrafikDetails: React.FC<Props> = ({ params: { id } }) => {
-    const endpoint = `/Grafik/${id}` as const;
+    const [user] = useUser();
+    const endpoint = `/profil/Pracownik/${user?.email}/Grafik/${id}` as const;
     const { data, isLoading } = useGetEndpoint<Grafik>(endpoint);
     const [_, navigate] = useLocation();
     return (
@@ -44,13 +46,13 @@ const GrafikDetails: React.FC<Props> = ({ params: { id } }) => {
                     >
                         {GrafikFormFields}
                     </FormButton>
-                    <DeleteButton
+                    {/* <DeleteButton
                         onClick={() => {
                             deleteFromEndpoint(endpoint)().then(() => {
                                 navigate("/panel/grafik");
                             });
                         }}
-                    />
+                    /> */}
                 </ActionRow>
                 <DetailsCard title="Status">
                     <Stack direction="row" justifyContent="space-between">
@@ -64,13 +66,13 @@ const GrafikDetails: React.FC<Props> = ({ params: { id } }) => {
                         />
                     </Stack>
                 </DetailsCard>
-                <DetailsCard title="Pracownik odpowiedzialny">
+                {/* <DetailsCard title="Pracownik odpowiedzialny">
                     <Link
                         onClick={() => navigate(`/panel/pracownicy/${data?.Pracownik_IdPracownik}`)}
                     >
                         {data?.Imie} {data?.Nazwisko}
                     </Link>
-                </DetailsCard>
+                </DetailsCard> */}
                 <DetailsCard title="Dla klienta">
                     <Link onClick={() => navigate(`/panel/klienci/${data?.Klient_IdKlient}`)}>
                         {data?.Nazwa}
