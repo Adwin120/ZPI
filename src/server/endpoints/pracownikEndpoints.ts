@@ -7,6 +7,7 @@ import { authenticate, authorize, getUserData } from "../middleware/firebaseAuth
 import {ResultSetHeader, RowDataPacket } from "mysql2/promise";
 import { roleGreaterOrEqual } from "../../common/userRoles";
 import { GrafikPayload, grafikSchema } from "../../common/grafikSchema";
+import { getScheduleById } from "./grafikEndpoints";
 
 app.post(
     "/Pracownik",
@@ -45,7 +46,7 @@ app.get('/Pracownik/:id', authenticate, authorize((user) => roleGreaterOrEqual(u
    }
 });
 
-app.get('/Pracownik/:email', authenticate, async (req: Request, res: Response) => {                                //tylko swoj grafik
+app.get('/profil/Pracownik/:email', authenticate, async (req: Request, res: Response) => {                                //tylko swoj grafik
     const emailParam = req.params["email"];
 
     if (!emailParam) {
@@ -74,7 +75,7 @@ app.get('/Pracownik/:email', authenticate, async (req: Request, res: Response) =
 
         const [grafikResults] = await connection.query<RowDataPacket[]>("SELECT * FROM Pracownik WHERE IdPracownik = ?", [pracownikID]);
 
-        return res.json(grafikResults);
+        return res.json(grafikResults[0]);
     } catch (error) {
         console.error(error);
         return res.status(500).send('Wystąpił błąd podczas pobierania danych pracownika');
@@ -203,8 +204,12 @@ app.patch(
     }
 );
 
+app.get("/profil/Pracownik/:email/Grafik/:id", authenticate, async (req, res) => {
+    return await getScheduleById(req.params["id"]!, res);
+})
+
 app.patch(
-    "/Pracownik/:email/Grafik/:id",                                                                //tylko swoj grafik
+    "/profil/Pracownik/:email/Grafik/:id",                                                                //tylko swoj grafik
     authenticate,
     validateBody(grafikSchema.innerType().partial()), 
     async (req: Request, res: Response) => {
@@ -262,7 +267,7 @@ app.patch(
 
 
 app.patch(                                                                                       //tylko swoje dane
-    "/Pracownik/:email",
+    "/profil/Pracownik/:email",
     authenticate,
     validateBody(pracownikSchema.partial()), 
     async (req: Request, res: Response) => {
@@ -307,6 +312,40 @@ app.patch(                                                                      
         } catch (error) {
             console.error(error);
             return res.status(500).send("Wystąpił błąd podczas aktualizacji danych pracownika");
+        }
+    }
+);
+
+
+
+app.post(
+    "/profil/Pracownik/:email/grafik",
+    authenticate,
+    validateBody(grafikSchema),
+    async (req: Request, res: Response) => {
+        const emailParam = req.params["email"];
+        const grafikData = req.body as GrafikPayload;
+
+        if (!emailParam) {
+            return res.status(400).send("Email jest wymagany");
+        }
+
+        const email = decodeURIComponent(emailParam);
+        const user = getUserData(res);
+
+        if (!user || user.email !== email) {
+            return res.status(403).send("Brak uprawnień do edycji tego grafiku");
+        }
+
+        try {
+            const dbConnection = await connection;
+            await dbConnection.query("INSERT INTO Grafik ( Pracownik_IdPracownik, Klient_IdKlient, Czas_rozpoczecia, Czas_zakonczenia, Status) VALUES ((SELECT IdPracownik FROM Pracownik WHERE Email = ?), ?, ?, ?, ?)",
+             [ email, grafikData.Klient_IdKlient, grafikData.Czas_rozpoczecia , grafikData.Czas_zakonczenia, "przesłane"]);
+
+            return res.status(200).send("Grafik został pomyślnie dodany");
+        } catch (error) {
+            console.error(error);
+            return res.status(500).send("Wystąpił błąd podczas zapisywania grafiku");
         }
     }
 );

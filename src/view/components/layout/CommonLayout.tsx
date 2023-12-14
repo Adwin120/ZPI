@@ -27,7 +27,12 @@ interface Props extends PropsWithChildren {
     subpageTitle: string;
     center?: boolean;
 }
-const CommonLayout: React.FC<Props> = ({ children, pageTitle = "MOXLY", subpageTitle, center = false }) => {
+const CommonLayout: React.FC<Props> = ({
+    children,
+    pageTitle = "MOXLY",
+    subpageTitle,
+    center = false,
+}) => {
     const isDesktop = useMediaQuery((t: Theme) => t.breakpoints.up("md"));
     const [_isDrawerOpen, setDrawerOpen] = useSessionStorage<"true" | "false">(
         "isDrawerOpen",
@@ -83,6 +88,15 @@ const CommonLayout: React.FC<Props> = ({ children, pageTitle = "MOXLY", subpageT
                 </Toolbar>
                 <Divider />
                 <List disablePadding>
+                    <NavigationListItem href="/panel/klient/profil" exactRole="klient">
+                        Mój profil
+                    </NavigationListItem>
+                    <NavigationListItem href="/panel/pracownik/profil" exactRole="pracownik">
+                        Mój profil
+                    </NavigationListItem>
+                    <NavigationListItem href="/panel/pracownik/grafik" exactRole="pracownik">
+                        Mój grafik
+                    </NavigationListItem>
                     <NavigationListItem href="/panel/auta" minimalRole="pracownik">
                         Auta
                     </NavigationListItem>

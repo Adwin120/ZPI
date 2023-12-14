@@ -6,9 +6,10 @@ import { Role, roleGreaterOrEqual } from "../../../common/userRoles";
 import { useRole } from "../../firebaseAuth";
 interface Props extends PropsWithChildren {
     href: string;
-    minimalRole: Role;
-}
-const NavigationListItem: React.FC<Props> = ({ children, href, minimalRole }) => {
+    minimalRole?: Role;
+    exactRole?: Role;
+} 
+const NavigationListItem: React.FC<Props> = ({ children, href, minimalRole, exactRole }) => {
     
     const [location, navigate] = useLocation();
     const isActive = location.startsWith(href);
@@ -19,7 +20,10 @@ const NavigationListItem: React.FC<Props> = ({ children, href, minimalRole }) =>
     });
 
     const [role] = useRole()
-    if (!role || !roleGreaterOrEqual(role, minimalRole)) {
+    if (exactRole && role !== exactRole) {
+        return <></>
+    }
+    if (minimalRole && (!role || !roleGreaterOrEqual(role, minimalRole))) {
         return <></>
     }
 

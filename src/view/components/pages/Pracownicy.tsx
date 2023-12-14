@@ -8,7 +8,7 @@ import DataTable from "../DataTable";
 import { useLocation } from "wouter";
 import { GridActionsCellItem } from "@mui/x-data-grid";
 
-import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
+import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 
 const Pracownicy: React.FC = () => {
     const [_, navigate] = useLocation();
@@ -21,12 +21,14 @@ const Pracownicy: React.FC = () => {
                         onSubmit={postToEndpoint("/Pracownik")}
                         schema={pracownikSchema}
                         title="Dodaj Pracownika"
-                    >{PracownicyFormFields}</FormButton>
+                    >
+                        {PracownicyFormFields}
+                    </FormButton>
                 </div>
                 <DataTable<Pracownik>
                     dataEndpoint="/Pracownik"
                     getRowId={(row) => row.IdPracownik}
-                    onRowDoubleClick={({row}) => navigate(`/panel/pracownicy/${row.IdPracownik}`)}
+                    onRowDoubleClick={({ row }) => navigate(`/panel/pracownicy/${row.IdPracownik}`)}
                     schema={[
                         { field: "Email", flex: 1, minWidth: 200 },
                         { field: "Imie", flex: 1, minWidth: 100 },
@@ -38,15 +40,15 @@ const Pracownicy: React.FC = () => {
                             type: "actions",
                             getActions({ id }) {
                                 return [
-                                          <GridActionsCellItem
-                                              label="wyświetl"
-                                              icon={<MoreHorizIcon />}
-                                              onClick={() => navigate(`/panel/pracownicy/${id}`)}
-                                              key="display"
-                                          ></GridActionsCellItem>,
-                                      ];
+                                    <GridActionsCellItem
+                                        label="wyświetl"
+                                        icon={<MoreHorizIcon />}
+                                        onClick={() => navigate(`/panel/pracownicy/${id}`)}
+                                        key="display"
+                                    ></GridActionsCellItem>,
+                                ];
                             },
-                        }
+                        },
                     ]}
                 />
             </Stack>
@@ -54,12 +56,18 @@ const Pracownicy: React.FC = () => {
     );
 };
 
-export const PracownicyFormFields = (
+export const LimitedEditPracownicyFormFields = (
     <>
-        <FormTextField name="Email" label="E-mail" type="email" required />
         <FormTextField name="Imie" label="Imię" />
         <FormTextField name="Nazwisko" label="Nazwisko" />
         <FormTextField name="Telefon" label="Telefon" type="tel" />
+    </>
+);
+
+export const PracownicyFormFields = (
+    <>
+        <FormTextField name="Email" label="E-mail" type="email" required />
+        {LimitedEditPracownicyFormFields}
     </>
 );
 
