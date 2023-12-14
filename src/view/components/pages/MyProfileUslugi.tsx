@@ -12,11 +12,11 @@ import { useRole } from "../../firebaseAuth";
 
 interface Props {}
 const Uslugi: React.FC<Props> = () => {
-    const [role] = useRole();
+    // const [role] = useRole();
     return (
         <CommonLayout subpageTitle="Usługi">
             <Stack alignItems={"normal"} gap={2}>
-                <div>
+                {/* <div>
                     <FormButton
                         minimalRole="kierownik"
                         onSubmit={postToEndpoint("/Usluga")}
@@ -26,35 +26,30 @@ const Uslugi: React.FC<Props> = () => {
                         <FormTextField name="Nazwa" label="Nazwa" />
                         <FormTextField name="Opis" label="Opis" multiline minRows={3} />
                     </FormButton>
-                </div>
+                </div> */}
 
                 <DataTable<Usluga>
                     dataEndpoint="/Usluga"
                     getRowId={(row) => row.IdUsluga}
-                    editMode="cell"
-                    processRowUpdate={({ IdUsluga, ...rest }) => {
-                        patchEndpoint(`/Usluga/${IdUsluga}`)(rest);
-                        return { IdUsluga, ...rest };
-                    }}
                     schema={[
-                        { field: "Nazwa", flex: 1, minWidth: 200, editable: true, renderHeader: EditableColumnHeader },
-                        { field: "Opis", flex: 3, minWidth: 300, editable: true, renderHeader: EditableColumnHeader},
-                         {
-                            field: "opcje",
-                            width: 50,
-                            type: "actions",
-                            getActions({ id }) {
-                                return [
-                                    <GridActionsCellItem
-                                        label="usuń"
-                                        icon={<DeleteForeverIcon />}
-                                        color="error"
-                                        onClick={deleteFromEndpoint(`/Usluga/${id}`)}
-                                        key="delete"
-                                    ></GridActionsCellItem>,
-                                ];
-                            },
-                        },
+                        { field: "Nazwa", flex: 1, minWidth: 200, editable: true, },
+                        { field: "Opis", flex: 3, minWidth: 300, editable: true, },
+                        //  {
+                        //     field: "opcje",
+                        //     width: 50,
+                        //     type: "actions",
+                        //     getActions({ id }) {
+                        //         return [
+                        //             <GridActionsCellItem
+                        //                 label="usuń"
+                        //                 icon={<DeleteForeverIcon />}
+                        //                 color="error"
+                        //                 onClick={deleteFromEndpoint(`/Usluga/${id}`)}
+                        //                 key="delete"
+                        //             ></GridActionsCellItem>,
+                        //         ];
+                        //     },
+                        // },
                     ]}
                 />
             </Stack>

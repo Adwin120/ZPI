@@ -94,15 +94,15 @@ const UmowaDetails: React.FC<Props> = ({ params: { id } }) => {
                         //     patchEndpoint(`/Wersja_umowy/${id}`)(rest)
                         //     return {id, ...rest}
                         // }}
-                        onProcessRowUpdateError={console.error}
+                        // onProcessRowUpdateError={console.error}
                         schema={[
                             { field: "NazwaUslugi", flex: 1, headerName: "Usługa" },
                             {
                                 field: "Cena",
                                 flex: 0.2,
                                 type: "number",
-                                editable: true,
-                                renderHeader: EditableColumnHeader,
+                                // editable: true,
+                                // renderHeader: EditableColumnHeader,
                                 valueFormatter: ({ value }) => zlotyFormatter.format(value),
                             },
                             // {

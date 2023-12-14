@@ -31,6 +31,7 @@ import MyProfileGrafik from "./components/pages/MyProfileGrafik";
 import MyProfileUmowaDetails from "./components/pages/MyProfileUmowaDetails";
 import MyProfileGrafikDetails from "./components/pages/MyProfileGrafikDetails";
 import DefaultPage from "./components/pages/DefaultPage";
+import MyProfileUslugi from "./components/pages/MyProfileUslugi";
 
 const reactContainer = document.getElementById("react-app")!;
 
@@ -43,6 +44,7 @@ root.render(
             <Router>
                 <Switch>
                     <Route path="/login" component={Login}></Route>
+                    <Route path="/klient/panel/uslugi" component={MyProfileUslugi}></Route>
                     <Route path="/panel/klient/profil" component={MyProfileKlient}></Route>
                     <Route path="/panel/klient/umowa/:id" component={MyProfileUmowaDetails}></Route>
                     <Route path="/panel/pracownik/profil" component={MyProfilePracownik}></Route>

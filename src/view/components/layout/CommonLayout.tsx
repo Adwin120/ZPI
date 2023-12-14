@@ -115,7 +115,8 @@ const CommonLayout: React.FC<Props> = ({
                     <NavigationListItem href="/panel/umowy" minimalRole="kierownik">
                         Umowy
                     </NavigationListItem>
-                    <NavigationListItem href="/panel/uslugi" minimalRole="klient">
+                    <NavigationListItem href="/klient/panel/uslugi" exactRole="klient">Usługi</NavigationListItem>
+                    <NavigationListItem href="/panel/uslugi" minimalRole="pracownik">
                         Usługi
                     </NavigationListItem>
                     <NavigationListItem href="/panel/zgloszenia" minimalRole="pracownik">
