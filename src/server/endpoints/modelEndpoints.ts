@@ -29,7 +29,7 @@ app.post(
     }
 );
 
-app.get('/Model', authenticate, authorize((user) => roleGreaterOrEqual(user["role"], "kierownik")), async (req: Request, res: Response) => {
+app.get('/Model', authenticate, authorize("pracownik"), async (req: Request, res: Response) => {
     try {
         const [results] = await connection.query<RowDataPacket[]>("SELECT * FROM Model");
         if (results.length === 0) {
