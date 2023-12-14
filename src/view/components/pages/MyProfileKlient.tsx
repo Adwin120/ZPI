@@ -22,7 +22,7 @@ interface Props {
 }
 const MyProfileKlient: React.FC<Props> = ({ params: { id } }) => {
     const [user] = useUser();
-    const endpoint = `/profil/Klient/${user?.email}` as const;
+    const endpoint = `/profil/Klient/${encodeURIComponent(user?.email ?? "")}` as const;
 
     const { data, isLoading } = useGetEndpoint<Klient>(endpoint);
     const [_, navigate] = useLocation();

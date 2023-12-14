@@ -1,7 +1,7 @@
 import { Link, Stack } from "@mui/material";
 import CommonLayout from "../layout/CommonLayout";
 import FormButton from "../layout/FormButton";
-import { postToEndpoint } from "../../backendAccess";
+import { postToEndpoint, useGetEndpoint } from "../../backendAccess";
 import { Grafik, grafikSchema } from "../../../common/grafikSchema";
 import FormAutocompleteFromEndpoint from "../forms/FormAutocompleteFromEndpoint";
 import { Pracownik } from "../../../common/pracownikSchema";
@@ -22,8 +22,8 @@ interface Props {}
 const MyProfileGrafik: React.FC<Props> = () => {
     const [_, navigate] = useLocation();
     const [user] = useUser();
-    const endpoint = `/profil/Pracownik/${user?.email}/grafik` as const;
-    
+    const endpoint = `/profil/Pracownik/${encodeURIComponent(user?.email ?? "")}/grafik` as const;
+    const {data: pracownik, isLoading} = useGetEndpoint<Pracownik>(`/profil/Pracownik/${encodeURIComponent(user?.email ?? "")}`)
     return (
         <CommonLayout subpageTitle="Mój Grafik">
             <Stack alignItems={"normal"} gap={2}>
@@ -33,6 +33,10 @@ const MyProfileGrafik: React.FC<Props> = () => {
                         onSubmit={postToEndpoint(endpoint)}
                         schema={grafikSchema}
                         title="Dodaj wpis w grafiku"
+                        defaultValues={{
+                            Pracownik_IdPracownik: pracownik?.IdPracownik
+                        }}
+                        isLoading={isLoading}
                     >
                         {GrafikFormFields}
                     </FormButton>

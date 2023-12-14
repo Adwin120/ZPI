@@ -62,7 +62,7 @@ root.render(
                     <Route path="/panel/zgloszenia" component={Zgloszenia}></Route>
                     <Route path="/panel/zgloszenia/:id" component={ZgloszenieDetails}></Route>
                     <Route path="/panel/uprawnienia" component={Uprawnienia}></Route>
-                    <Route path="/" component={MockForms}></Route>
+                    <Route path="/" component={Auta}></Route>
                     <Route component={NotFound}></Route>
                 </Switch>
             </Router>

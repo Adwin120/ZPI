@@ -18,7 +18,7 @@ export const grafikSchema = z.object(
         Klient_IdKlient: z.number(defaultMessage("Podany klient jest wymagany.")).min(1,"ID klienta musi być większe od 0."),
         Czas_rozpoczecia: datetimeSchema,
         Czas_zakonczenia: datetimeSchema,
-        Status: z.enum(["przesłane", "zaakceptowane", "odrzucone"]).default("przesłane"),
+        // Status: z.enum(["przesłane", "zaakceptowane", "odrzucone"]).default("przesłane"),
     }
 ).refine(
     (obj) => {

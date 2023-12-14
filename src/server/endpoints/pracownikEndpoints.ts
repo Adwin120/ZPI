@@ -321,8 +321,7 @@ app.patch(                                                                      
 app.post(
     "/profil/Pracownik/:email/grafik",
     authenticate,
-    authorize((user) => roleGreaterOrEqual(user["role"], "kierownik")),
-    validateBody(pracownikSchema),
+    validateBody(grafikSchema),
     async (req: Request, res: Response) => {
         const emailParam = req.params["email"];
         const grafikData = req.body as GrafikPayload;
