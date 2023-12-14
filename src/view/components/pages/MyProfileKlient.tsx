@@ -15,12 +15,7 @@ import { autaTableSchema, limitedAutaTableSchema } from "./Auta";
 import { umowyTableSchema } from "./Umowy";
 import { useUser } from "../../firebaseAuth";
 
-interface Props {
-    params: {
-        id: string;
-    };
-}
-const MyProfileKlient: React.FC<Props> = ({ params: { id } }) => {
+const MyProfileKlient: React.FC = () => {
     const [user] = useUser();
     const endpoint = `/profil/Klient/${encodeURIComponent(user?.email ?? "")}` as const;
 
