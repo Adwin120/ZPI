@@ -29,6 +29,7 @@ import { Usluga } from "../../../common/uslugaSchema";
 import { DateTimeFormFormat } from "../../../common/DateTime";
 import HiddenInput from "../forms/HiddenInput";
 import FormTextField from "../forms/FormTextField";
+import { mutate } from "swr";
 
 interface Props {
     params: {
@@ -90,7 +91,7 @@ const AutoDetails: React.FC<Props> = ({ params: { id } }) => {
                 <DetailsCard title="Dodatkowe informacje">{data?.Dodatkowe_informacje}</DetailsCard>
                 <DetailsCard title="Wykonywane usługi">
                     <FormButton
-                        onSubmit={postToEndpoint("/Auto_usluga")}
+                        onSubmit={(data) => postToEndpoint("/Auto_usluga")(data).then(() => mutate(`/Auto_usluga/auto/${id}`))}
                         schema={auto_uslugaSchema}
                         title="Dodaj wykonywaną usługę"
                         defaultValues={{
@@ -119,7 +120,7 @@ const AutoDetails: React.FC<Props> = ({ params: { id } }) => {
                 </DetailsCard>
                 <DetailsCard title="Pracownicy odpowiedzialni">
                     <FormButton
-                        onSubmit={postToEndpoint("/Auto_pracownik")}
+                        onSubmit={(data) => postToEndpoint("/Auto_pracownik")(data).then(() => mutate(`/Auto_pracownik/auto/${id}`))}
                         schema={auto_pracownikSchema}
                         title="Przydziel pracownika"
                         defaultValues={{
@@ -140,7 +141,7 @@ const AutoDetails: React.FC<Props> = ({ params: { id } }) => {
                         />
                     </FormButton>
                     <DataTable<Auto_pracownik>
-                        dataEndpoint={`/Auto_pracownik/auto/:id`}
+                        dataEndpoint={`/Auto_pracownik/auto/${id}`}
                         getRowId={(row) => row.Pracownik_IdPracownik}
                         onRowDoubleClick={({ row }) =>
                             navigate(`/panel/pracownicy/${row.Pracownik_IdPracownik}`)

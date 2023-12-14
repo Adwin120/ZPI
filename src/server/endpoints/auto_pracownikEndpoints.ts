@@ -27,23 +27,23 @@ app.post(
              const [resultsAuto_IdAuto] = await connection.query<RowDataPacket[]>("SELECT * FROM Auto_Pracownik WHERE Auto_IdAuto = ?",
              [ auto_pracownikData.Auto_IdAuto ]);
 
-            if (resultsPracownik_IdPracownik.length === 0) {
-                return res.status(400).send("Pracownik o podanym ID nie istnieje w bazie danych.");
-            }
+            // if (resultsPracownik_IdPracownik.length === 0) {
+            //     return res.status(400).send("Pracownik o podanym ID nie istnieje w bazie danych.");
+            // }
 
-            if (resultsAuto_IdAuto.length === 0) {
-                return res.status(400).send("Auto o podanym ID nie istnieje w bazie danych.");
-            }
+            // if (resultsAuto_IdAuto.length === 0) {
+            //     return res.status(400).send("Auto o podanym ID nie istnieje w bazie danych.");
+            // }
 
-            if (results.length > 0) {
-                return res.status(400).send("Padane ID Auta oraz ID Pracownika już istnieją w bazie danych.");
-            }
+            // if (results.length > 0) {
+            //     return res.status(400).send("Padane ID Auta oraz ID Pracownika już istnieją w bazie danych.");
+            // }
             await dbConnection.query("INSERT INTO Auto_Pracownik ( Auto_IdAuto, Pracownik_IdPracownik) VALUES ( ?, ? )",
              [ auto_pracownikData.Auto_IdAuto, auto_pracownikData.Pracownik_IdPracownik ]);
             return res.status(200).send("Dane dla Auto_pracownik zostały dodane pomyślnie");
         } catch (error) {
             console.error(error);
-            return res.status(500).send("Wystąpił błąd podczas zapisywania danych dla Auto_pracownik");
+            return res.status(500).send("Pracownik jest już przypisany do auta");
         }
     }
 );
