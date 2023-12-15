@@ -15,7 +15,7 @@ import dayjs from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat.js"
 dayjs.extend(customParseFormat)
 
-const port = 3000;
+const port = process.argv.slice(2)[1] ?? 3000;
 
 app.listen(port, () => {
     console.log(`express listening on port ${port}`);
